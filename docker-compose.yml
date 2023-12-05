@@ -6,5 +6,23 @@ services:
             dockerfile: Dockerfile
         environment:
             - SERVER_PORT=4200
+            - DB_HOST=postgres
+            - DB_PORT=5432
+            - DB_USERNAME
+            - DB_PASSWORD
+            - DB_DATABASE
         ports:
             - 4200:4200
+
+    postgres:
+        container_name: link-shortener_postgres
+        image: postgres:14.4-alpine
+        volumes:
+            - link-shortener_postgres:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_DATABASE}
+
+volumes:
+    link-shortener_postgres:
