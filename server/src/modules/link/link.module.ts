@@ -16,6 +16,7 @@ import { Link } from './link.entity'
 			provide: BackHalfGenerationStrategy,
 			useClass: AlphanumericBackHalfGenerationStrategy
 		}
-	]
+	],
+	exports: [LinkService]
 })
 export class LinkModule {}
