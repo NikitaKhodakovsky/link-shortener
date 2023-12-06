@@ -1,4 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm'
+import { paginate } from 'nestjs-typeorm-paginate'
 import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 
@@ -76,5 +77,14 @@ export class LinkService {
 
 	public async findByBackHalf(backhalf: string): Promise<Link | null> {
 		return this.linkRepository.findOneBy({ backhalf })
+	}
+
+	public async findAll(userId: number, page: number = 1, perPage: number = 20) {
+		const queryBuilder = this.linkRepository
+			.createQueryBuilder('l')
+			.where('l.userId = :userId', { userId })
+			.orderBy('created_at', 'DESC')
+
+		return paginate(queryBuilder, { page, limit: perPage })
 	}
 }

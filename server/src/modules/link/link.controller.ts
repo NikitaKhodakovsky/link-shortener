@@ -10,13 +10,17 @@ import {
 	Param,
 	Body,
 	Get,
-	Post
+	Post,
+	Query
 } from '@nestjs/common'
 
+import { ApiOkPaginatedResponse } from '../../common/api-ok-paginated-response.decorator'
 import { BackHalfIsNotUniqueException, LinkNotFoundException } from './link.exception'
+import { PaginatedQuery } from '../../common/paginated.query'
 import { CreateLinkDTO, UpdateLinkDTO } from './link.dto'
 import { UserId } from '../../common/user-id.decorator'
 import { LinkService } from './link.service'
+import { Link } from './link.entity'
 
 @ApiTags('Links')
 @Controller('links')
@@ -46,5 +50,12 @@ export class LinkController {
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
 	public findById(@UserId() userId: number, @Param('linkId') linkId: number) {
 		return this.linkService.findByIdOrFail(userId, linkId)
+	}
+
+	@Get()
+	@ApiOkPaginatedResponse(Link)
+	@ApiException(() => [BadRequestException, UnauthorizedException])
+	public findAll(@UserId() userId: number, @Query() { page, perPage }: PaginatedQuery) {
+		return this.linkService.findAll(userId, page, perPage)
 	}
 }
