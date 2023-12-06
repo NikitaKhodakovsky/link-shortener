@@ -1,10 +1,23 @@
-import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post, Session } from '@nestjs/common'
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
 import { SessionData } from 'express-session'
+import { Request, Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
+import {
+	BadRequestException,
+	HttpStatus,
+	Controller,
+	HttpCode,
+	Session,
+	Delete,
+	Body,
+	Post,
+	Req,
+	Res
+} from '@nestjs/common'
 
 import { InvalidPasswordException, UsernameConflictException } from './auth.exception'
 import { UserNotFoundException } from '../user/user.exception'
+import { destroySession } from './destroy-session.util'
 import { CredentialsDTO } from './credentials.dto'
 import { UserService } from '../user/user.service'
 import { AuthService } from './auth.service'
@@ -36,5 +49,10 @@ export class AuthController {
 		session.userId = userId
 
 		return this.userService.findById(userId)
+	}
+
+	@Delete('logout')
+	public logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+		return destroySession(req, res)
 	}
 }
