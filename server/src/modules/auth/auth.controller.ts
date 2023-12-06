@@ -64,4 +64,10 @@ export class AuthController {
 	public profile(@UserId() userId: number) {
 		return this.userService.findById(userId)
 	}
+
+	@Delete('profile')
+	@ApiException(() => [UnauthorizedException, UserNotFoundException])
+	public deleteAccount(@UserId() userId: number) {
+		return this.userService.deleteById(userId)
+	}
 }

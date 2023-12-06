@@ -19,4 +19,12 @@ export class UserService {
 
 		return user
 	}
+
+	public async deleteById(userId: number) {
+		const user = await this.findById(userId)
+
+		await this.userRepository.remove(user)
+
+		return true
+	}
 }
