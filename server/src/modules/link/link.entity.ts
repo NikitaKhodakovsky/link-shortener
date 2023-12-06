@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { ApiHideProperty } from '@nestjs/swagger'
 
 import { User } from '../user/user.entity'
-import { ApiHideProperty } from '@nestjs/swagger'
 
 @Entity()
 export class Link {
