@@ -1,19 +1,11 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, Entity, ManyToOne } from 'typeorm'
 import { ApiHideProperty } from '@nestjs/swagger'
 
+import { BaseEntity } from '../../common/base.entity'
 import { User } from '../user/user.entity'
 
 @Entity()
-export class Link {
-	@PrimaryGeneratedColumn()
-	id: number
-
-	@UpdateDateColumn({ name: 'created_at' })
-	createdAt: Date
-
-	@CreateDateColumn({ name: 'updated_at' })
-	updatedAt: Date
-
+export class Link extends BaseEntity {
 	@ApiHideProperty()
 	@ManyToOne(() => User, { nullable: false, onDelete: 'CASCADE' })
 	user: User | undefined
