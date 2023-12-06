@@ -60,14 +60,20 @@ export class AuthController {
 	}
 
 	@Get('profile')
-	@ApiException(() => [UnauthorizedException, UserNotFoundException])
+	@ApiException(() => [UnauthorizedException])
 	public profile(@UserId() userId: number) {
 		return this.userService.findById(userId)
 	}
 
 	@Delete('profile')
-	@ApiException(() => [UnauthorizedException, UserNotFoundException])
-	public deleteAccount(@UserId() userId: number) {
-		return this.userService.deleteById(userId)
+	@ApiException(() => [UnauthorizedException])
+	public async deleteAccount(
+		@UserId() userId: number,
+		@Req() req: Request,
+		@Res({ passthrough: true }) res: Response
+	) {
+		await this.userService.deleteById(userId)
+
+		return destroySession(req, res)
 	}
 }
