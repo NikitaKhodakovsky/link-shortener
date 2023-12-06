@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 import { User } from '../user/user.entity'
+import { ApiHideProperty } from '@nestjs/swagger'
 
 @Entity()
 export class Link {
@@ -13,8 +14,12 @@ export class Link {
 	@CreateDateColumn({ name: 'updated_at' })
 	updatedAt: Date
 
+	@ApiHideProperty()
 	@ManyToOne(() => User, { nullable: false, onDelete: 'CASCADE' })
 	user: User | undefined
+
+	@Column({ unique: true })
+	backhalf: string
 
 	@Column()
 	name: string
