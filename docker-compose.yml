@@ -1,9 +1,17 @@
 services:
+    client:
+        container_name: link-shortener_client
+        build:
+            context: ./client
+        depends_on:
+            - server
+        ports:
+            - 80:80
+
     server:
         container_name: link-shortener_server
         build:
             context: ./server
-            dockerfile: Dockerfile
         environment:
             - SERVER_PORT=4200
             - SESSION_SECRET
@@ -17,6 +25,9 @@ services:
             - REDIS_PASSWORD
         ports:
             - 4200:4200
+        depends_on:
+            - postgres
+            - redis
 
     postgres:
         container_name: link-shortener_postgres
