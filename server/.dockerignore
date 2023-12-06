@@ -1,4 +1,9 @@
-Dockerfile*
 dist
 build
+
 node_modules
+
+Dockerfile*
+
+.dockerignore
+.gitignore
