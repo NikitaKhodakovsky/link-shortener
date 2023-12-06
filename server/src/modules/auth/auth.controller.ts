@@ -3,6 +3,7 @@ import { SessionData } from 'express-session'
 import { Request, Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
 import {
+	UnauthorizedException,
 	BadRequestException,
 	HttpStatus,
 	Controller,
@@ -12,12 +13,14 @@ import {
 	Body,
 	Post,
 	Req,
-	Res
+	Res,
+	Get
 } from '@nestjs/common'
 
 import { InvalidPasswordException, UsernameConflictException } from './auth.exception'
 import { UserNotFoundException } from '../user/user.exception'
 import { destroySession } from './destroy-session.util'
+import { UserId } from 'src/common/user-id.decorator'
 import { CredentialsDTO } from './credentials.dto'
 import { UserService } from '../user/user.service'
 import { AuthService } from './auth.service'
@@ -54,5 +57,11 @@ export class AuthController {
 	@Delete('logout')
 	public logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
 		return destroySession(req, res)
+	}
+
+	@Get('profile')
+	@ApiException(() => [UnauthorizedException, UserNotFoundException])
+	public profile(@UserId() userId: number) {
+		return this.userService.findById(userId)
 	}
 }
