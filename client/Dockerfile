@@ -8,6 +8,10 @@ RUN npm i &> /dev/null
 
 COPY . .
 
+ARG PUBLIC_URL
+
+ENV PUBLIC_URL=${PUBLIC_URL}
+
 RUN npm run build 
 
 FROM nginx:1.25.3-alpine as production 
