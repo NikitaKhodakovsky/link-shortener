@@ -6,4 +6,6 @@ COPY package*.json ./
 
 RUN npm i 
 
+RUN apk --no-cache add curl
+
 CMD ["sleep", "1d"]
