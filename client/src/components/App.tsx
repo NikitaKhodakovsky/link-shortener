@@ -4,30 +4,33 @@ import { Toaster } from 'react-hot-toast'
 
 import { RequireAuth, WithoutAuth } from '../auth'
 
-import { FallbackPage } from './FallbackPage'
-import { RegisterPage } from './RegisterPage'
-import { NotFoundPage } from './NotFoundPage'
-import { LinksPage } from './LinksPage'
-import { LoginPage } from './LoginPage'
-import { LinkPage } from './LinkPage'
+import { FallbackPage, NotFoundPage } from '../pages/FallbackPages'
+import { RegisterPage } from '../pages/AuthPages/RegisterPage'
+import { DemoAccountConfirm } from './DemoAccountConfirm'
+import { LoginPage } from '../pages/AuthPages/LoginPage'
+import { LinksPage } from '../pages/LinksPage'
+import { LinkPage } from '../pages/LinkPage'
 import { Layout } from './Layout'
 
 export function App() {
 	return (
 		<div>
 			<ErrorBoundary FallbackComponent={FallbackPage} onReset={() => window.location.reload()}>
-				<Toaster />
+				<Toaster toastOptions={{ className: 'toast' }} />
+				<DemoAccountConfirm />
 				<Routes>
 					<Route element={<Layout />}>
 						<Route element={<RequireAuth redirectTo="/login" />}>
 							<Route path="/" element={<LinksPage />} />
-							<Route path="/links/:id" element={<LinkPage />} />
+							<Route path="/links/:linkId" element={<LinkPage />} />
 						</Route>
 					</Route>
-					<Route element={<WithoutAuth redirectTo="/" />}>
+					{/* <Route element={<WithoutAuth redirectTo="/" />}>
 						<Route path="/register" element={<RegisterPage />} />
 						<Route path="/login" element={<LoginPage />} />
-					</Route>
+					</Route> */}
+					<Route path="/register" element={<RegisterPage />} />
+					<Route path="/login" element={<LoginPage />} />
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</ErrorBoundary>

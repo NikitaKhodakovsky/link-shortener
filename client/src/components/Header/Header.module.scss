@@ -1,0 +1,38 @@
+@use '../../sass/abstracts' as *;
+
+.wrapper {
+	background-color: var(--element-bg);
+	box-shadow: var(--shadow);
+	width: 100%;
+}
+
+.header {
+	padding: 2rem 0;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logo {
+	font-size: 1.6rem;
+	font-weight: 700;
+
+	&:hover {
+		transform: scale(1.015);
+	}
+}
+
+.actions {
+	display: flex;
+	gap: 1.4rem;
+
+	button {
+		background-color: var(--text-secondary);
+
+		width: 2rem;
+		height: 2rem;
+
+		border-radius: 9999px;
+	}
+}

@@ -1,0 +1,22 @@
+.wrapper {
+	position: absolute;
+	left: 0;
+	right: 0;
+
+	height: 80vh;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	h1 {
+		font-size: 8rem;
+		margin-bottom: 2rem;
+	}
+
+	h2 {
+		font-size: 3rem;
+		margin-bottom: 3.5rem;
+	}
+}

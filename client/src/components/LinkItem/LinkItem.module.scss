@@ -1,0 +1,52 @@
+@use '../../sass/abstracts' as *;
+
+.linkItem {
+	@include element;
+
+	display: grid;
+	grid-template-columns: 1fr min-content;
+	align-items: center;
+
+	&.animate:hover {
+		transform: scale(0.99);
+	}
+
+	a {
+		padding-left: 2.5rem;
+		padding-top: 1.4rem;
+		padding-bottom: 1.4rem;
+
+		@include breakpoint-up('small') {
+			padding-left: 4rem;
+			padding-top: 1.6rem;
+			padding-bottom: 1.6rem;
+		}
+	}
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+}
+
+.actions {
+	display: flex;
+	gap: 0.8rem;
+
+	button {
+		background-color: var(--text-secondary);
+		width: 2rem;
+		height: 2rem;
+		border-radius: 9999px;
+	}
+
+	padding-right: 2rem;
+	padding-top: 1.4rem;
+	padding-bottom: 1.4rem;
+
+	@include breakpoint-up('small') {
+		padding-right: 4rem;
+		padding-top: 1.6rem;
+		padding-bottom: 1.6rem;
+	}
+}

@@ -1,0 +1,33 @@
+@use 'variables' as *;
+
+/* ------------------------------- Breakpoints ------------------------------ */
+
+@mixin breakpoint-up($size) {
+	@media (min-width: map-get($breakpoints-up, $size)) {
+		@content;
+	}
+}
+
+@mixin breakpoint-down($size) {
+	@media (max-width: map-get($breakpoints-down, $size)) {
+		@content;
+	}
+}
+
+@mixin element {
+	background-color: var(--element-bg);
+	border-radius: var(--border-radius);
+	box-shadow: var(--shadow);
+
+	strong {
+		color: var(--text-main);
+		font-size: 1.6rem;
+		font-weight: 700;
+	}
+
+	p {
+		color: var(--text-secondary);
+		font-size: 1.2rem;
+		font-weight: 500;
+	}
+}

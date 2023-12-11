@@ -1,0 +1,17 @@
+.icon {
+	&::before {
+		content: '';
+		display: inline-block;
+		width: 2rem;
+		height: 2rem;
+
+		background-color: currentColor;
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+	}
+
+	// &.linkedin::before {
+	// 	mask-image: url('../../../public/icons/icon.svg');
+	// }
+}
