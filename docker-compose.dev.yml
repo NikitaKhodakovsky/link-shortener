@@ -5,10 +5,13 @@ services:
         volumes:
             - ./client:/app
             - /app/node_modules
-
+        environment:
+            - NODE_ENV=development
     server:
         build:
             dockerfile: Dockerfile.dev
         volumes:
             - ./server:/app
             - /app/node_modules
+        environment:
+            - NODE_ENV=development
