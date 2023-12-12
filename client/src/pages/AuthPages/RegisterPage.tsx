@@ -1,11 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { object, ref, string } from 'yup'
 import { Form, Formik } from 'formik'
+import toast from 'react-hot-toast'
 
 import styles from './AuthPages.module.scss'
 
-import { FormikInput } from '../../components/FormikInput'
+import { useRegisterMutation } from '../../mutations/useRegisterMutation'
+
+import { useAuthManager } from '../../auth'
+
 import { LoginFormValues } from './LoginPage'
+
+import { FormikInput } from '../../components/FormikInput'
 
 export interface RegisterFormValues extends LoginFormValues {
 	confirmation: string
@@ -26,12 +32,23 @@ const registerFormValidationSchema = object({
 })
 
 export function RegisterPage() {
-	const navigate = useNavigate()
+	const { mutate } = useRegisterMutation()
+	const authManager = useAuthManager()
 
-	const register = async (data: RegisterFormValues) => {
-		//TODO: Lock submit button
-		console.log('Register request...', data)
-		navigate('/')
+	//TODO: Lock submit button
+	const register = async ({ username, password }: RegisterFormValues) => {
+		mutate(
+			{ body: { username, password } },
+			{
+				onSuccess: () => {
+					authManager.setAuth(true)
+					toast('Welcome!')
+				},
+				onError: (error) => {
+					toast(typeof error.payload === 'object' ? error.payload.message : 'Something went wrong')
+				}
+			}
+		)
 	}
 
 	return (
