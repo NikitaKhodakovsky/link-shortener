@@ -25,12 +25,10 @@ export function App() {
 							<Route path="/links/:linkId" element={<LinkPage />} />
 						</Route>
 					</Route>
-					{/* <Route element={<WithoutAuth redirectTo="/" />}>
+					<Route element={<WithoutAuth redirectTo="/" />}>
 						<Route path="/register" element={<RegisterPage />} />
 						<Route path="/login" element={<LoginPage />} />
-					</Route> */}
-					<Route path="/register" element={<RegisterPage />} />
-					<Route path="/login" element={<LoginPage />} />
+					</Route>
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</ErrorBoundary>
