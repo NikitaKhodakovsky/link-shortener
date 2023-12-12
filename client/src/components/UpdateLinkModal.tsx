@@ -1,5 +1,7 @@
 import toast from 'react-hot-toast'
 
+import { useUpdateLinkMutation } from '../mutations/useUpdateLinkMutation'
+
 import { LinkFormValues, LinkModal } from './LinkModal'
 import { ModalProps } from './Modal'
 
@@ -9,10 +11,21 @@ export interface UpdateLinkModalProps extends ModalProps {
 }
 
 export function UpdateLinkModal({ closeHandler, isOpen, linkId, values }: UpdateLinkModalProps) {
-	const updateLink = async (data: LinkFormValues) => {
-		console.log('Updating a link...', linkId, data)
-		toast('Link was successfully updated')
-		closeHandler()
+	const { mutate } = useUpdateLinkMutation()
+
+	const updateLink = async ({ name, destination }: LinkFormValues) => {
+		mutate(
+			{ body: { name, destination }, pathParams: { linkId } },
+			{
+				onSuccess: () => {
+					closeHandler()
+					toast('Link was successfully updated')
+				},
+				onError: (error) => {
+					toast(typeof error.payload === 'object' ? error.payload.message : 'Something went wrong')
+				}
+			}
+		)
 	}
 
 	return (
