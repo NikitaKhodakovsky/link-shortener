@@ -28,6 +28,7 @@
 		"build": "npm run generate:fetchers && react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
+		"generate:fetchers": "npx openapi-codegen gen api",
 		"generate:schema": "curl server/swagger-yaml --output ./swagger.yaml"
 	},
 	"eslintConfig": {
@@ -49,6 +50,8 @@
 		]
 	},
 	"devDependencies": {
+		"@openapi-codegen/cli": "^2.0.0",
+		"@openapi-codegen/typescript": "^8.0.0",
 		"@tanstack/react-query-devtools": "^5.13.5"
 	}
 }

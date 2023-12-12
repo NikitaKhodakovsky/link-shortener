@@ -260,7 +260,7 @@ paths:
         - Auth
   /links:
     post:
-      operationId: create
+      operationId: createLink
       parameters: []
       requestBody:
         required: true
@@ -356,7 +356,7 @@ paths:
       tags:
         - Links
     get:
-      operationId: findAll
+      operationId: findAllLinks
       parameters:
         - name: page
           required: false
@@ -377,7 +377,6 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Pagination'
                   - properties:
                       items:
                         type: array
@@ -413,6 +412,11 @@ paths:
                             type: string
                           last:
                             type: string
+                        required:
+                          - first
+                          - previous
+                          - next
+                          - last
                     required:
                       - items
                       - meta
@@ -472,7 +476,7 @@ paths:
         - Links
   /links/{linkId}:
     post:
-      operationId: update
+      operationId: updateLink
       parameters:
         - name: linkId
           required: true
@@ -573,7 +577,7 @@ paths:
       tags:
         - Links
     delete:
-      operationId: delete
+      operationId: deleteLink
       parameters:
         - name: linkId
           required: true
@@ -668,7 +672,7 @@ paths:
       tags:
         - Links
     get:
-      operationId: findById
+      operationId: findLinkById
       parameters:
         - name: linkId
           required: true
@@ -897,6 +901,3 @@ components:
           type: string
           minLength: 1
           maxLength: 32
-    Pagination:
-      type: object
-      properties: {}
