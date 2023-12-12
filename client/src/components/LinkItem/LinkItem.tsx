@@ -13,20 +13,13 @@ export interface ILink {
 	destination: string
 }
 
-const defaultLink: ILink = {
-	id: 1,
-	name: 'Personal Portfolio',
-	createdAt: '2023-11-01, 12:58',
-	destination: 'https://google.com'
-}
-
 export interface LinkItemProps {
-	link?: ILink
+	link: ILink
 	animate?: boolean
 	navState?: any
 }
 
-export function LinkItem({ link = defaultLink, animate = false, navState }: LinkItemProps) {
+export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
 	const [deleteLinkConfirm, setDeleteLinkConfirm] = useState(false)
 	const [updateLinkModal, setUpdateLinkModal] = useState(false)
 	const { id, createdAt, name, destination } = link
