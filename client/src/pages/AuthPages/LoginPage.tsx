@@ -1,8 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Form, Formik } from 'formik'
 import { object, string } from 'yup'
+import toast from 'react-hot-toast'
 
 import styles from './AuthPages.module.scss'
+
+import { useLoginMutation } from '../../mutations/useLoginMutation'
+
+import { useAuthManager } from '../../auth'
 
 import { FormikInput } from '../../components/FormikInput'
 
@@ -22,12 +27,24 @@ export const loginFormValidationSchema = object({
 })
 
 export function LoginPage() {
-	const navigate = useNavigate()
+	const authManager = useAuthManager()
+	const { mutate } = useLoginMutation()
 
-	const login = async (data: LoginFormValues) => {
-		//TODO: Lock submit button
-		console.log('Login request...', data)
-		navigate('/')
+	//TODO: Lock submit button
+
+	const login = async ({ username, password }: LoginFormValues) => {
+		mutate(
+			{ body: { username, password } },
+			{
+				onSuccess: () => {
+					authManager.setAuth(true)
+					toast('Welcome to LinkShortener!')
+				},
+				onError: (error) => {
+					toast(typeof error.payload === 'object' ? error.payload.message : 'Something went wrong')
+				}
+			}
+		)
 	}
 
 	return (
