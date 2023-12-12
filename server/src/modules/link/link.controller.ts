@@ -29,33 +29,33 @@ export class LinkController {
 
 	@Post()
 	@ApiException(() => [BadRequestException, UnauthorizedException, BackHalfIsNotUniqueException])
-	public create(@UserId() userId: number, @Body() data: CreateLinkDTO) {
+	public createLink(@UserId() userId: number, @Body() data: CreateLinkDTO) {
 		return this.linkService.create(userId, data)
 	}
 
 	@Post(':linkId')
 	@HttpCode(HttpStatus.OK)
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
-	public update(@UserId() userId: number, @Param('linkId') linkId: number, @Body() data: UpdateLinkDTO) {
+	public updateLink(@UserId() userId: number, @Param('linkId') linkId: number, @Body() data: UpdateLinkDTO) {
 		return this.linkService.update(userId, linkId, data)
 	}
 
 	@Delete(':linkId')
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
-	public delete(@UserId() userId: number, @Param('linkId') linkId: number) {
+	public deleteLink(@UserId() userId: number, @Param('linkId') linkId: number) {
 		return this.linkService.delete(userId, linkId)
 	}
 
 	@Get(':linkId')
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
-	public findById(@UserId() userId: number, @Param('linkId') linkId: number) {
+	public findLinkById(@UserId() userId: number, @Param('linkId') linkId: number) {
 		return this.linkService.findByIdOrFail(userId, linkId)
 	}
 
 	@Get()
 	@ApiOkPaginatedResponse(Link)
 	@ApiException(() => [BadRequestException, UnauthorizedException])
-	public findAll(@UserId() userId: number, @Query() { page, perPage }: PaginatedQuery) {
+	public findAllLinks(@UserId() userId: number, @Query() { page, perPage }: PaginatedQuery) {
 		return this.linkService.findAll(userId, page, perPage)
 	}
 }

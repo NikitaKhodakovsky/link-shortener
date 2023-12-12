@@ -1,14 +1,11 @@
-import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
+import { ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
 import { Type, applyDecorators } from '@nestjs/common'
-import { Pagination } from 'nestjs-typeorm-paginate'
 
 export function ApiOkPaginatedResponse<T extends Type<unknown>>(data: T) {
 	return applyDecorators(
-		ApiExtraModels(Pagination, data),
 		ApiOkResponse({
 			schema: {
 				allOf: [
-					{ $ref: getSchemaPath(Pagination) },
 					{
 						properties: {
 							items: {
@@ -51,7 +48,8 @@ export function ApiOkPaginatedResponse<T extends Type<unknown>>(data: T) {
 									last: {
 										type: 'string'
 									}
-								}
+								},
+								required: ['first', 'previous', 'next', 'last']
 							}
 						},
 						required: ['items', 'meta']
