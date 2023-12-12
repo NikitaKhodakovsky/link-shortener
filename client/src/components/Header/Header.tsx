@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom'
+
 import styles from './Header.module.scss'
 
+import { useLogoutMutation } from '../../mutations/useLogoutMutation'
+
 export function Header() {
+	const { mutate } = useLogoutMutation()
+
+	const logout = () => mutate()
+
 	return (
 		<div className={styles.wrapper}>
 			<div className="container">
@@ -12,7 +19,7 @@ export function Header() {
 
 					<div className={styles.actions}>
 						<button />
-						<button />
+						<button onClick={logout} />
 					</div>
 				</header>
 			</div>
