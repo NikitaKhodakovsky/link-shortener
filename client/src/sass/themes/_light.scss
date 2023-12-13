@@ -6,12 +6,12 @@ body.light {
 	--text-secondary: hsl(225, 32%, 73%);
 	--text-inverse: hsl(0, 0%, 100%);
 
-	--selection-bg: #333;
-	--selection-color: var(--text-inverse);
-
 	--element-bg: hsl(0, 0%, 100%);
 
 	--action-color: hsl(251, 100%, 55%);
+
+	--selection-bg: var(--action-color);
+	--selection-color: var(--text-inverse);
 
 	--border-radius: 15px;
 
