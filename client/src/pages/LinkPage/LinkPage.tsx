@@ -1,26 +1,26 @@
-import { Link, createSearchParams, useLocation, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Fragment } from 'react'
 
 import styles from './LinkPage.module.scss'
 
 import { useFindLinkByIdQuery } from '../../queries/useFindLinkByIdQuery'
+import { useToHome } from '../../hooks/useToHome'
 
 import { LinkItem } from '../../components/LinkItem'
 import { Loader } from '../../components/Loader'
 
 export function LinkPage() {
-	const { state } = useLocation()
 	const params = useParams()
+	const home = useToHome()
 
 	const { data, error, isPending, isError } = useFindLinkByIdQuery(parseInt(params.linkId ?? ''))
 
-	const search = typeof state?.page === 'number' ? createSearchParams({ page: state?.page }).toString() : undefined
 	const shortLink = 'https://short-link/aBsCbHd12'
 	const clicks = 10232
 
 	return (
 		<Fragment>
-			<Link to={{ pathname: '/', search }} className={styles.button}>
+			<Link to={home} className={styles.button}>
 				Links
 			</Link>
 			{isPending && <Loader />}
