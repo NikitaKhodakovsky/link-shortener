@@ -1,12 +1,10 @@
 import { useState } from 'react'
 
-export type UseIsOpenHandler = () => void
+export type OpenHandler = () => void
 
-export type OpenHandler = UseIsOpenHandler
+export type CloseHandler = () => void
 
-export type CloseHandler = UseIsOpenHandler
-
-export type ToggleHandler = UseIsOpenHandler
+export type ToggleHandler = () => void
 
 export function useIsOpen(initial: boolean = false): [boolean, CloseHandler, OpenHandler, ToggleHandler] {
 	const [isOpen, setIsOpen] = useState(initial)

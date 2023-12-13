@@ -1,11 +1,14 @@
-import { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Fragment } from 'react'
 
 import styles from './LinkItem.module.scss'
+
+import { useIsOpen } from '../../hooks/useIsOpen'
 
 import { DeleteLinkConfirm } from '../DeleteLinkConfirm'
 import { UpdateLinkModal } from '../UpdateLinkModal'
 
+//TODO
 export interface ILink {
 	id: number
 	name: string
@@ -20,8 +23,8 @@ export interface LinkItemProps {
 }
 
 export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
-	const [deleteLinkConfirm, setDeleteLinkConfirm] = useState(false)
-	const [updateLinkModal, setUpdateLinkModal] = useState(false)
+	const [deleteLinkConfirm, closeDeleteLinkConfirm, openDeleteLinkConfirm] = useIsOpen()
+	const [updateLinkModal, closeUpdateLinkModal, openUpdateLinkModal] = useIsOpen()
 	const { id, createdAt, name, destination } = link
 
 	return (
@@ -29,14 +32,10 @@ export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
 			<UpdateLinkModal
 				linkId={id}
 				isOpen={updateLinkModal}
-				closeHandler={() => setUpdateLinkModal(false)}
+				closeHandler={closeUpdateLinkModal}
 				values={{ name, destination }}
 			/>
-			<DeleteLinkConfirm
-				linkId={id}
-				isOpen={deleteLinkConfirm}
-				closeHandler={() => setDeleteLinkConfirm(false)}
-			/>
+			<DeleteLinkConfirm linkId={id} isOpen={deleteLinkConfirm} closeHandler={closeDeleteLinkConfirm} />
 			<div className={`${styles.linkItem} ${animate ? styles.animate : ''}`}>
 				<Link to={`/links/${id}`} className={styles.content} state={navState}>
 					<strong>{name}</strong>
@@ -44,8 +43,8 @@ export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
 				</Link>
 				<div className={styles.actions}>
 					<button />
-					<button onClick={() => setUpdateLinkModal(true)} />
-					<button onClick={() => setDeleteLinkConfirm(true)} />
+					<button onClick={openUpdateLinkModal} />
+					<button onClick={openDeleteLinkConfirm} />
 				</div>
 			</div>
 		</Fragment>

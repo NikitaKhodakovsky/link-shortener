@@ -1,13 +1,11 @@
-import { useState } from 'react'
-
+import { useIsOpen } from '../hooks/useIsOpen'
 import { useAuth } from '../auth'
+
 import { Modal } from './Modal'
 
 export function DemoAccountConfirm() {
-	const [isOpen, setIsOpen] = useState(true)
+	const [isOpen, close] = useIsOpen()
 	const { auth } = useAuth()
-
-	const closeHandler = () => setIsOpen(false)
 
 	const createDemoAccount = async () => {
 		//TODO: disable button until request ends
@@ -16,10 +14,10 @@ export function DemoAccountConfirm() {
 	}
 
 	return (
-		<Modal title="For strangers" isOpen={!auth && isOpen} closeHandler={closeHandler}>
+		<Modal title="For strangers" isOpen={!auth && isOpen} closeHandler={close}>
 			<p>Create a demo account with demo data without registration?</p>
 			<div className="actions">
-				<button className="button transparent" onClick={closeHandler}>
+				<button className="button transparent" onClick={close}>
 					Cancel
 				</button>
 				<button className="button action" onClick={createDemoAccount}>

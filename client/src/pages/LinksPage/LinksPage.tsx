@@ -5,6 +5,8 @@ import styles from './LinksPage.module.scss'
 
 import { useAllLinksQuery } from '../../queries/useAllLinksQuery'
 
+import { useIsOpen } from '../../hooks/useIsOpen'
+
 import { CreateLinkModal } from '../../components/CreateLinkModal'
 import { Pagination } from '../../components/Pagination'
 import { LinkItem } from '../../components/LinkItem'
@@ -13,7 +15,7 @@ import { Loader } from '../../components/Loader'
 export function LinksPage() {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 1)
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, close, open] = useIsOpen()
 
 	const { data, isPending, isError, error } = useAllLinksQuery(page, 2)
 
@@ -24,10 +26,10 @@ export function LinksPage() {
 
 	return (
 		<Fragment>
-			<CreateLinkModal isOpen={isOpen} closeHandler={() => setIsOpen(false)} />
+			<CreateLinkModal isOpen={isOpen} closeHandler={close} />
 			<div className={styles.header}>
 				<h1 className="title">Links</h1>
-				<button className="button action" onClick={() => setIsOpen(true)}>
+				<button className="button action" onClick={open}>
 					Create Link
 				</button>
 			</div>
