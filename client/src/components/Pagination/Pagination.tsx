@@ -1,6 +1,7 @@
 import ReactPaginate from 'react-paginate'
 
 import styles from './Pagination.module.scss'
+import { useEffect } from 'react'
 
 export interface PaginationProps {
 	page: number
@@ -9,6 +10,10 @@ export interface PaginationProps {
 }
 
 export function Pagination({ page, totalPages, setPage }: PaginationProps) {
+	if (page > totalPages) {
+		setPage(totalPages)
+	}
+
 	return (
 		<ReactPaginate
 			pageCount={totalPages}

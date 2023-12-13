@@ -4,7 +4,6 @@ import { Fragment, useState } from 'react'
 import styles from './LinksPage.module.scss'
 
 import { useAllLinksQuery } from '../../queries/useAllLinksQuery'
-
 import { useIsOpen } from '../../hooks/useIsOpen'
 
 import { CreateLinkModal } from '../../components/CreateLinkModal'
@@ -14,7 +13,7 @@ import { Loader } from '../../components/Loader'
 
 export function LinksPage() {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 1)
+	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 100)
 	const [isOpen, close, open] = useIsOpen()
 
 	const { data, isPending, isError, error } = useAllLinksQuery(page, 2)
@@ -35,7 +34,7 @@ export function LinksPage() {
 			</div>
 			{isPending && <Loader />}
 			{data && data.items.length === 0 && <div className="empty">There are no links</div>}
-			{data && data.items.length !== 0 && (
+			{data && data.meta.totalPages !== 0 && (
 				<Fragment>
 					<ul className={styles.linksList}>
 						{data.items.map((link) => (
