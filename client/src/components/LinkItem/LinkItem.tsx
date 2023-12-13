@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 
 import styles from './LinkItem.module.scss'
 
+import { formatDate } from '../../utils/formatDate'
 import { useIsOpen } from '../../hooks/useIsOpen'
 
 import { DeleteLinkConfirm } from '../DeleteLinkConfirm'
@@ -39,7 +40,7 @@ export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
 			<div className={`${styles.linkItem} ${animate ? styles.animate : ''}`}>
 				<Link to={`/links/${id}`} className={styles.content} state={navState}>
 					<strong>{name}</strong>
-					<p>{createdAt}</p>
+					<p>{formatDate(createdAt)}</p>
 				</Link>
 				<div className={styles.actions}>
 					<button />
