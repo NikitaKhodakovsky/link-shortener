@@ -11,7 +11,7 @@ export function useDeleteAccountMutation() {
 		mutationFn: () => deleteAccount(),
 		onSuccess: () => {
 			authManager.setAuth(false)
-			client.getQueryCache().clear()
+			client.clear()
 		}
 	})
 }

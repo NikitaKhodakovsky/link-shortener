@@ -7,8 +7,6 @@ import styles from './AuthPages.module.scss'
 
 import { useLoginMutation } from '../../mutations/useLoginMutation'
 
-import { useAuthManager } from '../../auth'
-
 import { FormikInput } from '../../components/FormikInput'
 
 export interface LoginFormValues {
@@ -27,17 +25,12 @@ export const loginFormValidationSchema = object({
 })
 
 export function LoginPage() {
-	const authManager = useAuthManager()
 	const { mutate } = useLoginMutation()
 
 	const login = async ({ username, password }: LoginFormValues) => {
 		mutate(
 			{ body: { username, password } },
 			{
-				onSuccess: () => {
-					authManager.setAuth(true)
-					toast('Welcome to LinkShortener!')
-				},
 				onError: (error) => {
 					toast(typeof error.payload === 'object' ? error.payload.message : 'Something went wrong')
 				}
