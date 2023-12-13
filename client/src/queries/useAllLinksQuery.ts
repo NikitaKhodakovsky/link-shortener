@@ -1,10 +1,21 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { FindAllLinksError, FindAllLinksResponse, findAllLinks } from '../__generated__/apiComponents'
+import {
+	FindAllLinksQueryParams,
+	FindAllLinksResponse,
+	FindAllLinksError,
+	findAllLinks
+} from '../__generated__/apiComponents'
+
+export const allLinksQueryKeyBase = ['link', 'list']
+
+export function allLinksQueryKeyFactory(params: FindAllLinksQueryParams) {
+	return [...allLinksQueryKeyBase, params]
+}
 
 export function useAllLinksQuery(page: number = 1, perPage: number = 20) {
 	return useQuery<FindAllLinksResponse, FindAllLinksError>({
-		queryKey: ['link', { page, perPage }],
+		queryKey: allLinksQueryKeyFactory({ page, perPage }),
 		queryFn: ({ signal }) => findAllLinks({ queryParams: { page, perPage } }, signal),
 		staleTime: Infinity
 	})
