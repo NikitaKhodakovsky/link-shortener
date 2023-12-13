@@ -9,7 +9,7 @@ export interface DeleteLinkConfirmProps extends ModalProps {
 }
 
 export function DeleteLinkConfirm({ linkId, isOpen, closeHandler }: DeleteLinkConfirmProps) {
-	const { mutate } = useDeleteLinkMutation()
+	const { mutate, isPending } = useDeleteLinkMutation()
 	// const navigate = useNavigate()
 
 	const deleteLink = async () => {
@@ -41,8 +41,8 @@ export function DeleteLinkConfirm({ linkId, isOpen, closeHandler }: DeleteLinkCo
 				<button className="button transparent" onClick={closeHandler}>
 					Cancel
 				</button>
-				<button className="button red" onClick={deleteLink}>
-					Delete
+				<button className="button red" onClick={deleteLink} disabled={isPending}>
+					{isPending ? 'Processing...' : 'Delete'}
 				</button>
 			</div>
 		</Modal>
