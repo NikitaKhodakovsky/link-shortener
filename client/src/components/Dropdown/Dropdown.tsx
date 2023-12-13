@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 
 import styles from './Dropdown.module.scss'
 
@@ -6,29 +6,39 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { useIsOpen } from '../../hooks/useIsOpen'
 
 import { useLogoutMutation } from '../../mutations/useLogoutMutation'
+import { DeleteAccountConfirm } from '../DeleteAccountConfirm'
 
 export function Dropdown() {
-	const [isOpen, close, _, toggle] = useIsOpen()
+	const [deleteAccountConfirm, closeDeleteAccountConfirm, openDeleteAccountConfirm] = useIsOpen()
+	const [dropdown, closeDropdown, _, toggleDropdown] = useIsOpen()
 	const ref = useRef(null)
 
-	useOnClickOutside(ref, close)
+	useOnClickOutside(ref, closeDropdown)
 
 	const { mutate } = useLogoutMutation()
 
+	const deleteAccountHandler = () => {
+		openDeleteAccountConfirm()
+		closeDropdown()
+	}
+
 	const logoutHandler = () => {
 		mutate()
-		close()
+		closeDropdown()
 	}
 
 	return (
-		<div className={styles.wrap} ref={ref}>
-			<button className={styles.button} onClick={toggle} />
-			{isOpen && (
-				<div className={styles.dropdown}>
-					<button>Delete Account</button>
-					<button onClick={logoutHandler}>Logout</button>
-				</div>
-			)}
-		</div>
+		<Fragment>
+			<DeleteAccountConfirm isOpen={deleteAccountConfirm} closeHandler={closeDeleteAccountConfirm} />
+			<div className={styles.wrap} ref={ref}>
+				<button className={styles.button} onClick={toggleDropdown} />
+				{dropdown && (
+					<div className={styles.dropdown}>
+						<button onClick={deleteAccountHandler}>Delete Account</button>
+						<button onClick={logoutHandler}>Logout</button>
+					</div>
+				)}
+			</div>
+		</Fragment>
 	)
 }
