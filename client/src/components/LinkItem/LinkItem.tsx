@@ -3,19 +3,13 @@ import { Fragment } from 'react'
 
 import styles from './LinkItem.module.scss'
 
+import { Link as ILink } from '../../__generated__/apiSchemas'
+
 import { formatDate } from '../../utils/formatDate'
 import { useIsOpen } from '../../hooks/useIsOpen'
 
 import { DeleteLinkConfirm } from '../DeleteLinkConfirm'
 import { UpdateLinkModal } from '../UpdateLinkModal'
-
-//TODO
-export interface ILink {
-	id: number
-	name: string
-	createdAt: string
-	destination: string
-}
 
 export interface LinkItemProps {
 	link: ILink

@@ -13,7 +13,7 @@ import { Loader } from '../../components/Loader'
 
 export function LinksPage() {
 	const [searchParams, setSearchParams] = useSearchParams()
-	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 100)
+	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 1)
 	const [isOpen, close, open] = useIsOpen()
 
 	const { data, isPending, isError, error } = useAllLinksQuery(page, 2)
