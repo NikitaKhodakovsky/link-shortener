@@ -25,7 +25,7 @@ export const linkFormValidationSchema = object({
 	destination: string().url('should include protocol, host and tld').required('required')
 })
 
-export function LinkModal({ title, buttonText, isOpen, closeHandler, values, onSubmit }: LinkModalProps) {
+export function LinkModal({ title, buttonText = 'Save', isOpen, closeHandler, values, onSubmit }: LinkModalProps) {
 	const submitHandler = async (data: LinkFormValues) => {
 		if (onSubmit) await onSubmit(data)
 		closeHandler()
@@ -38,20 +38,27 @@ export function LinkModal({ title, buttonText, isOpen, closeHandler, values, onS
 				validationSchema={linkFormValidationSchema}
 				onSubmit={submitHandler}
 			>
-				<Form>
-					<div className="input-list">
-						<FormikInput label="Name" name="name" required placeholder="Name your link" />
-						<FormikInput label="Destination" name="destination" required placeholder="https://google.com" />
-					</div>
-					<div className="actions">
-						<button className="button transparent" type="reset" onClick={closeHandler}>
-							Cancel
-						</button>
-						<button className="button action" type="submit">
-							{buttonText ?? 'Save'}
-						</button>
-					</div>
-				</Form>
+				{({ isSubmitting }) => (
+					<Form>
+						<div className="input-list">
+							<FormikInput label="Name" name="name" required placeholder="Name your link" />
+							<FormikInput
+								label="Destination"
+								name="destination"
+								required
+								placeholder="https://google.com"
+							/>
+						</div>
+						<div className="actions">
+							<button className="button transparent" type="reset" onClick={closeHandler}>
+								Cancel
+							</button>
+							<button className="button action" type="submit" disabled={isSubmitting}>
+								{isSubmitting ? 'Processing...' : buttonText}
+							</button>
+						</div>
+					</Form>
+				)}
 			</Formik>
 		</Modal>
 	)
