@@ -2,7 +2,7 @@
 
 .wrapper {
 	background-color: var(--element-bg);
-	box-shadow: var(--shadow);
+	box-shadow: var(--element-shadow);
 	width: 100%;
 }
 
@@ -27,12 +27,13 @@
 	display: flex;
 	gap: 1.4rem;
 
-	button {
-		background-color: var(--text-secondary);
+	//TODO
+	// button {
+	// 	background-color: var(--text-secondary);
 
-		width: 2rem;
-		height: 2rem;
+	// 	width: 2rem;
+	// 	height: 2rem;
 
-		border-radius: 9999px;
-	}
+	// 	border-radius: 9999px;
+	// }
 }

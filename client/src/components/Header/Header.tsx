@@ -4,6 +4,8 @@ import styles from './Header.module.scss'
 
 import { useLogoutMutation } from '../../mutations/useLogoutMutation'
 
+import { Dropdown } from '../Dropdown'
+
 export function Header() {
 	const { mutate } = useLogoutMutation()
 
@@ -18,8 +20,9 @@ export function Header() {
 					</Link>
 
 					<div className={styles.actions}>
-						<button />
-						<button onClick={logout} />
+						{/* <button /> */}
+						{/* <button onClick={logout} /> */}
+						<Dropdown />
 					</div>
 				</header>
 			</div>
