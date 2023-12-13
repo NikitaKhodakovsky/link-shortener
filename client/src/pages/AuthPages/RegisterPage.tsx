@@ -35,7 +35,6 @@ export function RegisterPage() {
 	const { mutate } = useRegisterMutation()
 	const authManager = useAuthManager()
 
-	//TODO: Lock submit button
 	const register = async ({ username, password }: RegisterFormValues) => {
 		mutate(
 			{ body: { username, password } },
@@ -58,32 +57,34 @@ export function RegisterPage() {
 				initialValues={registerFormInitialValues}
 				onSubmit={register}
 			>
-				<Form className={styles.content}>
-					<h1 className="title">New Account</h1>
-					<div className="input-list">
-						<FormikInput name="username" label="Username" required placeholder="Some username" />
-						<FormikInput
-							name="password"
-							label="Password"
-							required
-							placeholder="Min. 8 characters"
-							type="password"
-						/>
-						<FormikInput
-							name="confirmation"
-							label="Password Confirmation"
-							placeholder="Password Confirmation"
-							required
-							type="password"
-						/>
-					</div>
-					<button className="button action" type="submit">
-						Create
-					</button>
-					<p>
-						Already have an account? <Link to="/login">Sign In</Link>
-					</p>
-				</Form>
+				{({ isSubmitting }) => (
+					<Form className={styles.content}>
+						<h1 className="title">New Account</h1>
+						<div className="input-list">
+							<FormikInput name="username" label="Username" required placeholder="Some username" />
+							<FormikInput
+								name="password"
+								label="Password"
+								required
+								placeholder="Min. 8 characters"
+								type="password"
+							/>
+							<FormikInput
+								name="confirmation"
+								label="Password Confirmation"
+								placeholder="Password Confirmation"
+								required
+								type="password"
+							/>
+						</div>
+						<button className="button action" type="submit" disabled={isSubmitting}>
+							{isSubmitting ? 'Processing...' : 'Create account'}
+						</button>
+						<p>
+							Already have an account? <Link to="/login">Sign In</Link>
+						</p>
+					</Form>
+				)}
 			</Formik>
 		</div>
 	)

@@ -30,8 +30,6 @@ export function LoginPage() {
 	const authManager = useAuthManager()
 	const { mutate } = useLoginMutation()
 
-	//TODO: Lock submit button
-
 	const login = async ({ username, password }: LoginFormValues) => {
 		mutate(
 			{ body: { username, password } },
@@ -54,25 +52,27 @@ export function LoginPage() {
 				initialValues={loginFormInitialValues}
 				onSubmit={login}
 			>
-				<Form className={styles.content}>
-					<h1 className="title">Sign In</h1>
-					<div className="input-list">
-						<FormikInput name="username" label="Username" required placeholder="Your username" />
-						<FormikInput
-							name="password"
-							label="Password"
-							required
-							placeholder="Your password"
-							type="password"
-						/>
-					</div>
-					<button className="button action" type="submit">
-						Sign In
-					</button>
-					<p>
-						Not registered yet? <Link to="/register">Create an Account</Link>
-					</p>
-				</Form>
+				{({ isSubmitting }) => (
+					<Form className={styles.content}>
+						<h1 className="title">Sign In</h1>
+						<div className="input-list">
+							<FormikInput name="username" label="Username" required placeholder="Your username" />
+							<FormikInput
+								name="password"
+								label="Password"
+								required
+								placeholder="Your password"
+								type="password"
+							/>
+						</div>
+						<button className="button action" type="submit" disabled={isSubmitting}>
+							{isSubmitting ? 'Processing...' : 'Sign In'}
+						</button>
+						<p>
+							Not registered yet? <Link to="/register">Create an Account</Link>
+						</p>
+					</Form>
+				)}
 			</Formik>
 		</div>
 	)

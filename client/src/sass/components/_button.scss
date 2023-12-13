@@ -17,6 +17,14 @@
 		transform: scale(0.975);
 	}
 
+	&:disabled {
+		opacity: 0.8;
+	}
+
+	&:disabled:hover {
+		transform: none;
+	}
+
 	&.action {
 		background-color: var(--action-color);
 		color: var(--text-inverse);
