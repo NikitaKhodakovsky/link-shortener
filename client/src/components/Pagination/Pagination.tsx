@@ -22,6 +22,7 @@ export function Pagination({ page, totalPages, setPage }: PaginationProps) {
 			activeLinkClassName={styles.current}
 			previousLinkClassName={styles.item}
 			nextLinkClassName={styles.item}
+			disabledLinkClassName={styles.disabled}
 			previousLabel="<"
 			nextLabel=">"
 		/>

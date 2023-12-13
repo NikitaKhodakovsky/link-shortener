@@ -45,4 +45,12 @@
 	&:hover {
 		border: 1px solid var(--action-color);
 	}
+
+	&.disabled {
+		color: var(--text-secondary);
+
+		&:hover {
+			border: none;
+		}
+	}
 }
