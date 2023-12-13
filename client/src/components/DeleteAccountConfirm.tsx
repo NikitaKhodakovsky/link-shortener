@@ -1,10 +1,11 @@
 import toast from 'react-hot-toast'
 
 import { useDeleteAccountMutation } from '../mutations/useDeleteAccountMutation'
+
 import { Modal, ModalProps } from './Modal'
 
 export function DeleteAccountConfirm({ isOpen, closeHandler }: ModalProps) {
-	const { mutate } = useDeleteAccountMutation()
+	const { mutate, isPending } = useDeleteAccountMutation()
 
 	const deleteAccountHandler = () => {
 		mutate(undefined, {
@@ -22,8 +23,8 @@ export function DeleteAccountConfirm({ isOpen, closeHandler }: ModalProps) {
 				<button className="button transparent" onClick={closeHandler}>
 					Cancel
 				</button>
-				<button className="button red" onClick={deleteAccountHandler}>
-					Delete
+				<button className="button red" onClick={deleteAccountHandler} disabled={isPending}>
+					{isPending ? 'Processing...' : 'Delete'}
 				</button>
 			</div>
 		</Modal>
