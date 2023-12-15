@@ -1,5 +1,5 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import {
 	UnauthorizedException,
 	BadRequestException,
@@ -19,13 +19,17 @@ import { BackHalfIsNotUniqueException, LinkNotFoundException } from './link.exce
 import { PaginatedQuery } from '../../common/paginated.query'
 import { CreateLinkDTO, UpdateLinkDTO } from './link.dto'
 import { UserId } from '../../common/user-id.decorator'
+import { StatisticService } from './statistic.service'
 import { LinkService } from './link.service'
 import { Link } from './link.entity'
 
 @ApiTags('Links')
 @Controller('links')
 export class LinkController {
-	constructor(private readonly linkService: LinkService) {}
+	constructor(
+		private readonly statisticService: StatisticService,
+		private readonly linkService: LinkService
+	) {}
 
 	@Post()
 	@ApiException(() => [BadRequestException, UnauthorizedException, BackHalfIsNotUniqueException])
@@ -57,5 +61,11 @@ export class LinkController {
 	@ApiException(() => [BadRequestException, UnauthorizedException])
 	public findAllLinks(@UserId() userId: number, @Query() { page, perPage }: PaginatedQuery) {
 		return this.linkService.findAll(userId, page, perPage)
+	}
+
+	@Get(':linkId/statistic')
+	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
+	public linkStatistic(@UserId() userId: number, @Param('linkId') linkId: number) {
+		return this.statisticService.statistic(userId, linkId)
 	}
 }
