@@ -1,7 +1,7 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { SessionData } from 'express-session'
 import { Request, Response } from 'express'
-import { ApiTags } from '@nestjs/swagger'
 import {
 	UnauthorizedException,
 	BadRequestException,
@@ -14,7 +14,8 @@ import {
 	Post,
 	Req,
 	Res,
-	Get
+	Get,
+	Param
 } from '@nestjs/common'
 
 import { InvalidPasswordException, UsernameConflictException } from './auth.exception'
@@ -75,5 +76,14 @@ export class AuthController {
 		await this.userService.deleteById(userId)
 
 		return destroySession(req, res)
+	}
+
+	@Get('username/:username')
+	@ApiOkResponse({
+		description: 'Returns true if user with such username already exists and false otherwise',
+		type: Boolean
+	})
+	public checkUsername(@Param('username') username: string): Promise<boolean> {
+		return this.userService.findByUsername(username).then((user) => !!user)
 	}
 }

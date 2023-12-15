@@ -20,6 +20,10 @@ export class UserService {
 		return user
 	}
 
+	public async findByUsername(username: string) {
+		return await this.userRepository.findOneBy({ username })
+	}
+
 	public async deleteById(userId: number) {
 		const user = await this.findById(userId)
 
