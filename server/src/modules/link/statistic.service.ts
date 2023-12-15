@@ -2,7 +2,7 @@ import { InjectDataSource } from '@nestjs/typeorm'
 import { Injectable } from '@nestjs/common'
 import { DataSource } from 'typeorm'
 
-import { StatisticDTO } from './statistic.dto'
+import { LinkStatisticDTO } from './link-statistic.dto'
 import { LinkService } from './link.service'
 
 function mapper(array: { key: string; value: string }[]) {
@@ -23,7 +23,7 @@ export class StatisticService {
 		private readonly linkService: LinkService
 	) {}
 
-	public async statistic(userId: number, linkId: number): Promise<StatisticDTO> {
+	public async statistic(userId: number, linkId: number): Promise<LinkStatisticDTO> {
 		await this.linkService.findByIdOrFail(userId, linkId)
 
 		const queryRunner = this.dataSource.createQueryRunner()

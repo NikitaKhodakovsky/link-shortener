@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-export class StatisticDTO {
+export class LinkStatisticDTO {
 	@ApiProperty({ type: 'object', additionalProperties: { type: 'number' } })
 	platforms: Record<string, number>
 
