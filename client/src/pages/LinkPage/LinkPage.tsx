@@ -1,19 +1,24 @@
 import { Link, useParams } from 'react-router-dom'
-import { Fragment } from 'react'
 
 import styles from './LinkPage.module.scss'
 
+import { useLinkStatisticQuery } from '../../queries/useLinkStatisticQuery'
 import { useFindLinkByIdQuery } from '../../queries/useFindLinkByIdQuery'
 import { useToHome } from '../../hooks/useToHome'
 
 import { LinkItem } from '../../components/LinkItem'
 import { Loader } from '../../components/Loader'
+import { Chart } from '../../components/Chart'
+import { Fragment } from 'react'
 
 export function LinkPage() {
 	const params = useParams()
 	const home = useToHome()
 
-	const { data, error, isPending, isError } = useFindLinkByIdQuery(parseInt(params.linkId ?? ''))
+	const linkId = parseInt(params.linkId ?? '')
+
+	const lq = useFindLinkByIdQuery(linkId)
+	const sq = useLinkStatisticQuery(linkId)
 
 	const shortLink = 'https://short-link/aBsCbHd12'
 	const clicks = 10232
@@ -23,35 +28,46 @@ export function LinkPage() {
 			<Link to={home} className={styles.button}>
 				Links
 			</Link>
-			{isPending && <Loader />}
-			{isError && error.status === 404 && <div className="empty">Link not found</div>}
-			{data && (
-				<div className={styles.container}>
-					<LinkItem link={data} />
-					<ul className={styles.info}>
-						<li>
-							<strong>
-								<a href={data.destination}>{data.destination}</a>
-							</strong>
-							<p>Destination</p>
-						</li>
-						<li>
-							<strong>
-								<a href={shortLink}>{shortLink}</a>
-							</strong>
-							<p>Short Link</p>
-						</li>
-						<li>
-							<strong>{clicks}</strong>
-							<p>Clicks</p>
-						</li>
-						<li>
-							<strong>{data.backhalf}</strong>
-							<p>Back-Half</p>
-						</li>
-					</ul>
-				</div>
-			)}
+			<div className={styles.grid}>
+				{lq.isError && lq.error.status === 404 && <div className={`empty ${styles.row}`}>Link not found</div>}
+				{lq.isPending && <Loader className={styles.row} />}
+				{lq.data && (
+					<Fragment>
+						<LinkItem link={lq.data} className={styles.row} />
+						<ul className={`${styles.details} ${styles.row}`}>
+							<li>
+								<strong>
+									<a href={lq.data.destination}>{lq.data.destination}</a>
+								</strong>
+								<p>Destination</p>
+							</li>
+							<li>
+								<strong>
+									<a href={shortLink}>{shortLink}</a>
+								</strong>
+								<p>Short Link</p>
+							</li>
+							<li>
+								<strong>{clicks}</strong>
+								<p>Clicks</p>
+							</li>
+							<li>
+								<strong>{lq.data.backhalf}</strong>
+								<p>Back-Half</p>
+							</li>
+						</ul>
+					</Fragment>
+				)}
+				{sq.isLoading && <Loader className={styles.statisticLoader} />}
+				{sq.data && (
+					<Fragment>
+						<Chart title="Platforms" data={sq.data.platforms} />
+						<Chart title="Browsers" data={sq.data.browsers} />
+						<Chart title="Operating Systems" data={sq.data.systems} />
+						<Chart title="Devices" data={sq.data.devices} />
+					</Fragment>
+				)}
+			</div>
 		</Fragment>
 	)
 }

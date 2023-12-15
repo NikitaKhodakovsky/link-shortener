@@ -1,0 +1,14 @@
+@use '../../sass/abstracts' as *;
+
+.chart {
+	@include element;
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+	padding: 2rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

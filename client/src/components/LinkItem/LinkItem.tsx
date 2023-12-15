@@ -15,9 +15,10 @@ export interface LinkItemProps {
 	link: ILink
 	animate?: boolean
 	navState?: any
+	className?: string
 }
 
-export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
+export function LinkItem({ link, animate = false, navState, className }: LinkItemProps) {
 	const [deleteLinkConfirm, closeDeleteLinkConfirm, openDeleteLinkConfirm] = useIsOpen()
 	const [updateLinkModal, closeUpdateLinkModal, openUpdateLinkModal] = useIsOpen()
 	const { id, createdAt, name, destination } = link
@@ -31,7 +32,7 @@ export function LinkItem({ link, animate = false, navState }: LinkItemProps) {
 				values={{ name, destination }}
 			/>
 			<DeleteLinkConfirm linkId={id} isOpen={deleteLinkConfirm} closeHandler={closeDeleteLinkConfirm} />
-			<div className={`${styles.linkItem} ${animate ? styles.animate : ''}`}>
+			<div className={`${styles.linkItem} ${className ?? ''} ${animate ? styles.animate : ''}`}>
 				<Link to={`/links/${id}`} className={styles.content} state={navState}>
 					<strong>{name}</strong>
 					<p>{formatDate(createdAt)}</p>

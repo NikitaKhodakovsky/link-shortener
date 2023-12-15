@@ -1,10 +1,5 @@
 @use '../../sass/abstracts' as *;
 
-.container {
-	display: grid;
-	gap: 2rem;
-}
-
 .button {
 	margin: 3rem 0;
 	font-weight: 500;
@@ -21,7 +16,23 @@
 	}
 }
 
-.info {
+.grid {
+	padding-bottom: 10rem;
+
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2rem;
+
+	@include breakpoint-up('medium') {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.row {
+	grid-column: 1 / -1;
+}
+
+.details {
 	@include element;
 
 	padding: 2.5rem 3rem;
@@ -37,4 +48,9 @@
 	@include breakpoint-up('small') {
 		padding: 2.5rem 4rem;
 	}
+}
+
+.statisticLoader {
+	grid-column: 1 / -1;
+	margin-top: 6rem;
 }
