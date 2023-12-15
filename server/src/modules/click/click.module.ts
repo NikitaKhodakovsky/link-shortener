@@ -17,6 +17,7 @@ import { Click } from './click.entity'
 		DeviceDetector,
 		{ provide: LocationParsingStrategy, useClass: NotImplementedLocationParsingStrategy },
 		{ provide: UAParsingStrategy, useClass: BasicUAParsingStrategy }
-	]
+	],
+	exports: [ClickService]
 })
 export class ClickModule {}

@@ -14,6 +14,7 @@ import { AuthService } from './auth.service'
 			provide: PasswordHashingStrategy,
 			useClass: Argon2PasswordHashingStrategy
 		}
-	]
+	],
+	exports: [AuthService]
 })
 export class AuthModule {}
