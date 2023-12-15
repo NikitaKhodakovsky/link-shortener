@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { Fragment } from 'react'
 
 import styles from './LinkPage.module.scss'
 
@@ -9,7 +10,6 @@ import { useToHome } from '../../hooks/useToHome'
 import { LinkItem } from '../../components/LinkItem'
 import { Loader } from '../../components/Loader'
 import { Chart } from '../../components/Chart'
-import { Fragment } from 'react'
 
 export function LinkPage() {
 	const params = useParams()
@@ -21,7 +21,6 @@ export function LinkPage() {
 	const sq = useLinkStatisticQuery(linkId)
 
 	const shortLink = new URL(lq.data?.backhalf ?? '', window.location.origin).href
-	const clicks = 10232
 
 	return (
 		<Fragment>
@@ -52,7 +51,10 @@ export function LinkPage() {
 								<p>Short Link</p>
 							</li>
 							<li>
-								<strong>{sq.isLoading ? 'Loading...' : clicks}</strong>
+								<strong>
+									{sq.isLoading && 'Loading...'}
+									{sq.data && sq.data.clicks}
+								</strong>
 								<p>Clicks</p>
 							</li>
 							<li>

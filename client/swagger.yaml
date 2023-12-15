@@ -258,6 +258,26 @@ paths:
           description: ''
       tags:
         - Auth
+  /auth/username/{username}:
+    get:
+      operationId: checkUsername
+      parameters:
+        - name: username
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Returns true if user with such username already exists and false
+            otherwise
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+        - Auth
   /links:
     post:
       operationId: createLink
@@ -1016,8 +1036,11 @@ components:
           type: object
           additionalProperties:
             type: number
+        clicks:
+          type: number
       required:
         - platforms
         - browsers
         - systems
         - devices
+        - clicks
