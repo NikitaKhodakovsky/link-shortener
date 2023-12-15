@@ -9,4 +9,7 @@ export class LinkStatisticDTO {
 
 	@ApiProperty({ type: 'object', additionalProperties: { type: 'number' } })
 	systems: Record<string, number>
+
+	@ApiProperty({ type: 'object', additionalProperties: { type: 'number' } })
+	devices: Record<string, number>
 }

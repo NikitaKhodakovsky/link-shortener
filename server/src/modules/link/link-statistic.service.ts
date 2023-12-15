@@ -41,6 +41,11 @@ export class LinkStatisticService {
 				[linkId]
 			)
 
+			const devices = await queryRunner.query(
+				`SELECT device AS key, COUNT(*) AS value FROM click WHERE "linkId" = $1 GROUP BY device`,
+				[linkId]
+			)
+
 			const os = await queryRunner.query(
 				`SELECT os AS key, COUNT(*) AS value FROM click WHERE "linkId" = $1 GROUP BY os`,
 				[linkId]
@@ -49,6 +54,7 @@ export class LinkStatisticService {
 			return {
 				platforms: mapper(platform),
 				browsers: mapper(browser),
+				devices: mapper(devices),
 				systems: mapper(os)
 			}
 		} finally {
