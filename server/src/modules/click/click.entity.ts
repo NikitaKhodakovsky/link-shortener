@@ -9,6 +9,9 @@ export class Click extends BaseEntity {
 	link: Link | undefined
 
 	@Column({ nullable: true })
+	userAgent: string
+
+	@Column({ nullable: true })
 	platform: string
 
 	@Column({ nullable: true })
@@ -16,6 +19,9 @@ export class Click extends BaseEntity {
 
 	@Column({ nullable: true })
 	os: string
+
+	@Column({ nullable: true })
+	device: string
 
 	@Column({ nullable: true })
 	ip: string

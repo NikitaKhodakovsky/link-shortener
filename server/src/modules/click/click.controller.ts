@@ -32,10 +32,11 @@ export class ClickController {
 	) {
 		const link = await this.linkService.findByBackHalfOrFail(backHalf)
 
-		const parsedUA = await this.uaParsingStrategy.parse(req.headers['user-agent'] ?? '')
+		const userAgent = req.headers['user-agent']
+		const parsedUA = await this.uaParsingStrategy.parse(userAgent)
 		const location = await this.locationParsingStrategy.parse(ip)
 
-		await this.clickService.create({ link, ...parsedUA, ...location })
+		await this.clickService.create({ link, userAgent, ...parsedUA, ...location })
 
 		res.redirect(link.destination)
 	}
