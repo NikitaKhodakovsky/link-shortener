@@ -51,11 +51,16 @@ export class LinkStatisticService {
 				[linkId]
 			)
 
+			const [{ count }] = await queryRunner.query(`SELECT COUNT(*) AS count FROM click WHERE "linkId" = $1`, [
+				linkId
+			])
+
 			return {
 				platforms: mapper(platform),
 				browsers: mapper(browser),
 				devices: mapper(devices),
-				systems: mapper(os)
+				systems: mapper(os),
+				clicks: +count
 			}
 		} finally {
 			await queryRunner.rollbackTransaction()

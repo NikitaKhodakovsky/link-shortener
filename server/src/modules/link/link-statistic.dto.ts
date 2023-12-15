@@ -12,4 +12,7 @@ export class LinkStatisticDTO {
 
 	@ApiProperty({ type: 'object', additionalProperties: { type: 'number' } })
 	devices: Record<string, number>
+
+	@ApiProperty()
+	clicks: number
 }
