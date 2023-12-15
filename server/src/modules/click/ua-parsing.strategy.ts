@@ -1,27 +1,31 @@
-import Bowser from 'bowser'
+import DeviceDetector from 'device-detector-js'
+import { Injectable } from '@nestjs/common'
 
 export interface ParsedUA {
 	platform?: string
 	browser?: string
+	device?: string
 	os?: string
 }
 
 export abstract class UAParsingStrategy {
-	abstract parse(userAgent: string): ParsedUA | Promise<ParsedUA>
+	abstract parse(userAgent?: string): ParsedUA | Promise<ParsedUA>
 }
 
-export class BowserUAParsingStrategy extends UAParsingStrategy {
-	public parse(userAgent: string) {
-		try {
-			const { platform, browser, os } = Bowser.parse(userAgent)
+@Injectable()
+export class BasicUAParsingStrategy extends UAParsingStrategy {
+	constructor(private readonly deviceDetector: DeviceDetector) {
+		super()
+	}
 
-			return {
-				platform: platform.type.toLowerCase(),
-				browser: browser.name.toLowerCase(),
-				os: os.name.toLowerCase()
-			}
-		} catch {
-			return {}
+	public parse(userAgent: string) {
+		const { device, client, os } = this.deviceDetector.parse(userAgent)
+
+		return {
+			platform: device.type,
+			browser: client.name,
+			device: [device.brand, device.model].filter((i) => i).join(' ') || undefined,
+			os: os.name
 		}
 	}
 }
