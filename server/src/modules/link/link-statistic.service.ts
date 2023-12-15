@@ -16,7 +16,7 @@ function mapper(array: { key: string; value: string }[]) {
 }
 
 @Injectable()
-export class StatisticService {
+export class LinkStatisticService {
 	constructor(
 		@InjectDataSource()
 		private readonly dataSource: DataSource,

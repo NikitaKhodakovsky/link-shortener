@@ -16,10 +16,10 @@ import {
 
 import { ApiOkPaginatedResponse } from '../../common/api-ok-paginated-response.decorator'
 import { BackHalfIsNotUniqueException, LinkNotFoundException } from './link.exception'
+import { LinkStatisticService } from './link-statistic.service'
 import { PaginatedQuery } from '../../common/paginated.query'
 import { CreateLinkDTO, UpdateLinkDTO } from './link.dto'
 import { UserId } from '../../common/user-id.decorator'
-import { StatisticService } from './statistic.service'
 import { LinkService } from './link.service'
 import { Link } from './link.entity'
 
@@ -27,7 +27,7 @@ import { Link } from './link.entity'
 @Controller('links')
 export class LinkController {
 	constructor(
-		private readonly statisticService: StatisticService,
+		private readonly linkStatisticService: LinkStatisticService,
 		private readonly linkService: LinkService
 	) {}
 
@@ -66,6 +66,6 @@ export class LinkController {
 	@Get(':linkId/statistic')
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
 	public linkStatistic(@UserId() userId: number, @Param('linkId') linkId: number) {
-		return this.statisticService.statistic(userId, linkId)
+		return this.linkStatisticService.statistic(userId, linkId)
 	}
 }
