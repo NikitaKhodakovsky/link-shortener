@@ -12,6 +12,7 @@ export function linkStatisticQueryKeyFactory(linkId: number) {
 export function useLinkStatisticQuery(linkId: number) {
 	return useQuery<LinkStatisticDTO, LinkStatisticError>({
 		queryKey: linkStatisticQueryKeyFactory(linkId),
-		queryFn: ({ signal }) => linkStatistic({ pathParams: { linkId } }, signal)
+		queryFn: ({ signal }) => linkStatistic({ pathParams: { linkId } }, signal),
+		refetchInterval: 1000 * 60 * 1
 	})
 }
