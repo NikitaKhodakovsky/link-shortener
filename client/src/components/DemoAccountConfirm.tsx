@@ -1,25 +1,23 @@
 import { useEffect } from 'react'
 
+import { useDemoAccountMutation } from '../mutations/useDemoAccountMutation'
 import { useIsOpen } from '../hooks/useIsOpen'
 import { useAuth } from '../auth'
 
 import { Modal } from './Modal'
 
 export function DemoAccountConfirm() {
+	const { isPending, mutate } = useDemoAccountMutation()
 	const [isOpen, close, open] = useIsOpen()
 	const { auth } = useAuth()
 
 	useEffect(() => {
-		const timeout = setTimeout(() => !auth && open(), 1500)
+		const timeout = setTimeout(() => !auth && open(), 2000)
 
 		return () => clearTimeout(timeout)
 	}, [])
 
-	const createDemoAccount = async () => {
-		//TODO: disable button until request ends
-		console.log('..request')
-		window.location.reload()
-	}
+	const createDemoAccount = () => mutate(undefined, { onSuccess: close })
 
 	return (
 		<Modal title="For strangers" isOpen={isOpen} closeHandler={close}>
@@ -29,7 +27,7 @@ export function DemoAccountConfirm() {
 					Cancel
 				</button>
 				<button className="button action" onClick={createDemoAccount}>
-					Create
+					{isPending ? 'Processing...' : 'Create'}
 				</button>
 			</div>
 		</Modal>
