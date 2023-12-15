@@ -20,7 +20,7 @@ export function LinkPage() {
 	const lq = useFindLinkByIdQuery(linkId)
 	const sq = useLinkStatisticQuery(linkId)
 
-	const shortLink = 'https://short-link/aBsCbHd12'
+	const shortLink = new URL(lq.data?.backhalf ?? '', window.location.origin).href
 	const clicks = 10232
 
 	return (
@@ -37,18 +37,22 @@ export function LinkPage() {
 						<ul className={`${styles.details} ${styles.row}`}>
 							<li>
 								<strong>
-									<a href={lq.data.destination}>{lq.data.destination}</a>
+									<a href={lq.data.destination} target="_blank">
+										{lq.data.destination}
+									</a>
 								</strong>
 								<p>Destination</p>
 							</li>
 							<li>
 								<strong>
-									<a href={shortLink}>{shortLink}</a>
+									<a href={shortLink} target="_blank">
+										{shortLink}
+									</a>
 								</strong>
 								<p>Short Link</p>
 							</li>
 							<li>
-								<strong>{clicks}</strong>
+								<strong>{sq.isLoading ? 'Loading...' : clicks}</strong>
 								<p>Clicks</p>
 							</li>
 							<li>
