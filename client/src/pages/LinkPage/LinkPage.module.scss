@@ -7,12 +7,22 @@
 	display: flex;
 	align-items: center;
 
+	color: var(--text-main);
+
 	&::before {
 		content: '';
-		width: 7px;
-		height: 12px;
-		background-color: var(--text-secondary);
+
 		margin-right: 1.5rem;
+		width: 0.7rem;
+		height: 1.2rem;
+
+		background-color: currentColor;
+
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+
+		mask-image: url('../../../public/icons/arrow.svg');
 	}
 }
 

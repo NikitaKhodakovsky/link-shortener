@@ -35,7 +35,7 @@ export function Modal({ isOpen, closeHandler, title, children }: RawModalProps) 
 			<div className={styles.modal} ref={ref}>
 				<ModalContext.Provider value={{ isOpen, closeHandler }}>
 					<div className={styles.header}>
-						<button onClick={closeHandler}>Close</button>
+						<button onClick={closeHandler} className={`icon close ${styles.close}`} />
 						{title && <h1>{title}</h1>}
 					</div>
 					{children}

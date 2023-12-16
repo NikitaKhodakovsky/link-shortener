@@ -1,5 +1,9 @@
 @use '../../sass/abstracts' as *;
 
+.wrap {
+	padding-bottom: 10rem;
+}
+
 .linksList {
 	display: grid;
 	grid-auto-flow: row;

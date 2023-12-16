@@ -1,6 +1,6 @@
+import { FieldValidator, Form, Formik } from 'formik'
 import { object, ref, string } from 'yup'
 import { Link } from 'react-router-dom'
-import { Form, Formik } from 'formik'
 import toast from 'react-hot-toast'
 
 import styles from './AuthPages.module.scss'
@@ -20,11 +20,19 @@ export const registerFormInitialValues: RegisterFormValues = {
 	confirmation: ''
 }
 
+const validateUsername: FieldValidator = async (username: string) => {
+	if (username.length >= 8) {
+		const isTaken = username === 'username'
+
+		if (isTaken) return 'username is already taken'
+	}
+}
+
 const registerFormValidationSchema = object({
 	username: string().min(8, 'at least 8 characters').required('required'),
 	password: string().min(8, 'at least 8 characters').required('required'),
 	confirmation: string()
-		.oneOf([ref('password')], "Passwords don't match")
+		.oneOf([ref('password')], "passwords don't match")
 		.required('required')
 })
 
@@ -53,7 +61,13 @@ export function RegisterPage() {
 					<Form className={styles.content}>
 						<h1 className="title">New Account</h1>
 						<div className="input-list">
-							<FormikInput name="username" label="Username" required placeholder="Some username" />
+							<FormikInput
+								name="username"
+								label="Username"
+								required
+								placeholder="Some username"
+								validate={validateUsername}
+							/>
 							<FormikInput
 								name="password"
 								label="Password"

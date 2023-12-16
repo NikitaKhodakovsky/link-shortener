@@ -16,7 +16,7 @@ export function LinksPage() {
 	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 1)
 	const [isOpen, close, open] = useIsOpen()
 
-	const { data, isPending, isError, error } = useAllLinksQuery(page, 2)
+	const { data, isPending, isError, error } = useAllLinksQuery(page, 20)
 
 	const setPage = (page: number) => {
 		setSearchParams({ page: page.toString() })
@@ -24,7 +24,7 @@ export function LinksPage() {
 	}
 
 	return (
-		<Fragment>
+		<div className={styles.wrap}>
 			<CreateLinkModal isOpen={isOpen} closeHandler={close} />
 			<div className={styles.header}>
 				<h1 className="title">Links</h1>
@@ -46,6 +46,6 @@ export function LinksPage() {
 					<Pagination page={page} totalPages={data.meta.totalPages} setPage={setPage} />
 				</Fragment>
 			)}
-		</Fragment>
+		</div>
 	)
 }

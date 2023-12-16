@@ -31,7 +31,7 @@ export function Dropdown() {
 		<Fragment>
 			<DeleteAccountConfirm isOpen={deleteAccountConfirm} closeHandler={closeDeleteAccountConfirm} />
 			<div className={styles.wrap} ref={ref}>
-				<button className={styles.button} onClick={toggleDropdown} />
+				<button className="icon profile" onClick={toggleDropdown} />
 				{dropdown && (
 					<div className={styles.dropdown}>
 						<button onClick={deleteAccountHandler}>Delete Account</button>

@@ -12,10 +12,7 @@ export function Header() {
 					<Link to="/" className={styles.logo}>
 						Link Shortener
 					</Link>
-
-					<div className={styles.actions}>
-						<Dropdown />
-					</div>
+					<Dropdown />
 				</header>
 			</div>
 		</div>

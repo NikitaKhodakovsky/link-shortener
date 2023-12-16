@@ -38,9 +38,8 @@ export function LinkItem({ link, animate = false, navState, className }: LinkIte
 					<p>{formatDate(createdAt)}</p>
 				</Link>
 				<div className={styles.actions}>
-					<button />
-					<button onClick={openUpdateLinkModal} />
-					<button onClick={openDeleteLinkConfirm} />
+					<button className="icon edit" onClick={openUpdateLinkModal} />
+					<button className="icon delete" onClick={openDeleteLinkConfirm} />
 				</div>
 			</div>
 		</Fragment>

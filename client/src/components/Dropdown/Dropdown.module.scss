@@ -2,6 +2,10 @@
 
 .wrap {
 	position: relative;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .dropdown {
@@ -48,13 +52,4 @@
 			transform: translateX(50%);
 		}
 	}
-}
-
-.button {
-	background-color: var(--text-secondary);
-
-	width: 2rem;
-	height: 2rem;
-
-	border-radius: 9999px;
 }

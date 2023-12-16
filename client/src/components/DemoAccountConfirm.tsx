@@ -26,7 +26,7 @@ export function DemoAccountConfirm() {
 				<button className="button transparent" onClick={close}>
 					Cancel
 				</button>
-				<button className="button action" onClick={createDemoAccount}>
+				<button className="button action" onClick={createDemoAccount} disabled={isPending}>
 					{isPending ? 'Processing...' : 'Create'}
 				</button>
 			</div>
