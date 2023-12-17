@@ -33,9 +33,11 @@ export function Dropdown() {
 			<div className={styles.wrap} ref={ref}>
 				<button className="icon profile" onClick={toggleDropdown} />
 				{dropdown && (
-					<div className={styles.dropdown}>
-						<button onClick={deleteAccountHandler}>Delete Account</button>
-						<button onClick={logoutHandler}>Logout</button>
+					<div className={styles.dropdownAnimation}>
+						<div className={styles.dropdown}>
+							<button onClick={deleteAccountHandler}>Delete Account</button>
+							<button onClick={logoutHandler}>Logout</button>
+						</div>
 					</div>
 				)}
 			</div>
