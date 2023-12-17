@@ -1,7 +1,7 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { SessionData } from 'express-session'
 import { Request, Response } from 'express'
+import { ApiTags } from '@nestjs/swagger'
 import {
 	UnauthorizedException,
 	BadRequestException,
@@ -20,6 +20,7 @@ import {
 
 import { InvalidPasswordException, UsernameConflictException } from './auth.exception'
 import { UserNotFoundException } from '../user/user.exception'
+import { UsernameCheckDTO } from './username-check.dto'
 import { destroySession } from './destroy-session.util'
 import { UserId } from 'src/common/user-id.decorator'
 import { CredentialsDTO } from './credentials.dto'
@@ -68,22 +69,16 @@ export class AuthController {
 
 	@Delete('profile')
 	@ApiException(() => [UnauthorizedException])
-	public async deleteAccount(
-		@UserId() userId: number,
-		@Req() req: Request,
-		@Res({ passthrough: true }) res: Response
-	) {
+	public async deleteAccount(@UserId() userId: number, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
 		await this.userService.deleteById(userId)
 
 		return destroySession(req, res)
 	}
 
 	@Get('username/:username')
-	@ApiOkResponse({
-		description: 'Returns true if user with such username already exists and false otherwise',
-		type: Boolean
-	})
-	public checkUsername(@Param('username') username: string): Promise<boolean> {
-		return this.userService.findByUsername(username).then((user) => !!user)
+	public async checkUsername(@Param('username') username: string): Promise<UsernameCheckDTO> {
+		const isTaken = await this.userService.findByUsername(username).then((user) => !!user)
+
+		return { isTaken }
 	}
 }
