@@ -1,20 +1,21 @@
 import toast from 'react-hot-toast'
 
 import { useDeleteAccountMutation } from '../mutations/useDeleteAccountMutation'
+import { toastErrorHandler } from '../utils/toastErrorHandler'
 
 import { Modal, ModalProps } from './Modal'
 
 export function DeleteAccountConfirm({ isOpen, closeHandler }: ModalProps) {
-	const { mutate, isPending } = useDeleteAccountMutation()
+	const { mutateAsync, isPending } = useDeleteAccountMutation()
 
-	const deleteAccountHandler = () => {
-		mutate(undefined, {
+	const deleteAccountHandler = () =>
+		mutateAsync(undefined, {
 			onSuccess: () => {
 				closeHandler()
 				toast('Your account was successfully deleted')
-			}
+			},
+			onError: toastErrorHandler
 		})
-	}
 
 	return (
 		<Modal title="Confirm deletion of the link" isOpen={isOpen} closeHandler={closeHandler}>

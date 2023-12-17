@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 import { useDeleteLinkMutation } from '../mutations/useDeleteLinkMutation'
+import { toastErrorHandler } from '../utils/toastErrorHandler'
 import { useToHome } from '../hooks/useToHome'
 
 import { Modal, ModalProps } from './Modal'
@@ -11,12 +12,12 @@ export interface DeleteLinkConfirmProps extends ModalProps {
 }
 
 export function DeleteLinkConfirm({ linkId, isOpen, closeHandler }: DeleteLinkConfirmProps) {
-	const { mutate, isPending } = useDeleteLinkMutation()
+	const { mutateAsync, isPending } = useDeleteLinkMutation()
 	const navigate = useNavigate()
 	const home = useToHome()
 
-	const deleteLink = async () => {
-		mutate(
+	const deleteLink = () =>
+		mutateAsync(
 			{ pathParams: { linkId } },
 			{
 				onSuccess: () => {
@@ -24,12 +25,9 @@ export function DeleteLinkConfirm({ linkId, isOpen, closeHandler }: DeleteLinkCo
 					navigate(home)
 					toast('Link was successfully deleteted')
 				},
-				onError: (error) => {
-					toast(typeof error.payload === 'object' ? error.payload.message : 'Something went wrong')
-				}
+				onError: toastErrorHandler
 			}
 		)
-	}
 
 	return (
 		<Modal title="Confirm deletion of the link" isOpen={isOpen} closeHandler={closeHandler}>

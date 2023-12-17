@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import { useDemoAccountMutation } from '../mutations/useDemoAccountMutation'
+import { toastErrorHandler } from '../utils/toastErrorHandler'
 import { useIsOpen } from '../hooks/useIsOpen'
 import { useAuth } from '../auth'
 
@@ -15,9 +16,9 @@ export function DemoAccountConfirm() {
 		const timeout = setTimeout(() => !auth && open(), 2000)
 
 		return () => clearTimeout(timeout)
-	}, [])
+	}, [auth])
 
-	const createDemoAccount = () => mutate(undefined, { onSuccess: close })
+	const createDemoAccount = () => mutate(undefined, { onSuccess: close, onError: toastErrorHandler })
 
 	return (
 		<Modal title="For strangers" isOpen={isOpen} closeHandler={close}>

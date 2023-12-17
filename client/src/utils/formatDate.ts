@@ -9,7 +9,7 @@ export function formatDate(date: Date | string) {
 		date = new Date(date)
 	}
 
-	return `${date.getFullYear()}-${x(date.getMonth())}-${x(date.getDay())}, ${x(date.getHours())}:${x(
+	return `${date.getFullYear()}-${x(date.getMonth() + 1)}-${x(date.getDate())}, ${x(date.getHours())}:${x(
 		date.getMinutes()
 	)}`
 }

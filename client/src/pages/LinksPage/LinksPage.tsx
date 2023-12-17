@@ -18,7 +18,7 @@ export function LinksPage() {
 
 	const page = parseInt(searchParams.get('page') ?? '') || 1
 
-	const { data, isPending, isError, error } = useAllLinksQuery(page, 8)
+	const { data, isPending, isError } = useAllLinksQuery(page, 8)
 
 	const setPage = (page: number) =>
 		navigate(
@@ -36,6 +36,7 @@ export function LinksPage() {
 				</button>
 			</div>
 			{isPending && <Loader />}
+			{isError && <div className="empty">Something went wrong...</div>}
 			{data && data.items.length === 0 && <div className="empty">There are no links</div>}
 			{data && data.meta.totalPages !== 0 && (
 				<Fragment>

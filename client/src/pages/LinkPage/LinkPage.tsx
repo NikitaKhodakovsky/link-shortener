@@ -32,7 +32,11 @@ export function LinkPage() {
 				Links
 			</Link>
 			<div className={styles.grid}>
-				{lq.isError && lq.error.status === 404 && <div className={`empty ${styles.row}`}>Link not found</div>}
+				{lq.isError && (
+					<div className={`empty ${styles.row}`}>
+						{lq.error.status === 404 ? 'Link not found' : 'Something went wrong...'}
+					</div>
+				)}
 				{lq.isPending && <Loader className={styles.row} />}
 				{lq.data && (
 					<Fragment>
@@ -40,7 +44,7 @@ export function LinkPage() {
 						<ul className={`${styles.details} ${styles.row}`}>
 							<li>
 								<strong>
-									<a href={lq.data.destination} target="_blank">
+									<a href={lq.data.destination} target="_blank" rel="noreferrer">
 										{lq.data.destination}
 									</a>
 								</strong>
@@ -48,7 +52,7 @@ export function LinkPage() {
 							</li>
 							<li>
 								<strong>
-									<a href={shortLink} target="_blank">
+									<a href={shortLink} target="_blank" rel="noreferrer">
 										{shortLink}
 									</a>
 								</strong>
