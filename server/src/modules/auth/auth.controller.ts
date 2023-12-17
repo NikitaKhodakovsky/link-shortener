@@ -20,10 +20,10 @@ import {
 
 import { InvalidPasswordException, UsernameConflictException } from './auth.exception'
 import { UserNotFoundException } from '../user/user.exception'
+import { LoginDTO, RegisterDTO } from './credentials.dto'
 import { UsernameCheckDTO } from './username-check.dto'
 import { destroySession } from './destroy-session.util'
 import { UserId } from 'src/common/user-id.decorator'
-import { CredentialsDTO } from './credentials.dto'
 import { UserService } from '../user/user.service'
 import { AuthService } from './auth.service'
 
@@ -37,7 +37,7 @@ export class AuthController {
 
 	@Post('register')
 	@ApiException(() => [BadRequestException, UsernameConflictException])
-	public async register(@Session() session: SessionData, @Body() { username, password }: CredentialsDTO) {
+	public async register(@Session() session: SessionData, @Body() { username, password }: RegisterDTO) {
 		const userId = await this.authService.register(username, password)
 
 		session.userId = userId
@@ -48,7 +48,7 @@ export class AuthController {
 	@Post('login')
 	@HttpCode(HttpStatus.OK)
 	@ApiException(() => [BadRequestException, UserNotFoundException, InvalidPasswordException])
-	public async login(@Session() session: SessionData, @Body() { username, password }: CredentialsDTO) {
+	public async login(@Session() session: SessionData, @Body() { username, password }: LoginDTO) {
 		const userId = await this.authService.login(username, password)
 
 		session.userId = userId
