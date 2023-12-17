@@ -5,6 +5,7 @@ import styles from './LinkPage.module.scss'
 
 import { useLinkStatisticQuery } from '../../queries/useLinkStatisticQuery'
 import { useFindLinkByIdQuery } from '../../queries/useFindLinkByIdQuery'
+import { useScrollToTop } from '../../hooks/useScrollToTop'
 import { useToHome } from '../../hooks/useToHome'
 
 import { LinkItem } from '../../components/LinkItem'
@@ -14,6 +15,8 @@ import { Chart } from '../../components/Chart'
 export function LinkPage() {
 	const params = useParams()
 	const home = useToHome()
+
+	useScrollToTop()
 
 	const linkId = parseInt(params.linkId ?? '')
 
