@@ -1,5 +1,5 @@
-import { useSearchParams } from 'react-router-dom'
-import { Fragment, useState } from 'react'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { Fragment } from 'react'
 
 import styles from './LinksPage.module.scss'
 
@@ -12,16 +12,19 @@ import { LinkItem } from '../../components/LinkItem'
 import { Loader } from '../../components/Loader'
 
 export function LinksPage() {
-	const [searchParams, setSearchParams] = useSearchParams()
-	const [page, setPageState] = useState(parseInt(searchParams.get('page') ?? '') || 1)
 	const [isOpen, close, open] = useIsOpen()
+	const [searchParams] = useSearchParams()
+	const navigate = useNavigate()
 
-	const { data, isPending, isError, error } = useAllLinksQuery(page, 20)
+	const page = parseInt(searchParams.get('page') ?? '') || 1
 
-	const setPage = (page: number) => {
-		setSearchParams({ page: page.toString() })
-		setPageState(page)
-	}
+	const { data, isPending, isError, error } = useAllLinksQuery(page, 8)
+
+	const setPage = (page: number) =>
+		navigate(
+			{ pathname: '/', search: createSearchParams({ page: page.toString() }).toString() },
+			{ state: { page } }
+		)
 
 	return (
 		<div className={styles.wrap}>

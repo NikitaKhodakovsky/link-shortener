@@ -25,7 +25,6 @@ export function DeleteLinkConfirm({ linkId, isOpen, closeHandler }: DeleteLinkCo
 					toast('Link was successfully deleteted')
 				},
 				onError: (error) => {
-					console.log(error)
 					toast(typeof error.payload === 'object' ? error.payload.message : 'Something went wrong')
 				}
 			}
