@@ -5,7 +5,7 @@ import { Link } from '../link/link.entity'
 
 @Entity()
 export class Click extends BaseEntity {
-	@ManyToOne(() => Link, { onDelete: 'CASCADE' })
+	@ManyToOne(() => Link, { onDelete: 'CASCADE', nullable: false })
 	link: Link | undefined
 
 	@Column({ nullable: true })
