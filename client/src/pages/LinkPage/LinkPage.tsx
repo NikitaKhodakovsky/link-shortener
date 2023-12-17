@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import { Fragment } from 'react'
+import { Fragment, Suspense, lazy } from 'react'
 
 import styles from './LinkPage.module.scss'
 
@@ -10,7 +10,8 @@ import { useToHome } from '../../hooks/useToHome'
 
 import { LinkItem } from '../../components/LinkItem'
 import { Loader } from '../../components/Loader'
-import { Chart } from '../../components/Chart'
+
+const Chart = lazy(() => import('../../components/Chart').then((module) => ({ default: module.Chart })))
 
 export function LinkPage() {
 	const params = useParams()
@@ -69,12 +70,12 @@ export function LinkPage() {
 				)}
 				{sq.isLoading && <Loader className={styles.statisticLoader} />}
 				{sq.data && (
-					<Fragment>
+					<Suspense fallback={<Loader className={styles.statisticLoader} />}>
 						<Chart title="Platforms" data={sq.data.platforms} />
 						<Chart title="Browsers" data={sq.data.browsers} />
 						<Chart title="Operating Systems" data={sq.data.systems} />
 						<Chart title="Devices" data={sq.data.devices} />
-					</Fragment>
+					</Suspense>
 				)}
 			</div>
 		</Fragment>
