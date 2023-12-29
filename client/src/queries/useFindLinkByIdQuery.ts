@@ -13,6 +13,7 @@ export function useFindLinkByIdQuery(linkId: number) {
 	return useQuery<Link, FindLinkByIdError>({
 		queryKey: linkDetailsQueryKeyFactory(linkId),
 		queryFn: ({ signal }) => findLinkById({ pathParams: { linkId } }, signal),
-		staleTime: Infinity
+		staleTime: Infinity,
+		retry: false
 	})
 }
