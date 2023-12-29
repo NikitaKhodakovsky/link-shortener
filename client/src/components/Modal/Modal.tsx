@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useRef } from 'react'
+import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 
@@ -26,13 +26,20 @@ const defaultContext: ModalProps = {
 export const ModalContext = createContext<ModalProps>(defaultContext)
 
 export function Modal({ isOpen, closeHandler, title, children }: RawModalProps) {
+	const [showAnimation, setShowAnimation] = useState(false)
 	const ref = useRef() as any
 
 	useOnClickOutside(ref, closeHandler)
 
-	return isOpen ? (
-		<div className={styles.blur}>
-			<div className={styles.modal} ref={ref}>
+	useEffect(() => {
+		isOpen && setShowAnimation(true)
+	}, [isOpen])
+
+	const animation = isOpen ? styles.entrance : showAnimation ? styles.exit : styles.hidden
+
+	return showAnimation ? (
+		<div className={`${styles.blur} ${animation}`}>
+			<div className={`${styles.modal} ${animation}`} ref={isOpen ? ref : null}>
 				<ModalContext.Provider value={{ isOpen, closeHandler }}>
 					<div className={styles.header}>
 						<button onClick={closeHandler} className={`icon close ${styles.close}`} />
