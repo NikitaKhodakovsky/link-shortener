@@ -18,7 +18,7 @@ export function DeleteAccountConfirm({ isOpen, closeHandler }: ModalProps) {
 		})
 
 	return (
-		<Modal title="Confirm deletion of the link" isOpen={isOpen} closeHandler={closeHandler}>
+		<Modal title="Confirm account deletion" isOpen={isOpen} closeHandler={closeHandler}>
 			<p>Your account and all your links will be deleted. This action cannot be undone. Continue?</p>
 			<div className="actions">
 				<button className="button transparent" onClick={closeHandler}>
