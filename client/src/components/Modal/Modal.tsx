@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useRef } from 'react'
+import { createContext, CSSProperties, ReactNode, useRef } from 'react'
 
 import { useEntranceExitAnimation } from '../../hooks/useEntranceExitAnimation'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
@@ -26,21 +26,23 @@ const defaultContext: ModalProps = {
 
 export const ModalContext = createContext<ModalProps>(defaultContext)
 
+const exitDuration = 200
+
 export function Modal({ isOpen, closeHandler, title, children }: RawModalProps) {
 	const ref = useRef() as any
 
 	useOnClickOutside(ref, closeHandler)
 
-	const { animation, shouldRender } = useEntranceExitAnimation({
+	const { animation, render } = useEntranceExitAnimation({
 		isOpen,
 		entrance: styles.entrance,
 		exit: styles.exit,
-		hidden: styles.hidden
+		exitDuration
 	})
 
-	return shouldRender ? (
-		<div className={`${styles.blur} ${animation}`}>
-			<div className={`${styles.modal} ${animation}`} ref={isOpen ? ref : null}>
+	return render ? (
+		<div className={`${styles.blur} ${animation}`} style={{ '--duration': `${exitDuration}ms` } as CSSProperties}>
+			<div className={`${styles.modal} ${animation}`} ref={ref}>
 				<ModalContext.Provider value={{ isOpen, closeHandler }}>
 					<div className={styles.header}>
 						<button onClick={closeHandler} className={`icon close ${styles.close}`} />

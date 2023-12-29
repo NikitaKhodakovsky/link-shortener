@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react'
+import { CSSProperties, Fragment, useRef } from 'react'
 
 import styles from './Dropdown.module.scss'
 
@@ -10,6 +10,8 @@ import { useLogoutMutation } from '../../mutations/useLogoutMutation'
 
 import { DeleteAccountConfirm } from '../DeleteAccountConfirm'
 
+const exitDuration = 200
+
 export function Dropdown() {
 	const [deleteAccountConfirm, closeDeleteAccountConfirm, openDeleteAccountConfirm] = useIsOpen()
 	const [isOpen, closeDropdown, _, toggleDropdown] = useIsOpen()
@@ -17,14 +19,14 @@ export function Dropdown() {
 
 	useOnClickOutside(ref, closeDropdown)
 
-	const { animation, shouldRender } = useEntranceExitAnimation({
+	const { mutate } = useLogoutMutation()
+
+	const { animation, render } = useEntranceExitAnimation({
 		isOpen,
 		entrance: styles.entrance,
 		exit: styles.exit,
-		hidden: styles.hidden
+		exitDuration
 	})
-
-	const { mutate } = useLogoutMutation()
 
 	const deleteAccountHandler = () => {
 		openDeleteAccountConfirm()
@@ -41,8 +43,11 @@ export function Dropdown() {
 			<DeleteAccountConfirm isOpen={deleteAccountConfirm} closeHandler={closeDeleteAccountConfirm} />
 			<div className={styles.wrap} ref={ref}>
 				<button className="icon profile" onClick={toggleDropdown} />
-				{shouldRender && (
-					<div className={`${styles.animation} ${animation}`}>
+				{render && (
+					<div
+						className={`${styles.animation} ${animation}`}
+						style={{ '--exit-duration': `${exitDuration}ms` } as CSSProperties}
+					>
 						<div className={styles.dropdown}>
 							<button onClick={deleteAccountHandler}>Delete Account</button>
 							<button onClick={logoutHandler}>Logout</button>

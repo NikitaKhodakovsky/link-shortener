@@ -71,35 +71,26 @@
 /* Animations */
 
 .blur {
-	&.hidden {
-		display: none;
-	}
+	animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+	animation-duration: var(--duration);
+	animation-fill-mode: both;
 
 	&.extrance {
-		animation: fade-in 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
-		display: block;
 		animation-name: fade-in;
 	}
 
 	&.exit {
-		animation: fade-out 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 		animation-name: fade-out;
 	}
 }
 
 .modal {
-	&.hidden {
-		display: none;
-	}
-
 	&.entrance {
-		display: block;
-		animation: scale-in-center 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+		animation: scale-in-center var(--duration) cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 	}
 
 	&.exit {
-		// animation: scale-out-center 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
-		animation: scale-out-center 0.2s ease-out both;
+		animation: scale-out-center var(--duration) ease-out both;
 	}
 }
 
@@ -128,7 +119,6 @@
 		opacity: 1;
 	}
 	100% {
-		display: none;
 		opacity: 0;
 	}
 }
@@ -140,7 +130,6 @@
 	}
 	100% {
 		transform: scale(0);
-		display: none;
 		opacity: 1;
 	}
 }
