@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
+import { createContext, ReactNode, useRef } from 'react'
 
+import { useEntranceExitAnimation } from '../../hooks/useEntranceExitAnimation'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 
 import styles from './Modal.module.scss'
@@ -26,18 +27,18 @@ const defaultContext: ModalProps = {
 export const ModalContext = createContext<ModalProps>(defaultContext)
 
 export function Modal({ isOpen, closeHandler, title, children }: RawModalProps) {
-	const [showAnimation, setShowAnimation] = useState(false)
 	const ref = useRef() as any
 
 	useOnClickOutside(ref, closeHandler)
 
-	useEffect(() => {
-		isOpen && setShowAnimation(true)
-	}, [isOpen])
+	const { animation, shouldRender } = useEntranceExitAnimation({
+		isOpen,
+		entrance: styles.entrance,
+		exit: styles.exit,
+		hidden: styles.hidden
+	})
 
-	const animation = isOpen ? styles.entrance : showAnimation ? styles.exit : styles.hidden
-
-	return showAnimation ? (
+	return shouldRender ? (
 		<div className={`${styles.blur} ${animation}`}>
 			<div className={`${styles.modal} ${animation}`} ref={isOpen ? ref : null}>
 				<ModalContext.Provider value={{ isOpen, closeHandler }}>
