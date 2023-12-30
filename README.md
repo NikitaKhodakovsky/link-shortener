@@ -1,28 +1,37 @@
 # Link Shortener
 
-Link shortener application with comprehensive click analytics.
+Link shortener application with comprehensive click analytics. The application gathers statistics about the browser, operating system and device from which the click was made.
 
 ## Table of contents
 
--   [Overview](#overview)
-    -   [Screenshots](#screenshots)
+-   [Links](#links)
+-   [Screenshots](#screenshots)
 -   [Built with](#built-with)
     -   [Common](#common)
     -   [Front End](#front-end)
     -   [Back End](#back-end)
 -   [How to run the application](#how-to-run-the-application)
 
-## Overview
+## Links
 
-Link shortener application with comprehensive click analytics. The application gathers statistics about the browser, operating system and device from which the click was made.
+-   [Live Demo](https://shortener.khodakovsky.com)
+-   [Swagger](https://shortener.khodakovsky.com/swagger)
 
-### Screenshots
+The app allows you to create a demo account with demo data without the tedious registration process, so feel free to check it out.
 
-![links-page-desktop](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/f2559859-8820-45e8-9e91-d5f3df7f7967)
-![links-page-mobile](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/7394c591-8c28-4da7-b994-e6ec093b644b)
+## Screenshots
 
-![link-page-desktop](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/8822091b-1f00-4719-892b-e42827fdc0f4)
-![link-page-mobile](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/1dc274f2-0f18-403d-a77d-7f2e8e744416)
+![list-desktop-dark](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/6eb78520-be0b-4c7c-a0af-ce340ea53e0e)
+![list-desktop-light](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/191e9a71-e332-4e72-90c6-3c8e9046d2d3)
+
+![list-mobile-dark](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/e3b0175d-d494-4c56-8012-760e1800e5fc)
+![list-mobile-light](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/031be57b-c40b-42fa-84b4-a437a15f2a51)
+
+![details-desktop-dark](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/63250f23-7b3b-4fd7-a452-bf703fc70e4f)
+![details-desktop-light](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/9740da3d-af09-4eca-b2e6-eda5e4c13000)
+
+![details-mobile-dark](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/115623bd-4025-44a2-a296-1d82a18b31ed)
+![details-mobile-light](https://github.com/NikitaKhodakovsky/link-shortener/assets/52799295/61709b73-e6ef-4c5b-9123-b7e5cb779435)
 
 ## Built with
 
@@ -119,4 +128,3 @@ To stop the application run:
 ```console
 docker compose down
 ```
-
