@@ -1,4 +1,6 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors, ChartOptions, Title } from 'chart.js'
+import { useEffect, useState } from 'react'
+import { useTheme } from 'react-theme-lib'
 import { Pie } from 'react-chartjs-2'
 
 import styles from './Chart.module.scss'
@@ -32,9 +34,19 @@ function dataMapper(input: IData) {
 }
 
 export function Chart(props: ChartProps) {
-	const { labels, data, empty } = dataMapper(props.data)
+	const [color, setColor] = useState('')
+	const [emptyBg, setEmptyBg] = useState('')
+	const { theme } = useTheme()
 
-	const color = getComputedStyle(document.body).getPropertyValue('--text-main')
+	useEffect(() => {
+		const styles = getComputedStyle(document.body)
+		const emptyBg = styles.getPropertyValue('--chart-empty-bg')
+		const color = styles.getPropertyValue('--text-main')
+		setEmptyBg(emptyBg)
+		setColor(color)
+	}, [theme])
+
+	const { labels, data, empty } = dataMapper(props.data)
 
 	const options: ChartOptions<'pie'> = {
 		plugins: {
@@ -67,8 +79,12 @@ export function Chart(props: ChartProps) {
 					labels,
 					datasets: [
 						data.length > 1
-							? { data }
-							: { data, borderWidth: 0, backgroundColor: empty ? ['LightGray'] : undefined }
+							? { data, borderWidth: 1.2 }
+							: {
+									data,
+									borderWidth: 0,
+									backgroundColor: empty ? [emptyBg] : undefined
+							  }
 					]
 				}}
 				options={options}

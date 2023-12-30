@@ -4,7 +4,7 @@
 	width: 2rem;
 	height: 2rem;
 
-	background-color: var(--text-secondary);
+	background-color: var(--icon-bg);
 	mask-repeat: no-repeat;
 	mask-position: center;
 	mask-size: contain;
@@ -23,5 +23,13 @@
 
 	&.close {
 		mask-image: url('../../../public/icons/close.svg');
+	}
+
+	&.sun {
+		mask-image: url('../../../public/icons/sun.svg');
+	}
+
+	&.moon {
+		mask-image: url('../../../public/icons/moon.svg');
 	}
 }

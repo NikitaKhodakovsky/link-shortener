@@ -17,11 +17,12 @@
 		transform: scale(0.975);
 	}
 
-	&:disabled {
-		opacity: 0.8;
+	&:active {
+		transform: scale(0.95);
 	}
 
-	&:disabled:hover {
+	&:disabled:hover,
+	&:disabled:active {
 		transform: none;
 	}
 

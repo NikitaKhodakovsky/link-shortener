@@ -1,7 +1,5 @@
 @use '../../sass/abstracts' as *;
 
-@use '../../sass/abstracts' as *;
-
 .wrap {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -38,7 +36,7 @@
 	}
 
 	::placeholder {
-		color: var(--text-secondary);
+		color: var(--input-placeholder-color);
 	}
 }
 

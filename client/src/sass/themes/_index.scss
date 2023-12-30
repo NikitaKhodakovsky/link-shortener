@@ -1,2 +1,63 @@
-@use 'light';
-@use 'dark';
+@use '../abstracts' as *;
+
+body {
+	--action-color: hsl(251, 100%, 55%);
+	--red: hsl(0, 80%, 63%);
+	--border-radius: 15px;
+	--text-inverse: hsl(0, 0%, 100%);
+	--dark-gray: hsl(215, 16%, 47%);
+	--chart-empty-bg: var(--input-placeholder-color);
+	--scrollbar-color: var(--input-border);
+}
+
+body {
+	transition: color 100ms ease-in, background-color 100ms ease-in;
+}
+
+body.light {
+	--bg: hsl(222, 83%, 98%);
+
+	--element-bg: hsl(0, 0%, 100%);
+	--element-border-color: var(--element-bg);
+	--element-shadow: var(--shadow-color) 0px 0px 2px;
+
+	--input-container-bg: var(--element-bg);
+
+	--icon-bg: var(--text-secondary);
+
+	--text-main: hsl(231, 46%, 31%);
+	--text-secondary: hsl(225, 32%, 73%);
+
+	--selection-bg: var(--action-color);
+	--selection-color: var(--text-inverse);
+
+	--shadow-color: hsla(210, 29%, 56%, 12%);
+	--blur: hsla(0, 0%, 0%, 50%);
+
+	--input-border: hsl(223, 41%, 91%);
+	--input-placeholder-color: var(--text-secondary);
+}
+
+body.dark {
+	--bg: #090c18;
+
+	--element-bg: #0c0f1e;
+	--element-border-color: #1f212d;
+	--element-shadow: none;
+
+	--input-container-bg: var(--bg);
+
+	--icon-bg: hsl(232, 23%, 61%);
+
+	--text-main: hsl(0, 0%, 100%);
+	--text-secondary: hsl(215, 20%, 65%);
+
+	--selection-bg: #fff;
+	--selection-color: #333;
+
+	--shadow-color: none;
+	--blur: hsla(0, 0%, 0%, 60%);
+
+	--input-border: var(--element-border-color);
+	--input-placeholder-color: hsl(215, 16%, 47%);
+}
