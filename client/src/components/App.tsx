@@ -8,6 +8,7 @@ import { FallbackPage, NotFoundPage } from '../pages/FallbackPages'
 import { RegisterPage } from '../pages/AuthPages/RegisterPage'
 import { DemoAccountConfirm } from './DemoAccountConfirm'
 import { LoginPage } from '../pages/AuthPages/LoginPage'
+import { ThemeColorMeta } from './ThemeColorMeta'
 import { LinksPage } from '../pages/LinksPage'
 import { LinkPage } from '../pages/LinkPage'
 import { Layout } from './Layout'
@@ -18,6 +19,7 @@ export function App() {
 			<ErrorBoundary FallbackComponent={FallbackPage} onReset={() => window.location.reload()}>
 				<Toaster toastOptions={{ className: 'toast' }} />
 				<DemoAccountConfirm />
+				<ThemeColorMeta />
 				<Routes>
 					<Route element={<Layout />}>
 						<Route element={<RequireAuth redirectTo="/login" />}>
