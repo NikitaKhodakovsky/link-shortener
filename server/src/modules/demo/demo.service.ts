@@ -4,17 +4,8 @@ import crypto from 'crypto'
 import { ClickService } from '../click/click.service'
 import { AuthService } from '../auth/auth.service'
 import { LinkService } from '../link/link.service'
-import { CreateLinkDTO } from '../link/link.dto'
+import { createDemoLinks } from './demo.data'
 import { createClicks } from './demo.utils'
-
-const links: CreateLinkDTO[] = [
-	{ name: 'GitHub', destination: 'https://github.com' },
-	{ name: 'YouTube', destination: 'https://youtube.com' },
-	{ name: 'LinkedIn', destination: 'https://linkedin.com' },
-	{ name: 'Udemy', destination: 'https://udemy.com' },
-	{ name: 'DeepL', destination: 'https://www.deepl.com' },
-	{ name: 'Facebook', destination: 'https://www.facebook.com' }
-].reverse()
 
 @Injectable()
 export class DemoService {
@@ -25,14 +16,14 @@ export class DemoService {
 	) {}
 
 	public async demo() {
-		const username = crypto.randomBytes(10).toString()
-		const password = crypto.randomBytes(10).toString()
+		const username = crypto.randomBytes(20).toString('hex')
+		const password = crypto.randomBytes(20).toString('hex')
 
 		const userId = await this.authService.register(username, password)
 
 		const promises: Promise<unknown>[] = []
 
-		for (const item of links) {
+		for (const item of createDemoLinks()) {
 			const promise = this.linkService.create(userId, item).then((link) => createClicks(link, this.clickService))
 			promises.push(promise)
 		}
