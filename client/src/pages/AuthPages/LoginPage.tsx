@@ -38,7 +38,7 @@ export function LoginPage() {
 				onSubmit={login}
 			>
 				{({ isSubmitting }) => (
-					<Form className={styles.content}>
+					<Form className={styles.content} autoComplete="off">
 						<h1 className="title">Sign In</h1>
 						<div className="input-list">
 							<FormikInput name="username" label="Username" required placeholder="Your username" />

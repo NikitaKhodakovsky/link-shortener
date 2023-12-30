@@ -53,7 +53,7 @@ export function RegisterPage() {
 				onSubmit={register}
 			>
 				{({ isSubmitting }) => (
-					<Form className={styles.content}>
+					<Form className={styles.content} autoComplete="off">
 						<h1 className="title">New Account</h1>
 						<div className="input-list">
 							<FormikInput

@@ -39,7 +39,7 @@ export function LinkModal({ title, buttonText = 'Save', isOpen, closeHandler, va
 				onSubmit={submitHandler}
 			>
 				{({ isSubmitting }) => (
-					<Form>
+					<Form autoComplete="off">
 						<div className="input-list">
 							<FormikInput label="Name" name="name" required placeholder="Name your link" />
 							<FormikInput
