@@ -1,0 +1,25 @@
+{
+	"name": "link-shortener",
+	"private": true,
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"lint": "turbo lint",
+		"format": "prettier --write .",
+		"prune": "turbo run prune",
+		"clean:turbo": "rm -rf `find . -type d -name .turbo`",
+		"clean:node_modules": "rm -rf `find . -type d -name node_modules`"
+	},
+	"devDependencies": {
+		"prettier": "^3.1.1",
+		"turbo": "^1.12.3"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"packageManager": "npm@10.2.5",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	]
+}

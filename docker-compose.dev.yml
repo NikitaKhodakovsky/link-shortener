@@ -1,20 +1,28 @@
 services:
-    client:
+    ui:
+        image: dev
+        user: ${UID:-1000}:${GID:-1000}
         build:
+            context: .
             dockerfile: Dockerfile.dev
         volumes:
-            - ./client:/app
-            - /app/node_modules
+            - ./:/app
         environment:
             - NODE_ENV=development
+        command: turbo dev --filter=ui
+
     server:
+        image: dev
+        user: ${UID:-1000}:${GID:-1000}
         build:
+            context: .
             dockerfile: Dockerfile.dev
         volumes:
-            - ./server:/app
-            - /app/node_modules
+            - ./:/app
         environment:
             - NODE_ENV=development
+        command: turbo dev --filter=server
+
     postgres:
         ports:
             - '5432:5432'

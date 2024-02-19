@@ -1,0 +1,40 @@
+# Dependencies
+**/node_modules
+
+# Turbo
+**/.turbo
+
+# Artifacts
+**/out
+**/build
+**/dist
+**/__generated__
+
+# Logs 
+**/logs
+**/*.log
+**/npm-debug.log*
+**/pnpm-debug.log*
+
+# OS
+**/.DS_Store
+
+# IDE
+**/.vscode
+
+# Env
+**/.env*
+ 
+# Docker
+**/*Dockerfile*
+**/*.dockerignore*
+
+# Git 
+**/.gitignore
+**/.gitkeep
+
+# NestJS
+**/nest-cli.json
+
+# ESLint
+**/.eslint*
