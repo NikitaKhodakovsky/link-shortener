@@ -1,4 +1,9 @@
 services:
+    rabbitmq:
+        image: rabbitmq:3.12.13-management-alpine
+        ports:
+            - 15672:15672
+
     ui:
         image: dev
         user: ${UID:-1000}:${GID:-1000}
@@ -39,41 +44,25 @@ services:
         ports:
             - 4100:80
 
-    server:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=server
-
-    postgres:
-        ports:
-            - 5432:5432
-
     redis-insight:
         container_name: link-shortener_redis-insight
         image: redislabs/redisinsight:latest
         volumes:
-            - redis-insight-data:/db
+            - link-shortener_redis-insight-data:/db
         ports:
             - 5000:5540
 
-    pg-admin:
+    pgadmin:
         image: dpage/pgadmin4:8.3
-        container_name: link-shortener_pg-admin
+        container_name: link-shortener_pgadmin
         environment:
             - PGADMIN_DEFAULT_EMAIL=admin@admin.com
             - PGADMIN_DEFAULT_PASSWORD=password
         volumes:
-            - pg-admin-data:/var/lib/pgadmin
+            - link-shortener_pgadmin-data:/var/lib/pgadmin
         ports:
             - 4200:80
 
 volumes:
-    redis-insight-data:
-    pg-admin-data:
+    link-shortener_redis-insight-data:
+    link-shortener_pgadmin-data:
