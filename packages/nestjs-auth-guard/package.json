@@ -1,0 +1,14 @@
+{
+	"name": "@app/nestjs-auth-guard",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"@app/nestjs-jwt": "*",
+		"@app/cookie-names": "*",
+		"@nestjs/common": "^10.3.3"
+	}
+}

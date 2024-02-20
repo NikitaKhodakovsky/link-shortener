@@ -1,7 +1,6 @@
+import { BaseEntity } from '@app/typeorm-base-entity'
 import { ApiHideProperty } from '@nestjs/swagger'
 import { Column, Entity } from 'typeorm'
-
-import { BaseEntity } from '../../common/base.entity'
 
 @Entity()
 export class User extends BaseEntity {

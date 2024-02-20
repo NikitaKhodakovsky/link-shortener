@@ -12,7 +12,7 @@ export class UserService {
 		private readonly userRepository: Repository<User>
 	) {}
 
-	public async findById(userId: number) {
+	public async findOneByIdOrFail(userId: number) {
 		const user = await this.userRepository.findOneBy({ id: userId })
 
 		if (!user) throw new UserNotFoundException()
@@ -25,7 +25,7 @@ export class UserService {
 	}
 
 	public async deleteById(userId: number) {
-		const user = await this.findById(userId)
+		const user = await this.findOneByIdOrFail(userId)
 
 		await this.userRepository.remove(user)
 

@@ -1,0 +1,12 @@
+{
+	"name": "@app/redis-env-validation",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"envalid": "^8.0.0"
+	}
+}

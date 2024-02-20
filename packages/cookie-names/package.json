@@ -1,0 +1,9 @@
+{
+	"name": "@app/cookie-names",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"build": "tsc"
+	}
+}
