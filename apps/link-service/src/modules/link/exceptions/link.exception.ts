@@ -1,10 +1,4 @@
-import { ConflictException, NotFoundException } from '@nestjs/common'
-
-export class LinkNotFoundException extends NotFoundException {
-	constructor() {
-		super('Link not found')
-	}
-}
+import { ConflictException } from '@nestjs/common'
 
 export class BackHalfIsNotUniqueException extends ConflictException {
 	constructor() {

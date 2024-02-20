@@ -1,9 +1,10 @@
+import { LinkNotFoundException } from '@app/link-exceptions'
 import { InjectRepository } from '@nestjs/typeorm'
 import { paginate } from 'nestjs-typeorm-paginate'
 import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 
-import { BackHalfIsNotUniqueException, LinkNotFoundException } from '../exceptions'
+import { BackHalfIsNotUniqueException } from '../exceptions'
 import { BackHalfGenerationStrategy } from '../strategies'
 import { CreateLinkDTO, UpdateLinkDTO } from '../dtos'
 import { createLink } from '../factories'

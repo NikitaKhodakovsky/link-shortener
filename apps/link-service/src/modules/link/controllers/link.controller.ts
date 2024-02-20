@@ -1,4 +1,5 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
+import { LinkNotFoundException } from '@app/link-exceptions'
 import { AuthGuard } from '@app/nestjs-auth-guard'
 import { UserId } from '@app/nestjs-utils'
 import { ApiTags } from '@nestjs/swagger'
@@ -18,9 +19,9 @@ import {
 	Get
 } from '@nestjs/common'
 
-import { BackHalfIsNotUniqueException, LinkNotFoundException } from '../exceptions'
 import { CreateLinkDTO, PaginatedQuery, UpdateLinkDTO } from '../dtos'
 import { LinkService, LinkStatisticService } from '../services'
+import { BackHalfIsNotUniqueException } from '../exceptions'
 import { ApiOkPaginatedResponse } from '../decorators'
 import { Link } from '../entities'
 

@@ -13,12 +13,13 @@ services:
     rabbitmq:
         container_name: link-shortener_rabbitmq
         image: rabbitmq:3.12.13-alpine
+        restart: always
         volumes:
             - link-shortener_rabbitmq-data:/var/lib/rabbitmq
             - link-shortener_rabbitmq-logs:/var/log/rabbitmq
         environment:
-            - RMQ_DEFAULT_USER
-            - RMQ_DEFAULT_PASS
+            - RABBITMQ_DEFAULT_USER=${RMQ_USERNAME}
+            - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
 
     ui:
         container_name: link-shortener_ui
@@ -98,9 +99,36 @@ services:
             - POSTGRES_PASSWORD=${LINK_SERVICE_DB_PASSWORD}
             - POSTGRES_DB=postgres
 
+    click-service:
+        container_name: link-shortener_click-service
+        init: true
+        build:
+            context: .
+            dockerfile: apps/click-service/Dockerfile
+        environment:
+            - SERVER_PORT=80
+            - RMQ_HOST=rabbitmq
+            - RMQ_PORT=5672
+            - RMQ_USERNAME
+            - RMQ_PASSWORD
+            - REDIS_HOST=click-service-redis
+            - REDIS_PORT=6379
+            - REDIS_PASSWORD=${CLICK_SERVICE_REDIS_PASSWORD}
+        depends_on:
+            - click-service-redis
+            - rabbitmq
+
+    click-service-redis:
+        container_name: link-shortener_click-service-redis
+        image: redis:7.2.4-alpine
+        command: redis-server --requirepass ${CLICK_SERVICE_REDIS_PASSWORD}
+        volumes:
+            - link-shortener_click-service-redis:/data
+
 volumes:
     link-shortener_auth-service-postgres:
     link-shortener_auth-service-redis:
     link-shortener_link-service-postgres:
     link-shortener_rabbitmq-data:
     link-shortener_rabbitmq-logs:
+    link-shortener_click-service-redis:
