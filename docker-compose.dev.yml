@@ -25,6 +25,20 @@ services:
         ports:
             - 4000:80
 
+    link-service:
+        image: dev
+        user: ${UID:-1000}:${GID:-1000}
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ./:/app
+        environment:
+            - NODE_ENV=development
+        command: turbo dev --filter=link-service
+        ports:
+            - 4100:80
+
     server:
         image: dev
         user: ${UID:-1000}:${GID:-1000}

@@ -1,20 +1,19 @@
-import { User } from '../user/user.entity'
-import { Link } from './link.entity'
+import { Link } from '../entities'
 
 export interface CreateLinkArguments {
-	user: User
+	userId: number
 	name: string
 	destination: string
 	backHalf: string
 }
 
-export function createLink({ user, name, backHalf, destination }: CreateLinkArguments) {
+export function createLink({ userId, name, backHalf, destination }: CreateLinkArguments) {
 	const link = new Link()
 
 	link.destination = destination
 	link.backhalf = backHalf
+	link.userId = userId
 	link.name = name
-	link.user = user
 
 	return link
 }

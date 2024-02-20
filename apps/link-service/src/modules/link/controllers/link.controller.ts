@@ -1,27 +1,28 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { AuthGuard } from '@app/nestjs-auth-guard'
+import { UserId } from '@app/nestjs-utils'
+import { ApiTags } from '@nestjs/swagger'
 import {
 	UnauthorizedException,
 	BadRequestException,
 	HttpStatus,
 	Controller,
+	UseGuards,
 	HttpCode,
 	Delete,
 	Param,
+	Query,
+	Patch,
 	Body,
-	Get,
 	Post,
-	Query
+	Get
 } from '@nestjs/common'
 
-import { ApiOkPaginatedResponse } from '../../common/api-ok-paginated-response.decorator'
-import { BackHalfIsNotUniqueException, LinkNotFoundException } from './link.exception'
-import { LinkStatisticService } from './link-statistic.service'
-import { PaginatedQuery } from '../../common/paginated.query'
-import { CreateLinkDTO, UpdateLinkDTO } from './link.dto'
-import { UserId } from '../../common/user-id.decorator'
-import { LinkService } from './link.service'
-import { Link } from './link.entity'
+import { BackHalfIsNotUniqueException, LinkNotFoundException } from '../exceptions'
+import { CreateLinkDTO, PaginatedQuery, UpdateLinkDTO } from '../dtos'
+import { LinkService, LinkStatisticService } from '../services'
+import { ApiOkPaginatedResponse } from '../decorators'
+import { Link } from '../entities'
 
 @ApiTags('Links')
 @Controller('links')
@@ -32,12 +33,14 @@ export class LinkController {
 	) {}
 
 	@Post()
+	@UseGuards(AuthGuard)
 	@ApiException(() => [BadRequestException, UnauthorizedException, BackHalfIsNotUniqueException])
 	public createLink(@UserId() userId: number, @Body() data: CreateLinkDTO) {
 		return this.linkService.create(userId, data)
 	}
 
-	@Post(':linkId')
+	@Patch(':linkId')
+	@UseGuards(AuthGuard)
 	@HttpCode(HttpStatus.OK)
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
 	public updateLink(@UserId() userId: number, @Param('linkId') linkId: number, @Body() data: UpdateLinkDTO) {
@@ -45,18 +48,21 @@ export class LinkController {
 	}
 
 	@Delete(':linkId')
+	@UseGuards(AuthGuard)
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
 	public deleteLink(@UserId() userId: number, @Param('linkId') linkId: number) {
 		return this.linkService.delete(userId, linkId)
 	}
 
 	@Get(':linkId')
+	@UseGuards(AuthGuard)
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
 	public findLinkById(@UserId() userId: number, @Param('linkId') linkId: number) {
 		return this.linkService.findByIdOrFail(userId, linkId)
 	}
 
 	@Get()
+	@UseGuards(AuthGuard)
 	@ApiOkPaginatedResponse(Link)
 	@ApiException(() => [BadRequestException, UnauthorizedException])
 	public findAllLinks(@UserId() userId: number, @Query() { page, perPage }: PaginatedQuery) {
@@ -64,6 +70,7 @@ export class LinkController {
 	}
 
 	@Get(':linkId/statistic')
+	@UseGuards(AuthGuard)
 	@ApiException(() => [BadRequestException, UnauthorizedException, LinkNotFoundException])
 	public linkStatistic(@UserId() userId: number, @Param('linkId') linkId: number) {
 		return this.linkStatisticService.statistic(userId, linkId)

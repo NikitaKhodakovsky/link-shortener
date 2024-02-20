@@ -3,36 +3,32 @@ import { paginate } from 'nestjs-typeorm-paginate'
 import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 
-import { BackHalfIsNotUniqueException, LinkNotFoundException } from './link.exception'
-import { BackHalfGenerationStrategy } from './backhalf-generatoin.strategy'
-import { CreateLinkDTO, UpdateLinkDTO } from './link.dto'
-import { UserService } from '../user/user.service'
-import { createLink } from './link.factory'
-import { Link } from './link.entity'
+import { BackHalfIsNotUniqueException, LinkNotFoundException } from '../exceptions'
+import { BackHalfGenerationStrategy } from '../strategies'
+import { CreateLinkDTO, UpdateLinkDTO } from '../dtos'
+import { createLink } from '../factories'
+import { Link } from '../entities'
 
 @Injectable()
 export class LinkService {
 	constructor(
 		private readonly backHalfGenerationStrategy: BackHalfGenerationStrategy,
 		@InjectRepository(Link)
-		private readonly linkRepository: Repository<Link>,
-		private readonly userService: UserService
+		private readonly linkRepository: Repository<Link>
 	) {}
 
 	public async create(userId: number, data: CreateLinkDTO) {
-		const user = await this.userService.findById(userId)
-
 		const backHalf = await this.backHalfGenerationStrategy.generate()
 
 		const candidate = await this.findByBackHalf(backHalf)
 
 		if (candidate) throw new BackHalfIsNotUniqueException()
 
-		const link = createLink({ user, backHalf, ...data })
+		const link = createLink({ userId, backHalf, ...data })
 
 		await this.linkRepository.save(link)
 
-		delete link.user
+		delete link.userId
 
 		return link
 	}
@@ -51,16 +47,10 @@ export class LinkService {
 		const link = await this.findByIdOrFail(userId, linkId)
 
 		await this.linkRepository.remove(link)
-
-		return true
 	}
 
 	public async findByIdOrFail(userId: number, linkId: number) {
-		const link = await this.linkRepository
-			.createQueryBuilder('l')
-			.where('l.id = :linkId', { linkId })
-			.andWhere('l.userId = :userId', { userId })
-			.getOne()
+		const link = await this.linkRepository.findOneBy({ id: linkId, userId })
 
 		if (!link) throw new LinkNotFoundException()
 
