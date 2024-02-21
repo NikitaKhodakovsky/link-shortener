@@ -11,11 +11,21 @@ export class CacheRMQContoller {
 
 	@RabbitSubscribe({
 		exchange: LinkExchange.name,
-		routingKey: [LinkUpdatedEvent.routingKey, LinkDeletedEvent.routingKey],
+		routingKey: LinkUpdatedEvent.routingKey,
 		queue: 'click-service.cache.queue',
 		queueOptions: { deadLetterExchange: DeadLetterExchange.name }
 	})
-	public async handler(message: LinkUpdatedEvent.Message | LinkDeletedEvent.Message) {
-		await this.cacheService.invalidateLinkById(message.linkId)
+	public async linkUpdatedEvent({ linkId }: LinkUpdatedEvent.Message) {
+		await this.cacheService.invalidateLinkById(linkId)
+	}
+
+	@RabbitSubscribe({
+		exchange: LinkExchange.name,
+		routingKey: LinkDeletedEvent.routingKey,
+		queue: 'click-service.cache.queue',
+		queueOptions: { deadLetterExchange: DeadLetterExchange.name }
+	})
+	public async linkDeletedEvent({ linkIds }: LinkDeletedEvent.Message) {
+		await Promise.allSettled(linkIds.map(linkId => this.cacheService.invalidateLinkById(linkId)))
 	}
 }

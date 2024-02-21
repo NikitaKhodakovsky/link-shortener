@@ -10,7 +10,9 @@ export class LinkEventService {
 		await this.amqpConnection.publish<LinkUpdatedEvent.Message>(LinkUpdatedEvent.exchange, LinkUpdatedEvent.routingKey, { linkId })
 	}
 
-	public async linkDeletedEvent(linkId: number) {
-		await this.amqpConnection.publish<LinkDeletedEvent.Message>(LinkDeletedEvent.exchange, LinkDeletedEvent.routingKey, { linkId })
+	public async linkDeletedEvent(linkIds: number | number[]) {
+		await this.amqpConnection.publish<LinkDeletedEvent.Message>(LinkDeletedEvent.exchange, LinkDeletedEvent.routingKey, {
+			linkIds: Array.isArray(linkIds) ? linkIds : [linkIds]
+		})
 	}
 }

@@ -5,6 +5,6 @@ export namespace LinkDeletedEvent {
 	export const exchange = LINK_EXCHANGE_NAME
 
 	export class Message {
-		linkId: number
+		linkIds: number[]
 	}
 }

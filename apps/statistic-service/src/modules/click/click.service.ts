@@ -1,7 +1,7 @@
 import { ClickCreateCommand } from '@app/click-rabbitmq-contracts'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Injectable } from '@nestjs/common'
-import { Repository } from 'typeorm'
+import { In, Repository } from 'typeorm'
 
 import { LocationParsingStrategy } from './location-parsing.strategy'
 import { UAParsingStrategy } from './ua-parsing.strategy'
@@ -26,7 +26,7 @@ export class ClickService {
 		return this.clickRepository.save(click)
 	}
 
-	public async deleteByLinkId(linkId: number) {
-		await this.clickRepository.delete({ linkId })
+	public async deleteByLinkIds(linkIds: number[]) {
+		await this.clickRepository.delete({ linkId: In(linkIds) })
 	}
 }

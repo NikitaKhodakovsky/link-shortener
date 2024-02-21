@@ -16,6 +16,6 @@ export class LinkRMQController {
 		queueOptions: { deadLetterExchange: DeadLetterExchange.name }
 	})
 	public async delete(message: LinkDeletedEvent.Message) {
-		await this.clickService.deleteByLinkId(message.linkId)
+		await this.clickService.deleteByLinkIds(message.linkIds)
 	}
 }

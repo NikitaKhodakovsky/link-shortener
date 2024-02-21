@@ -99,7 +99,7 @@ export class LinkService {
 
 			await queryRunner.manager.remove(Link, links)
 
-			// await this.linkEventService.linkDeletedEvent(ids)
+			await this.linkEventService.linkDeletedEvent(ids)
 
 			await queryRunner.commitTransaction()
 		} catch (e) {
