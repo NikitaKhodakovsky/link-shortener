@@ -1,22 +1,22 @@
+import { RabbitMQModule } from '../rabbitmq.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import DeviceDetector from 'device-detector-js'
 import { Module } from '@nestjs/common'
 
 import { LocationParsingStrategy, NotImplementedLocationParsingStrategy } from './location-parsing.strategy'
 import { UAParsingStrategy, BasicUAParsingStrategy } from './ua-parsing.strategy'
-import { ClickController } from './click.controller'
-import { LinkModule } from '../link/link.module'
+import { ClickRMQController } from './click.controller'
 import { ClickService } from './click.service'
 import { Click } from './click.entity'
 
 @Module({
-	imports: [LinkModule, TypeOrmModule.forFeature([Click])],
-	controllers: [ClickController],
+	imports: [TypeOrmModule.forFeature([Click]), RabbitMQModule],
 	providers: [
-		ClickService,
-		DeviceDetector,
 		{ provide: LocationParsingStrategy, useClass: NotImplementedLocationParsingStrategy },
-		{ provide: UAParsingStrategy, useClass: BasicUAParsingStrategy }
+		{ provide: UAParsingStrategy, useClass: BasicUAParsingStrategy },
+		ClickRMQController,
+		DeviceDetector,
+		ClickService
 	],
 	exports: [ClickService]
 })

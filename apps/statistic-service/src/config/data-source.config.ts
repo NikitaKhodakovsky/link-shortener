@@ -3,7 +3,6 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME } from './env'
 import { Click } from '../modules/click/click.entity'
-import { Link } from '../modules/link/link.entity'
 
 export const dataSourceOptions: DataSourceOptions = {
 	type: 'postgres',
@@ -12,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
 	username: DB_USERNAME,
 	password: DB_PASSWORD,
 	database: DB_DATABASE,
-	entities: [Link, Click]
+	entities: [Click]
 }
 
 export const dataSource = new DataSource(dataSourceOptions)

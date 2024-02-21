@@ -1,11 +1,11 @@
-import { Link } from '../link/link.entity'
 import { Click } from './click.entity'
 
 export interface CreateClickArguments {
 	userAgent?: string
 	platform?: string
 	browser?: string
-	link: Link
+	linkId: number
+	date: Date
 	os?: string
 	device?: string
 	country?: string
@@ -14,21 +14,11 @@ export interface CreateClickArguments {
 	ip?: string
 }
 
-export function createClick({
-	userAgent,
-	link,
-	platform,
-	browser,
-	os,
-	device,
-	country,
-	region,
-	city,
-	ip
-}: CreateClickArguments) {
+export function createClick({ userAgent, linkId, date, platform, browser, os, device, country, region, city, ip }: CreateClickArguments) {
 	const click = new Click()
 
-	click.link = link
+	click.linkId = linkId
+	click.date = date
 
 	click.userAgent = userAgent ?? null
 

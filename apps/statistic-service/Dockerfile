@@ -12,11 +12,11 @@ WORKDIR /app
 
 RUN npm i -g turbo
 
-COPY pruned/server/json .
+COPY pruned/auth-service/json .
 
 RUN npm ci --include=dev
 
-COPY pruned/server/full .
+COPY pruned/auth-service/full .
 
 COPY turbo.json .
 COPY tsconfig.json .
@@ -36,7 +36,7 @@ FROM base AS production
 
 WORKDIR /app
 
-COPY pruned/server/json .
+COPY pruned/auth-service/json .
 
 RUN npm ci --only=production
 
@@ -48,4 +48,4 @@ RUN addgroup -S production
 RUN adduser -S -D production production
 USER production
 
-CMD node apps/server/dist/main.js
+CMD node apps/auth-service/dist/main.js

@@ -1,17 +1,11 @@
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { ValidationPipe } from '@nestjs/common'
-import { SwaggerModule } from '@nestjs/swagger'
 import { NestFactory } from '@nestjs/core'
 
-import { swaggerConfig } from './config/swagger.config'
-import { session } from './config/session.config'
 import { AppModule } from './modules/app.module'
-import { SERVER_PORT } from './config/env'
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule)
-
-	app.use(session)
 
 	app.useGlobalPipes(
 		new ValidationPipe({
@@ -24,13 +18,7 @@ async function bootstrap() {
 		})
 	)
 
-	const document = SwaggerModule.createDocument(app, swaggerConfig, {
-		operationIdFactory: (_, methodKey) => methodKey
-	})
-
-	SwaggerModule.setup('swagger', app, document)
-
-	await app.listen(SERVER_PORT)
+	await app.init()
 }
 
 bootstrap()

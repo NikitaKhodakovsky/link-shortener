@@ -1,12 +1,13 @@
-import { Column, Entity, ManyToOne } from 'typeorm'
-
-import { BaseEntity } from '../../common/base.entity'
-import { Link } from '../link/link.entity'
+import { BaseEntity } from '@app/typeorm-base-entity'
+import { Column, Entity } from 'typeorm'
 
 @Entity()
 export class Click extends BaseEntity {
-	@ManyToOne(() => Link, { onDelete: 'CASCADE', nullable: false })
-	link: Link | undefined
+	@Column({ type: 'integer' })
+	linkId: number
+
+	@Column()
+	date: Date
 
 	@Column({ nullable: true })
 	userAgent: string

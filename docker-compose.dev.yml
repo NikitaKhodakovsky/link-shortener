@@ -54,9 +54,23 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        # command: turbo dev --filter=click-service
+        command: turbo dev --filter=click-service
         ports:
             - 4200:80
+
+    statistic-service:
+        image: dev
+        user: ${UID:-1000}:${GID:-1000}
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ./:/app
+        environment:
+            - NODE_ENV=development
+        # command: turbo dev --filter=statistic-service
+        ports:
+            - 4300:80
 
     redis-insight:
         container_name: link-shortener_redis-insight

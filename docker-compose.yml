@@ -125,6 +125,36 @@ services:
         volumes:
             - link-shortener_click-service-redis:/data
 
+    statistic-service:
+        container_name: link-shortener_statistic-service
+        init: true
+        build:
+            context: .
+            dockerfile: apps/click-service/Dockerfile
+        environment:
+            - RMQ_HOST=rabbitmq
+            - RMQ_PORT=5672
+            - RMQ_USERNAME
+            - RMQ_PASSWORD
+            - DB_HOST=statistic-service-postgres
+            - DB_PORT=5432
+            - DB_USERNAME=${STATISTIC_SERVICE_DB_USERNAME}
+            - DB_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
+            - DB_DATABASE=postgres
+        depends_on:
+            - statistic-service-postgres
+            - rabbitmq
+
+    statistic-service-postgres:
+        container_name: link-shortener_statistic-service-postgres
+        image: postgres:14.4-alpine
+        volumes:
+            - link-shortener_statistic-service-postgres:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=${STATISTIC_SERVICE_DB_USERNAME}
+            - POSTGRES_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
+            - POSTGRES_DB=postgres
+
 volumes:
     link-shortener_auth-service-postgres:
     link-shortener_auth-service-redis:
@@ -132,3 +162,4 @@ volumes:
     link-shortener_rabbitmq-data:
     link-shortener_rabbitmq-logs:
     link-shortener_click-service-redis:
+    link-shortener_statistic-service-postgres:
