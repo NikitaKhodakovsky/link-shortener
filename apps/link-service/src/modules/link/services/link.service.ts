@@ -6,6 +6,7 @@ import { Repository } from 'typeorm'
 
 import { BackHalfIsNotUniqueException } from '../exceptions'
 import { BackHalfGenerationStrategy } from '../strategies'
+import { LinkEventService } from './link-event.service'
 import { CreateLinkDTO, UpdateLinkDTO } from '../dtos'
 import { createLink } from '../factories'
 import { Link } from '../entities'
@@ -14,6 +15,7 @@ import { Link } from '../entities'
 export class LinkService {
 	constructor(
 		private readonly backHalfGenerationStrategy: BackHalfGenerationStrategy,
+		private readonly linkEventService: LinkEventService,
 		@InjectRepository(Link)
 		private readonly linkRepository: Repository<Link>
 	) {}
@@ -41,6 +43,8 @@ export class LinkService {
 
 		await this.linkRepository.save(link)
 
+		await this.linkEventService.linkUpdatedEvent(link.id)
+
 		return link
 	}
 
@@ -48,6 +52,8 @@ export class LinkService {
 		const link = await this.findByIdOrFail(userId, linkId)
 
 		await this.linkRepository.remove(link)
+
+		await this.linkEventService.linkDeletedEvent(link.id)
 	}
 
 	public async findByIdOrFail(userId: number, linkId: number) {
