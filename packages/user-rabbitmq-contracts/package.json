@@ -1,0 +1,12 @@
+{
+	"name": "@app/user-rabbitmq-contracts",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"build": "tsc"
+	},
+	"devDependencies": {
+		"@golevelup/nestjs-rabbitmq": "^5.1.0"
+	}
+}

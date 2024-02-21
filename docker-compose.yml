@@ -44,10 +44,14 @@ services:
                 - SERVICE=auth-service
         environment:
             - SERVER_PORT=80
-            - DB_HOST=auth-service-postgres
-            - DB_PORT=5432
             - JWT_PUBLIC_KEY
             - JWT_PRIVATE_KEY
+            - RMQ_HOST=rabbitmq
+            - RMQ_PORT=5672
+            - RMQ_USERNAME
+            - RMQ_PASSWORD
+            - DB_HOST=auth-service-postgres
+            - DB_PORT=5432
             - DB_USERNAME=${AUTH_SERVICE_DB_USERNAME}
             - DB_PASSWORD=${AUTH_SERVICE_DB_PASSWORD}
             - DB_DATABASE=postgres
@@ -57,6 +61,7 @@ services:
         depends_on:
             - auth-service-postgres
             - auth-service-redis
+            - rabbitmq
 
     auth-service-postgres:
         container_name: link-shortener_auth-service-postgres
@@ -86,6 +91,10 @@ services:
         environment:
             - SERVER_PORT=80
             - JWT_PUBLIC_KEY
+            - RMQ_HOST=rabbitmq
+            - RMQ_PORT=5672
+            - RMQ_USERNAME
+            - RMQ_PASSWORD
             - DB_HOST=auth-service-postgres
             - DB_PORT=5432
             - DB_USERNAME=${LINK_SERVICE_DB_USERNAME}
@@ -93,6 +102,7 @@ services:
             - DB_DATABASE=postgres
         depends_on:
             - link-service-postgres
+            - rabbitmq
 
     link-service-postgres:
         container_name: link-shortener_link-service-postgres

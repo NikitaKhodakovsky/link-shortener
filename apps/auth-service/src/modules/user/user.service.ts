@@ -3,11 +3,13 @@ import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 
 import { UserNotFoundException } from './user.exception'
+import { UserEventService } from './user-event.service'
 import { User } from './user.entity'
 
 @Injectable()
 export class UserService {
 	constructor(
+		private readonly userEventService: UserEventService,
 		@InjectRepository(User)
 		private readonly userRepository: Repository<User>
 	) {}
@@ -29,6 +31,6 @@ export class UserService {
 
 		await this.userRepository.remove(user)
 
-		return true
+		await this.userEventService.userDeletedEvent(userId)
 	}
 }
