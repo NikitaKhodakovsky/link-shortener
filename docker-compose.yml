@@ -29,6 +29,7 @@ services:
             dockerfile: apps/ui/Dockerfile
             args:
                 - PUBLIC_URL=/dashboard
+                - SERVICE=ui
         environment:
             - PUBLIC_URL=/dashboard
             - PORT=80
