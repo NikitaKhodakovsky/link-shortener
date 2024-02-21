@@ -1,8 +1,8 @@
+import { LinkStatisticRequest } from '@app/link-rabbitmq-contracts'
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
 import { LinkService } from './link.service'
-import { LinkStatisticDTO } from '../dtos'
 
 @Injectable()
 export class LinkStatisticService {
@@ -11,10 +11,15 @@ export class LinkStatisticService {
 		private readonly linkService: LinkService
 	) {}
 
-	public async statistic(userId: number, linkId: number): Promise<LinkStatisticDTO> {
+	public async statistic(userId: number, linkId: number): Promise<LinkStatisticRequest.Response> {
 		await this.linkService.findByIdOrFail(userId, linkId)
 
-		//TODO
-		return {} as any
+		const payload: LinkStatisticRequest.Request = { linkId }
+
+		return this.amqpConnection.request<LinkStatisticRequest.Response>({
+			exchange: LinkStatisticRequest.exchange,
+			routingKey: LinkStatisticRequest.routingKey,
+			payload
+		})
 	}
 }

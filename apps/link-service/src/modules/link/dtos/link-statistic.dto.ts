@@ -1,6 +1,7 @@
+import { LinkStatisticRequest } from '@app/link-rabbitmq-contracts'
 import { ApiProperty } from '@nestjs/swagger'
 
-export class LinkStatisticDTO {
+export class LinkStatisticDTO implements LinkStatisticRequest.Response {
 	@ApiProperty({ type: 'object', additionalProperties: { type: 'number' } })
 	platforms: Record<string, number>
 
