@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@app/click-rabbitmq-contracts": "*",
+		"@app/cookie-names": "*",
 		"@app/link-exceptions": "*",
 		"@app/link-rabbitmq-contracts": "*",
 		"@app/nestjs-constants": "*",

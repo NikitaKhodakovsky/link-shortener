@@ -14,6 +14,7 @@
 	"dependencies": {
 		"@app/click-rabbitmq-contracts": "*",
 		"@app/link-rabbitmq-contracts": "*",
+		"@app/postgres-env-validation": "*",
 		"@app/rabbitmq-env-validation": "*",
 		"@app/shared-rabbitmq-contracts": "*",
 		"@app/typeorm-base-entity": "*",
@@ -24,6 +25,7 @@
 		"@nestjs/typeorm": "^10.0.2",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.1",
+		"device-detector-js": "^3.0.3",
 		"pg": "^8.11.3",
 		"reflect-metadata": "^0.2.1",
 		"rxjs": "^7.8.1",
