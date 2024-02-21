@@ -45,11 +45,13 @@ export class CacheService {
 		return this.redis.get(this.linkIdKey(linkId))
 	}
 
-	public async cacheLink(backhalf: string, linkId: number, destination: string): Promise<void> {
+	public async cacheLink(backhalf: string, linkId: number, destination: string): Promise<CacheRecord> {
 		const record: CacheRecord = { linkId, destination }
 
 		await this.redis.set(this.backhalfKey(backhalf), JSON.stringify(record))
 		await this.redis.set(this.linkIdKey(linkId), backhalf)
+
+		return record
 	}
 
 	public async invalidateLinkById(linkId: number): Promise<void> {

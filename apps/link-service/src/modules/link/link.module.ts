@@ -3,8 +3,8 @@ import { Module } from '@nestjs/common'
 
 import { AlphanumericBackHalfGenerationStrategy, BackHalfGenerationStrategy } from './strategies'
 import { LinkEventService, LinkService, LinkStatisticService } from './services'
+import { LinkController, LinkRMQController } from './controllers'
 import { RabbitMQModule } from '../rabbitmq.module'
-import { LinkController } from './controllers'
 import { Link } from './entities'
 
 @Module({
@@ -12,6 +12,7 @@ import { Link } from './entities'
 	controllers: [LinkController],
 	providers: [
 		LinkStatisticService,
+		LinkRMQController,
 		LinkEventService,
 		LinkService,
 		{
