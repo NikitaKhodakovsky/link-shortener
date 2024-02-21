@@ -1,8 +1,8 @@
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { LinkNotFoundException } from '@app/link-exceptions'
-import { InjectRepository } from '@nestjs/typeorm'
+import { Repository, In, DataSource } from 'typeorm'
 import { paginate } from 'nestjs-typeorm-paginate'
 import { Injectable } from '@nestjs/common'
-import { Repository } from 'typeorm'
 
 import { BackHalfIsNotUniqueException } from '../exceptions'
 import { BackHalfGenerationStrategy } from '../strategies'
@@ -17,7 +17,9 @@ export class LinkService {
 		private readonly backHalfGenerationStrategy: BackHalfGenerationStrategy,
 		private readonly linkEventService: LinkEventService,
 		@InjectRepository(Link)
-		private readonly linkRepository: Repository<Link>
+		private readonly linkRepository: Repository<Link>,
+		@InjectDataSource()
+		private readonly dataSource: DataSource
 	) {}
 
 	public async create(userId: number, data: CreateLinkDTO) {
@@ -83,5 +85,28 @@ export class LinkService {
 			.orderBy('created_at', 'DESC')
 
 		return paginate(queryBuilder, { page, limit: perPage })
+	}
+
+	public async deleteAllByUserId(userId: number) {
+		const queryRunner = this.dataSource.createQueryRunner()
+
+		await queryRunner.startTransaction('READ COMMITTED')
+
+		try {
+			const links = await queryRunner.manager.findBy(Link, { userId })
+
+			const ids = links.map(l => l.id)
+
+			await queryRunner.manager.remove(Link, links)
+
+			// await this.linkEventService.linkDeletedEvent(ids)
+
+			await queryRunner.commitTransaction()
+		} catch (e) {
+			await queryRunner.rollbackTransaction()
+			throw e
+		} finally {
+			await queryRunner.release()
+		}
 	}
 }
