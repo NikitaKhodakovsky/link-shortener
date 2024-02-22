@@ -1,6 +1,6 @@
 import { CLICK_EXCHANGE_NAME } from './click.exchange'
 
-export namespace ClickCreateCommand {
+export namespace CreateClickCommand {
 	export const routingKey = 'click.command.create'
 	export const exchange = CLICK_EXCHANGE_NAME
 

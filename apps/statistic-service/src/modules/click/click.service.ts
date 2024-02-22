@@ -1,4 +1,4 @@
-import { ClickCreateCommand } from '@app/click-rabbitmq-contracts'
+import { CreateClickCommand } from '@app/click-rabbitmq-contracts'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Injectable } from '@nestjs/common'
 import { In, Repository } from 'typeorm'
@@ -17,7 +17,7 @@ export class ClickService {
 		private readonly clickRepository: Repository<Click>
 	) {}
 
-	public async create({ date, linkId, userAgent, ip }: ClickCreateCommand.Message) {
+	public async create({ date, linkId, userAgent, ip }: CreateClickCommand.Message) {
 		const parsedUA = await this.uaParsingStrategy.parse(userAgent)
 		const location = await this.locationParsingStrategy.parse(ip)
 
