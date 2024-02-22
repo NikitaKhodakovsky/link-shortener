@@ -12,10 +12,10 @@
 		"typeorm:prod": "npx typeorm -d ./dist/config/data-source.config.js"
 	},
 	"dependencies": {
+		"@app/http-server-env-validation": "*",
 		"@app/link-exceptions": "*",
 		"@app/link-rabbitmq-contracts": "*",
 		"@app/nestjs-auth-guard": "*",
-		"@app/nestjs-constants": "*",
 		"@app/nestjs-ioredis": "*",
 		"@app/nestjs-utils": "*",
 		"@app/postgres-env-validation": "*",

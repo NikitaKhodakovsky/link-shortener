@@ -1,9 +1,4 @@
 services:
-    rabbitmq:
-        image: rabbitmq:3.12.13-management-alpine
-        ports:
-            - 15672:15672
-
     ui:
         image: dev
         user: ${UID:-1000}:${GID:-1000}
@@ -14,7 +9,7 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        command: turbo dev --filter=ui
+        # command: turbo dev --filter=ui
 
     auth-service:
         image: dev
@@ -26,9 +21,7 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        command: turbo dev --filter=auth-service
-        ports:
-            - 4000:80
+        # command: turbo dev --filter=auth-service
 
     link-service:
         image: dev
@@ -40,9 +33,7 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        command: turbo dev --filter=link-service
-        ports:
-            - 4100:80
+        # command: turbo dev --filter=link-service
 
     click-service:
         image: dev
@@ -54,9 +45,7 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        command: turbo dev --filter=click-service
-        ports:
-            - 4200:80
+        # command: turbo dev --filter=click-service
 
     statistic-service:
         image: dev
@@ -69,16 +58,6 @@ services:
         environment:
             - NODE_ENV=development
         # command: turbo dev --filter=statistic-service
-        ports:
-            - 4300:80
-
-    redis-insight:
-        container_name: link-shortener_redis-insight
-        image: redislabs/redisinsight:latest
-        volumes:
-            - link-shortener_redis-insight-data:/db
-        ports:
-            - 5000:5540
 
     pgadmin:
         image: dpage/pgadmin4:8.3
@@ -89,7 +68,20 @@ services:
         volumes:
             - link-shortener_pgadmin-data:/var/lib/pgadmin
         ports:
-            - 4200:80
+            - 3000:80
+
+    redis-insight:
+        container_name: link-shortener_redis-insight
+        image: redislabs/redisinsight:latest
+        volumes:
+            - link-shortener_redis-insight-data:/db
+        ports:
+            - 4000:5540
+
+    rabbitmq:
+        image: rabbitmq:3.12.13-management-alpine
+        ports:
+            - 5000:15672
 
 volumes:
     link-shortener_redis-insight-data:

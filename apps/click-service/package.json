@@ -12,9 +12,9 @@
 	"dependencies": {
 		"@app/click-rabbitmq-contracts": "*",
 		"@app/cookie-names": "*",
+		"@app/http-server-env-validation": "*",
 		"@app/link-exceptions": "*",
 		"@app/link-rabbitmq-contracts": "*",
-		"@app/nestjs-constants": "*",
 		"@app/nestjs-ioredis": "*",
 		"@app/rabbitmq-env-validation": "*",
 		"@app/redis-env-validation": "*",
@@ -28,7 +28,6 @@
 		"@nestjs/swagger": "^7.3.0",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.1",
-		"envalid": "^8.0.0",
 		"ioredis": "^5.3.2",
 		"nestjs-real-ip": "^3.0.1",
 		"reflect-metadata": "^0.2.1",

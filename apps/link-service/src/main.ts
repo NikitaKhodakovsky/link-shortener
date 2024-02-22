@@ -1,16 +1,17 @@
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { SWAGGER_ROUTE } from '@app/nestjs-constants'
 import { ValidationPipe } from '@nestjs/common'
 import { SwaggerModule } from '@nestjs/swagger'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
 
+import { GLOBAL_PREFIX, SERVER_PORT, SWAGGER_ROUTE } from './config/env'
 import { swaggerConfig } from './config/swagger.config'
 import { AppModule } from './modules/app.module'
-import { SERVER_PORT } from './config/env'
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule)
+
+	app.setGlobalPrefix(GLOBAL_PREFIX)
 
 	app.use(cookieParser())
 

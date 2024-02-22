@@ -1,6 +1,6 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
 import { Controller, Get, HttpCode, Param, Req, Res } from '@nestjs/common'
-import { ApiResponse, ApiExcludeEndpoint } from '@nestjs/swagger'
+import { ApiResponse, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger'
 import { LinkNotFoundException } from '@app/link-exceptions'
 import { Request, Response } from 'express'
 import { RealIP } from 'nestjs-real-ip'
@@ -9,17 +9,12 @@ import { ClickService } from './click.service'
 import { LinkService } from './link.service'
 
 @Controller()
+@ApiTags('Click')
 export class ClickController {
 	constructor(
 		private readonly clickService: ClickService,
 		private readonly linkService: LinkService
 	) {}
-
-	/* Do not register favicon.ico requests as a click  */
-	@Get('favicon.ico')
-	@HttpCode(404)
-	@ApiExcludeEndpoint()
-	public async favicon() {}
 
 	@Get('/:backhalf')
 	@HttpCode(301)

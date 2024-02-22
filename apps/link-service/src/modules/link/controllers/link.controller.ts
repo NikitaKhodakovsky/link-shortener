@@ -27,7 +27,7 @@ import { ApiOkPaginatedResponse } from '../decorators'
 import { Link } from '../entities'
 
 @ApiTags('Links')
-@Controller('links')
+@Controller()
 export class LinkController {
 	constructor(
 		private readonly linkStatisticService: LinkStatisticService,

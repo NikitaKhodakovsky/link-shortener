@@ -1,9 +1,19 @@
-FROM node:20.10.0-bookworm
+FROM node:20.10.0-alpine
 
 ENV NODE_ENV=development
 
 WORKDIR /app
 
+# Tools
+RUN apk add git
+
+RUN apk add curl
+
+RUN apk add bash
+
 RUN npm i -g turbo
+
+# Aliases
+RUN echo 'alias ll="ls -lAhS"' >> ~/.bashrc
 
 CMD sleep 1d

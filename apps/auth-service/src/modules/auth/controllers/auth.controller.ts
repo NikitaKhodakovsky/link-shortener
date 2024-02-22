@@ -26,7 +26,7 @@ import { UserService } from '../../user/user.service'
 import { Tokens } from '../decorators'
 
 @ApiTags('Auth')
-@Controller('auth')
+@Controller()
 export class AuthController {
 	constructor(
 		private readonly jwtCookieService: JWTCookieService,

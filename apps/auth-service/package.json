@@ -13,8 +13,8 @@
 	},
 	"dependencies": {
 		"@app/cookie-names": "*",
+		"@app/http-server-env-validation": "*",
 		"@app/nestjs-auth-guard": "*",
-		"@app/nestjs-constants": "*",
 		"@app/nestjs-ioredis": "*",
 		"@app/nestjs-utils": "*",
 		"@app/postgres-env-validation": "*",

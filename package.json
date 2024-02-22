@@ -7,7 +7,7 @@
 		"lint": "turbo lint",
 		"format": "prettier --write .",
 		"prune": "turbo run prune",
-		"clean:turbo": "rm -rf `find . -type d -name .turbo`",
+		"clean:turbo": "rm -rf `find . -type d -name .turbo` && rm -rf node_modules/.cache/turbo",
 		"clean:node_modules": "rm -rf `find . -type d -name node_modules`"
 	},
 	"devDependencies": {
