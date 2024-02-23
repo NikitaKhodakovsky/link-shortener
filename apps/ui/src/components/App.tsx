@@ -1,8 +1,7 @@
+import { RequireAuth, WithoutAuth } from '@app/react-auth'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-
-import { RequireAuth, WithoutAuth } from '../auth'
 
 import { FallbackPage, NotFoundPage } from '../pages/FallbackPages'
 import { RegisterPage } from '../pages/AuthPages/RegisterPage'

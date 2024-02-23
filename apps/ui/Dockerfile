@@ -15,11 +15,19 @@ FROM base AS turbo
 RUN npm i -g turbo
 
 
+# COPY: Exclude nginx folder to prevent cache invalidation at prune and build stages when nginx configuration is changed.
+FROM base AS copy
+
+COPY . .
+
+RUN rm -rf apps/${SERVICE}/nginx
+
+
 
 # PRUNE
 FROM turbo AS prune
 
-COPY . .
+COPY --from=copy /app .
 
 RUN turbo run prune --filter=${SERVICE}
 
@@ -36,9 +44,9 @@ COPY --from=prune app/pruned/${SERVICE}/full .
 
 COPY tsconfig.json .
 
-ARG PUBLIC_URL
+ARG BASE_URL
 
-ENV PUBLIC_URL=${PUBLIC_URL}
+ENV BASE_URL=${BASE_URL}
 
 RUN turbo build --filter=${SERVICE} --no-cache
 
@@ -51,4 +59,4 @@ ARG SERVICE
 
 COPY apps/${SERVICE}/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=build /app/apps/${SERVICE}/build /usr/share/nginx/html
+COPY --from=build /app/apps/${SERVICE}/dist /usr/share/nginx/html

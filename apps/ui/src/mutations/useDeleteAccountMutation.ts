@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAuthManager } from '@app/react-auth'
 
 import { deleteAccount } from '../__generated__/apiComponents'
-import { useAuthManager } from '../auth'
 
 export function useDeleteAccountMutation() {
 	const authManager = useAuthManager()

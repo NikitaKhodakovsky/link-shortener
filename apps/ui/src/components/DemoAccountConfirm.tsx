@@ -1,9 +1,9 @@
+import { useAuth } from '@app/react-auth'
 import { useEffect } from 'react'
 
 import { useDemoAccountMutation } from '../mutations/useDemoAccountMutation'
 import { toastErrorHandler } from '../utils/toastErrorHandler'
 import { useIsOpen } from '../hooks/useIsOpen'
-import { useAuth } from '../auth'
 
 import { Modal } from './Modal'
 

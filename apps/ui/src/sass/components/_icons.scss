@@ -10,26 +10,26 @@
 	mask-size: contain;
 
 	&.profile {
-		mask-image: url('../../../public/icons/profile.svg');
+		mask-image: url('assets/icons/profile.svg');
 	}
 
 	&.edit {
-		mask-image: url('../../../public/icons/edit.svg');
+		mask-image: url('assets/icons/edit.svg');
 	}
 
 	&.delete {
-		mask-image: url('../../../public/icons/delete.svg');
+		mask-image: url('assets/icons/delete.svg');
 	}
 
 	&.close {
-		mask-image: url('../../../public/icons/close.svg');
+		mask-image: url('assets/icons/close.svg');
 	}
 
 	&.sun {
-		mask-image: url('../../../public/icons/sun.svg');
+		mask-image: url('assets/icons/sun.svg');
 	}
 
 	&.moon {
-		mask-image: url('../../../public/icons/moon.svg');
+		mask-image: url('assets/icons/moon.svg');
 	}
 }

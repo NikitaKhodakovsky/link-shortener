@@ -21,10 +21,7 @@ export function LinksPage() {
 	const { data, isPending, isError } = useAllLinksQuery(page, 8)
 
 	const setPage = (page: number) =>
-		navigate(
-			{ pathname: '/', search: createSearchParams({ page: page.toString() }).toString() },
-			{ state: { page } }
-		)
+		navigate({ pathname: '/', search: createSearchParams({ page: page.toString() }).toString() }, { state: { page } })
 
 	return (
 		<div className={styles.wrap}>
@@ -41,7 +38,7 @@ export function LinksPage() {
 			{data && data.meta.totalPages !== 0 && (
 				<Fragment>
 					<ul className={styles.linksList}>
-						{data.items.map((link) => (
+						{data.items.map(link => (
 							<li>
 								<LinkItem animate link={link} navState={{ page }} />
 							</li>
