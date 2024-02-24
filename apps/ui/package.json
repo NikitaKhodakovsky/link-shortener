@@ -11,10 +11,14 @@
 		"prune": "turbo prune ui --docker --out-dir ./pruned/ui",
 		"generate:fetchers": "npx openapi-codegen gen auth && npx openapi-codegen gen links",
 		"generate:schema:auth": "curl auth-service/api/auth/swagger-yaml --output ./swagger.auth.yaml",
-		"generate:schema:links": "curl link-service/api/links/swagger-yaml --output ./swagger.links.yaml"
+		"generate:schema:links": "curl link-service/api/links/swagger-yaml --output ./swagger.links.yaml",
+		"proxy:start": "node ./proxy.js &",
+		"proxy:stop": "kill-port 80",
+		"proxy:restart": "npm run proxy:stop && npm run proxy:start"
 	},
 	"dependencies": {
 		"@app/react-auth": "*",
+		"@app/url-builder": "*",
 		"@tanstack/react-query": "^5.21.7",
 		"chart.js": "^4.4.1",
 		"formik": "^2.4.5",
@@ -44,6 +48,8 @@
 		"eslint": "^8.56.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.5",
+		"http-proxy": "^1.18.1",
+		"kill-port": "^2.0.1",
 		"sass": "^1.71.1",
 		"typescript": "^5.2.2",
 		"vite": "^5.1.4",

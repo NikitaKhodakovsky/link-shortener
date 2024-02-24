@@ -13,7 +13,8 @@ export default defineConfig({
 	},
 	base: process.env.BASE_URL,
 	server: {
-		port: Number(process.env.PORT)
+		host: true,
+		port: 3000
 	},
 	resolve: {
 		alias: {
