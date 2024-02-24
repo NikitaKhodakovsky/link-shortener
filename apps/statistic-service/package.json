@@ -17,7 +17,6 @@
 		"@app/postgres-env-validation": "*",
 		"@app/rabbitmq-env-validation": "*",
 		"@app/shared-rabbitmq-contracts": "*",
-		"@app/typeorm-base-entity": "*",
 		"@app/url-builder": "*",
 		"@golevelup/nestjs-rabbitmq": "^5.1.0",
 		"@nestjs/common": "^10.3.3",
@@ -32,6 +31,7 @@
 		"typeorm": "^0.3.20"
 	},
 	"devDependencies": {
+		"@app/typeorm-base-entity": "*",
 		"@nestjs/cli": "^10.3.2",
 		"@nestjs/schematics": "^10.1.1",
 		"@types/node": "^20.11.19",
