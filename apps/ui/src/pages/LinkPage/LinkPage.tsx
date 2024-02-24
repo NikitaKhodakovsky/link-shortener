@@ -11,7 +11,7 @@ import { useToHome } from '../../hooks/useToHome'
 import { LinkItem } from '../../components/LinkItem'
 import { Loader } from '../../components/Loader'
 
-const Chart = lazy(() => import('../../components/Chart').then((module) => ({ default: module.Chart })))
+const Chart = lazy(() => import('../../components/Chart').then(module => ({ default: module.Chart })))
 
 export function LinkPage() {
 	const params = useParams()
@@ -34,7 +34,7 @@ export function LinkPage() {
 			<div className={styles.grid}>
 				{lq.isError && (
 					<div className={`empty ${styles.row}`}>
-						{lq.error.status === 404 ? 'Link not found' : 'Something went wrong...'}
+						{'status' in lq.error && lq.error.status === 404 ? 'Link not found' : 'Something went wrong...'}
 					</div>
 				)}
 				{lq.isPending && <Loader className={styles.row} />}

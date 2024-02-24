@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query'
 import { useAuthManager } from '@app/react-auth'
 
-import { RegisterError, RegisterVariables, register } from '../__generated__/apiComponents'
-import { User } from '../__generated__/apiSchemas'
+import { RegisterError, RegisterVariables, register } from 'swagger/auth/components'
+import { JWTPayloadDTO } from 'swagger/auth/schemas'
 
 export function useRegisterMutation() {
 	const authManager = useAuthManager()
 
-	return useMutation<User, RegisterError, RegisterVariables>({
+	return useMutation<JWTPayloadDTO, RegisterError, RegisterVariables>({
 		mutationFn: register,
 		onSuccess: () => authManager.setAuth(true)
 	})

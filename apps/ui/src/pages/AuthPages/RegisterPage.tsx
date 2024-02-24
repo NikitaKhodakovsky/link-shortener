@@ -6,7 +6,7 @@ import styles from './AuthPages.module.scss'
 
 import { useRegisterMutation } from '../../mutations/useRegisterMutation'
 import { toastErrorHandler } from '../../utils/toastErrorHandler'
-import { checkUsername } from '../../__generated__/apiComponents'
+import { checkUsername } from 'swagger/auth/components'
 
 import { FormikInput } from '../../components/FormikInput'
 import { LoginFormValues } from './LoginPage'
@@ -47,11 +47,7 @@ export function RegisterPage() {
 
 	return (
 		<div className={styles.wrapper}>
-			<Formik
-				validationSchema={registerFormValidationSchema}
-				initialValues={registerFormInitialValues}
-				onSubmit={register}
-			>
+			<Formik validationSchema={registerFormValidationSchema} initialValues={registerFormInitialValues} onSubmit={register}>
 				{({ isSubmitting }) => (
 					<Form className={styles.content} autoComplete="off">
 						<h1 className="title">New Account</h1>
@@ -63,13 +59,7 @@ export function RegisterPage() {
 								placeholder="Some username"
 								validate={validateUsername}
 							/>
-							<FormikInput
-								name="password"
-								label="Password"
-								required
-								placeholder="Min. 8 characters"
-								type="password"
-							/>
+							<FormikInput name="password" label="Password" required placeholder="Min. 8 characters" type="password" />
 							<FormikInput
 								name="confirmation"
 								label="Password Confirmation"

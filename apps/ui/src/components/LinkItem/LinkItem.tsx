@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 
 import styles from './LinkItem.module.scss'
 
-import { Link as ILink } from '../../__generated__/apiSchemas'
+import { Link as ILink } from 'swagger/links/schemas'
 
 import { formatDate } from '../../utils/formatDate'
 import { useIsOpen } from '../../hooks/useIsOpen'
@@ -25,12 +25,7 @@ export function LinkItem({ link, animate = false, navState, className }: LinkIte
 
 	return (
 		<Fragment>
-			<UpdateLinkModal
-				linkId={id}
-				isOpen={updateLinkModal}
-				closeHandler={closeUpdateLinkModal}
-				values={{ name, destination }}
-			/>
+			<UpdateLinkModal linkId={id} isOpen={updateLinkModal} closeHandler={closeUpdateLinkModal} values={{ name, destination }} />
 			<DeleteLinkConfirm linkId={id} isOpen={deleteLinkConfirm} closeHandler={closeDeleteLinkConfirm} />
 			<div className={`${styles.linkItem} ${className ?? ''} ${animate ? styles.animate : ''}`}>
 				<Link to={`/links/${id}`} className={styles.content} state={navState}>

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuthManager } from '@app/react-auth'
 
-import { logout } from '../__generated__/apiComponents'
+import { logout } from 'swagger/auth/components'
 
 export function useLogoutMutation() {
 	const authManager = useAuthManager()

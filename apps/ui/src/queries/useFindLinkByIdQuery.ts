@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { FindLinkByIdError, findLinkById } from '../__generated__/apiComponents'
-import { Link } from '../__generated__/apiSchemas'
+import { FindLinkByIdError, findLinkById } from 'swagger/links/components'
+import { Link } from 'swagger/links/schemas'
 
 export const linkDetailsQueryKeyBase = ['link', 'details']
 

@@ -1,282 +1,6 @@
 openapi: 3.0.0
 paths:
-  /auth/register:
-    post:
-      operationId: register
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RegisterDTO'
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '409':
-          content:
-            application/json:
-              examples:
-                UsernameConflictException:
-                  description: User with such username already exists
-                  value:
-                    statusCode: 409
-                    message: User with such username already exists
-                    error: Conflict
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 409
-                  message:
-                    type: string
-                    example: User with such username already exists
-                  error:
-                    type: string
-                    example: Conflict
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Auth
-  /auth/login:
-    post:
-      operationId: login
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginDTO'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                InvalidPasswordException:
-                  description: Invalid password
-                  value:
-                    statusCode: 401
-                    message: Invalid password
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Invalid password
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '404':
-          content:
-            application/json:
-              examples:
-                UserNotFoundException:
-                  description: User not found
-                  value:
-                    statusCode: 404
-                    message: User not found
-                    error: Not Found
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 404
-                  message:
-                    type: string
-                    example: User not found
-                  error:
-                    type: string
-                    example: Not Found
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Auth
-  /auth/logout:
-    delete:
-      operationId: logout
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: boolean
-      tags:
-        - Auth
-  /auth/profile:
-    get:
-      operationId: profile
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Auth
-    delete:
-      operationId: deleteAccount
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: boolean
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Auth
-  /auth/username/{username}:
-    get:
-      operationId: checkUsername
-      parameters:
-        - name: username
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UsernameCheckDTO'
-      tags:
-        - Auth
-  /links:
+  /api/links:
     post:
       operationId: createLink
       parameters: []
@@ -492,8 +216,8 @@ paths:
           description: ''
       tags:
         - Links
-  /links/{linkId}:
-    post:
+  /api/links/{linkId}:
+    patch:
       operationId: updateLink
       parameters:
         - name: linkId
@@ -605,10 +329,6 @@ paths:
       responses:
         '200':
           description: ''
-          content:
-            application/json:
-              schema:
-                type: boolean
         '400':
           content:
             application/json:
@@ -784,7 +504,7 @@ paths:
           description: ''
       tags:
         - Links
-  /links/{linkId}/statistic:
+  /api/links/{linkId}/statistic:
     get:
       operationId: linkStatistic
       parameters:
@@ -880,59 +600,8 @@ paths:
           description: ''
       tags:
         - Links
-  /{backHalf}:
-    get:
-      operationId: click
-      parameters:
-        - name: backHalf
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '301':
-          description: Redirect to links destination.
-        '404':
-          content:
-            application/json:
-              examples:
-                LinkNotFoundException:
-                  description: Link not found
-                  value:
-                    statusCode: 404
-                    message: Link not found
-                    error: Not Found
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 404
-                  message:
-                    type: string
-                    example: Link not found
-                  error:
-                    type: string
-                    example: Not Found
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Click
-  /demo:
-    post:
-      operationId: demo
-      summary: ''
-      description: Creates a demo account with demo data
-      parameters: []
-      responses:
-        '201':
-          description: ''
-      tags:
-        - Demo
 info:
-  title: Link Shortener
+  title: Link Service
   description: ''
   version: 1.0.0
   contact: {}
@@ -943,57 +612,8 @@ components:
     cookie:
       type: apiKey
       in: cookie
-      name: sid
+      name: access-token
   schemas:
-    RegisterDTO:
-      type: object
-      properties:
-        username:
-          type: string
-          minLength: 4
-          maxLength: 32
-        password:
-          type: string
-          minLength: 8
-          maxLength: 32
-      required:
-        - username
-        - password
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-        id:
-          type: number
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      required:
-        - username
-        - id
-        - createdAt
-        - updatedAt
-    LoginDTO:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-      required:
-        - username
-        - password
-    UsernameCheckDTO:
-      type: object
-      properties:
-        isTaken:
-          type: boolean
-      required:
-        - isTaken
     CreateLinkDTO:
       type: object
       properties:
@@ -1011,12 +631,6 @@ components:
     Link:
       type: object
       properties:
-        backhalf:
-          type: string
-        name:
-          type: string
-        destination:
-          type: string
         id:
           type: number
         createdAt:
@@ -1025,13 +639,19 @@ components:
         updatedAt:
           format: date-time
           type: string
+        backhalf:
+          type: string
+        name:
+          type: string
+        destination:
+          type: string
       required:
-        - backhalf
-        - name
-        - destination
         - id
         - createdAt
         - updatedAt
+        - backhalf
+        - name
+        - destination
     UpdateLinkDTO:
       type: object
       properties:

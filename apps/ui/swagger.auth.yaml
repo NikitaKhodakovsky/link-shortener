@@ -1,0 +1,436 @@
+openapi: 3.0.0
+paths:
+  /api/auth/register:
+    post:
+      operationId: register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTPayloadDTO'
+        '400':
+          content:
+            application/json:
+              examples:
+                BadRequestException:
+                  description: Bad Request
+                  value:
+                    statusCode: 400
+                    message: Bad Request
+                    error: Bad Request
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad Request
+                  error:
+                    type: string
+                    example: Bad Request
+                required:
+                  - statusCode
+                  - message
+          description: ''
+        '409':
+          content:
+            application/json:
+              examples:
+                UsernameConflictException:
+                  description: User with such username already exists
+                  value:
+                    statusCode: 409
+                    message: User with such username already exists
+                    error: Conflict
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 409
+                  message:
+                    type: string
+                    example: User with such username already exists
+                  error:
+                    type: string
+                    example: Conflict
+                required:
+                  - statusCode
+                  - message
+          description: ''
+      tags:
+        - Auth
+  /api/auth/login:
+    post:
+      operationId: login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDTO'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTPayloadDTO'
+        '400':
+          content:
+            application/json:
+              examples:
+                BadRequestException:
+                  description: Bad Request
+                  value:
+                    statusCode: 400
+                    message: Bad Request
+                    error: Bad Request
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad Request
+                  error:
+                    type: string
+                    example: Bad Request
+                required:
+                  - statusCode
+                  - message
+          description: ''
+        '401':
+          content:
+            application/json:
+              examples:
+                InvalidPasswordException:
+                  description: Invalid password
+                  value:
+                    statusCode: 401
+                    message: Invalid password
+                    error: Unauthorized
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 401
+                  message:
+                    type: string
+                    example: Invalid password
+                  error:
+                    type: string
+                    example: Unauthorized
+                required:
+                  - statusCode
+                  - message
+          description: ''
+        '404':
+          content:
+            application/json:
+              examples:
+                UserNotFoundException:
+                  description: User not found
+                  value:
+                    statusCode: 404
+                    message: User not found
+                    error: Not Found
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 404
+                  message:
+                    type: string
+                    example: User not found
+                  error:
+                    type: string
+                    example: Not Found
+                required:
+                  - statusCode
+                  - message
+          description: ''
+      tags:
+        - Auth
+  /api/auth/refresh:
+    post:
+      operationId: refresh
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTPayloadDTO'
+        '401':
+          content:
+            application/json:
+              examples:
+                UnauthorizedException:
+                  description: Unauthorized
+                  value:
+                    statusCode: 401
+                    message: Unauthorized
+                    error: Unauthorized
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+                  error:
+                    type: string
+                    example: Unauthorized
+                required:
+                  - statusCode
+                  - message
+          description: ''
+        '404':
+          content:
+            application/json:
+              examples:
+                UserNotFoundException:
+                  description: User not found
+                  value:
+                    statusCode: 404
+                    message: User not found
+                    error: Not Found
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 404
+                  message:
+                    type: string
+                    example: User not found
+                  error:
+                    type: string
+                    example: Not Found
+                required:
+                  - statusCode
+                  - message
+          description: ''
+      tags:
+        - Auth
+  /api/auth/logout:
+    delete:
+      operationId: logout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Auth
+  /api/auth/profile:
+    get:
+      operationId: profile
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          content:
+            application/json:
+              examples:
+                UnauthorizedException:
+                  description: Unauthorized
+                  value:
+                    statusCode: 401
+                    message: Unauthorized
+                    error: Unauthorized
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+                  error:
+                    type: string
+                    example: Unauthorized
+                required:
+                  - statusCode
+                  - message
+          description: ''
+        '404':
+          content:
+            application/json:
+              examples:
+                UserNotFoundException:
+                  description: User not found
+                  value:
+                    statusCode: 404
+                    message: User not found
+                    error: Not Found
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 404
+                  message:
+                    type: string
+                    example: User not found
+                  error:
+                    type: string
+                    example: Not Found
+                required:
+                  - statusCode
+                  - message
+          description: ''
+      tags:
+        - Auth
+    delete:
+      operationId: deleteAccount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+        '401':
+          content:
+            application/json:
+              examples:
+                UnauthorizedException:
+                  description: Unauthorized
+                  value:
+                    statusCode: 401
+                    message: Unauthorized
+                    error: Unauthorized
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+                  error:
+                    type: string
+                    example: Unauthorized
+                required:
+                  - statusCode
+                  - message
+          description: ''
+      tags:
+        - Auth
+  /api/auth/username/{username}:
+    get:
+      operationId: checkUsername
+      parameters:
+        - name: username
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameCheckResponseDTO'
+      tags:
+        - Auth
+info:
+  title: Auth Service
+  description: ''
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    cookie:
+      type: apiKey
+      in: cookie
+      name: access-token
+  schemas:
+    RegisterDTO:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 4
+          maxLength: 32
+        password:
+          type: string
+          minLength: 8
+          maxLength: 32
+      required:
+        - username
+        - password
+    JWTPayloadDTO:
+      type: object
+      properties:
+        userId:
+          type: number
+        exp:
+          type: number
+        iat:
+          type: number
+      required:
+        - userId
+        - exp
+    LoginDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        username:
+          type: string
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - username
+    UsernameCheckResponseDTO:
+      type: object
+      properties:
+        isTaken:
+          type: boolean
+      required:
+        - isTaken

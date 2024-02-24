@@ -9,8 +9,9 @@
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"prune": "turbo prune ui --docker --out-dir ./pruned/ui",
-		"generate:fetchers": "npx openapi-codegen gen api",
-		"generate:schema": "curl server/swagger-yaml --output ./swagger.yaml"
+		"generate:fetchers": "npx openapi-codegen gen auth && npx openapi-codegen gen links",
+		"generate:schema:auth": "curl auth-service/api/auth/swagger-yaml --output ./swagger.auth.yaml",
+		"generate:schema:links": "curl link-service/api/links/swagger-yaml --output ./swagger.links.yaml"
 	},
 	"dependencies": {
 		"@app/react-auth": "*",

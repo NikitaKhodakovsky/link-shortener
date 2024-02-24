@@ -1,11 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import {
-	FindAllLinksQueryParams,
-	FindAllLinksResponse,
-	FindAllLinksError,
-	findAllLinks
-} from '../__generated__/apiComponents'
+import { FindAllLinksQueryParams, FindAllLinksResponse, FindAllLinksError, findAllLinks } from 'swagger/links/components'
 
 export const allLinksQueryKeyBase = ['link', 'list']
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { LinkStatisticError, linkStatistic } from '../__generated__/apiComponents'
-import { LinkStatisticDTO } from '../__generated__/apiSchemas'
+import { LinkStatisticError, linkStatistic } from 'swagger/links/components'
+import { LinkStatisticDTO } from 'swagger/links/schemas'
 
 export const linkStatisticQueryKeyBase = ['link', 'statistic']
 

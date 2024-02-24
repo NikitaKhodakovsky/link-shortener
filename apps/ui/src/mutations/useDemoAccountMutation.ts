@@ -1,7 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 import { useAuthManager } from '@app/react-auth'
 
-import { demo } from '../__generated__/apiComponents'
+//TODO
+
+async function demo() {
+	console.log('NOT IMPLEMENTED')
+}
 
 export function useDemoAccountMutation() {
 	const authManager = useAuthManager()
