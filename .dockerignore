@@ -33,6 +33,7 @@
 # Git 
 **/.gitignore
 **/.gitkeep
+**/.git
 
 # NestJS
 **/nest-cli.json
