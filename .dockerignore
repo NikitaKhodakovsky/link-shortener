@@ -35,8 +35,5 @@
 **/.gitkeep
 **/.git
 
-# NestJS
-**/nest-cli.json
-
 # ESLint
 **/.eslint*
