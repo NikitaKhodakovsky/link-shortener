@@ -1,4 +1,17 @@
 services:
+    builder:
+        image: dev
+        user: ${UID:-1000}:${GID:-1000}
+        restart: no
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ./:/app
+        environment:
+            - NODE_ENV=development
+        command: turbo build
+
     ui:
         image: dev
         user: ${UID:-1000}:${GID:-1000}
@@ -9,7 +22,12 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        # command: turbo dev --filter=ui
+        command: turbo dev --filter=ui
+        depends_on:
+            builder:
+                condition: service_completed_successfully
+        healthcheck:
+            disable: true
 
     auth-service:
         image: dev
@@ -21,7 +39,10 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        # command: turbo dev --filter=auth-service
+        command: turbo dev --filter=auth-service
+        depends_on:
+            builder:
+                condition: service_completed_successfully
 
     link-service:
         image: dev
@@ -33,7 +54,10 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        # command: turbo dev --filter=link-service
+        command: turbo dev --filter=link-service
+        depends_on:
+            builder:
+                condition: service_completed_successfully
 
     click-service:
         image: dev
@@ -45,7 +69,10 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        # command: turbo dev --filter=click-service
+        command: turbo dev --filter=click-service
+        depends_on:
+            builder:
+                condition: service_completed_successfully
 
     statistic-service:
         image: dev
@@ -57,7 +84,10 @@ services:
             - ./:/app
         environment:
             - NODE_ENV=development
-        # command: turbo dev --filter=statistic-service
+        command: turbo dev --filter=statistic-service
+        depends_on:
+            builder:
+                condition: service_completed_successfully
 
     pgadmin:
         image: dpage/pgadmin4:8.3
