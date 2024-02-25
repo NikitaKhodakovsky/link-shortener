@@ -39,7 +39,7 @@ export function LinksPage() {
 				<Fragment>
 					<ul className={styles.linksList}>
 						{data.items.map(link => (
-							<li>
+							<li key={link.id}>
 								<LinkItem animate link={link} navState={{ page }} />
 							</li>
 						))}
