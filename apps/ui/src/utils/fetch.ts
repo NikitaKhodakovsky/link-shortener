@@ -1,5 +1,3 @@
-const baseURL = ''
-
 export class HTTPError extends Error {
 	public readonly message: string
 
@@ -76,8 +74,10 @@ export async function fetch<
 	}
 }
 
+const baseURL = window.location.origin
+
 export function createURL(baseURL: string, path: string, pathParams: PathParams = {}, queryParams: QueryParams = {}): string {
-	const xPath = Object.keys(pathParams).reduce((path, param) => path.replace(`:${param}`, `${pathParams[param]}`), path)
+	const xPath = Object.keys(pathParams).reduce((path, param) => path.replace(`{${param}}`, `${pathParams[param]}`), path)
 
 	const query: string[] = []
 

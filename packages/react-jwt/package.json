@@ -1,0 +1,14 @@
+{
+	"name": "@app/react-jwt",
+	"private": true,
+	"type": "module",
+	"types": "./src/index.ts",
+	"module": "./dist/index.js",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"@app/react-auth": "*",
+		"react": "^18.2.0"
+	}
+}
