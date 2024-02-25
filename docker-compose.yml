@@ -55,6 +55,7 @@ services:
             dockerfile: apps/ui/Dockerfile
             args:
                 - SERVICE=ui
+                - BASE_URL=/dashboard
         environment:
             - BASE_URL=/dashboard
             - PORT=80
