@@ -3,6 +3,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common'
 
 import { RefreshTokenGenerationStrategy } from '../strategies'
 import { RefreshTokenService } from './refresh-token.service'
+import { UserService } from '../../user/user.service'
 
 export interface TokenPair {
 	accessToken: string
@@ -19,7 +20,8 @@ export class JWTService {
 		private readonly refreshTokenGenerationStrategy: RefreshTokenGenerationStrategy,
 		private readonly jwtGenerationStrategy: JWTGenerationStrategy,
 		private readonly jwtDecodingStrategy: JWTDecodingStrategy,
-		private readonly refreshTokenService: RefreshTokenService
+		private readonly refreshTokenService: RefreshTokenService,
+		private readonly userService: UserService
 	) {}
 
 	public async generate(userId: number): Promise<TokenPairWithAccessTokenPayload> {
@@ -39,7 +41,7 @@ export class JWTService {
 		const storedAccessToken = await this.refreshTokenService.get(refreshToken)
 
 		if (!storedAccessToken) {
-			throw new UnauthorizedException('The token had already been used, expired or been revoked')
+			throw new UnauthorizedException('Refresh token had already been used, expired, or been revoked')
 		}
 
 		if (accessToken !== storedAccessToken) {
@@ -51,6 +53,8 @@ export class JWTService {
 		if (typeof payload !== 'object' || typeof payload.userId !== 'number') {
 			throw new UnauthorizedException('Invalid token payload')
 		}
+
+		await this.userService.findOneByIdOrFail(payload.userId)
 
 		const pair = await this.generate(payload.userId)
 

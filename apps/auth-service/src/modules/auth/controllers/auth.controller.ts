@@ -61,16 +61,9 @@ export class AuthController {
 	}
 
 	@Post('refresh')
-	@UseGuards(AuthGuard)
 	@HttpCode(HttpStatus.OK)
 	@ApiException(() => [UnauthorizedException, UserNotFoundException])
-	public async refresh(
-		@UserId() userId: number,
-		@Tokens() tokenPair: TokenPair,
-		@Res({ passthrough: true }) res: Response
-	): Promise<JWTPayloadDTO> {
-		await this.userService.findOneByIdOrFail(userId)
-
+	public async refresh(@Tokens() tokenPair: TokenPair, @Res({ passthrough: true }) res: Response): Promise<JWTPayloadDTO> {
 		const { accessToken, refreshToken, accessTokenPayload } = await this.jwtService.refresh(tokenPair)
 
 		await this.jwtCookieService.setCookie(res, { accessToken, refreshToken })
