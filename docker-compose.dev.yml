@@ -89,6 +89,21 @@ services:
             builder:
                 condition: service_completed_successfully
 
+    demo-service:
+        image: dev
+        user: ${UID:-1000}:${GID:-1000}
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ./:/app
+        environment:
+            - NODE_ENV=development
+        command: turbo dev --filter=demo-service
+        depends_on:
+            builder:
+                condition: service_completed_successfully
+
     pgadmin:
         image: dpage/pgadmin4:8.3
         container_name: link-shortener_pgadmin

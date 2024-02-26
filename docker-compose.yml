@@ -286,6 +286,27 @@ services:
             timeout: 5s
             retries: 3
 
+    demo-service:
+        container_name: link-shortener_demo-service
+        restart: always
+        init: true
+        build:
+            dockerfile: Dockerfile.nestjs
+            context: .
+            args:
+                - SERVICE=demo-service
+        environment:
+            - SERVER_PORT=80
+            - GLOBAL_PREFIX=/api/demo
+            - JWT_PUBLIC_KEY
+            - RMQ_HOST=rabbitmq
+            - RMQ_PORT=5672
+            - RMQ_USERNAME
+            - RMQ_PASSWORD
+        depends_on:
+            rabbitmq:
+                condition: service_healthy
+
 volumes:
     link-shortener_auth-service-postgres:
     link-shortener_auth-service-redis:

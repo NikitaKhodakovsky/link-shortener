@@ -1,35 +1,38 @@
+import { VerifyLinkOwnershipRequest } from '@app/link-rabbitmq-contracts'
+import { CreateClickCommand } from '@app/click-rabbitmq-contracts'
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
-import crypto from 'crypto'
-
-import { ClickService } from '../click/click.service'
-import { AuthService } from '../auth/auth.service'
-import { LinkService } from '../link/link.service'
-import { createDemoLinks } from './demo.data'
-import { createClicks } from './demo.utils'
+import UserAgent from 'user-agents'
 
 @Injectable()
 export class DemoService {
-	constructor(
-		private readonly clickService: ClickService,
-		private readonly authService: AuthService,
-		private readonly linkService: LinkService
-	) {}
+	constructor(private readonly amqpConnection: AmqpConnection) {}
 
-	public async demo() {
-		const username = crypto.randomBytes(20).toString('hex')
-		const password = crypto.randomBytes(20).toString('hex')
+	public async createClicks(userId: number, linkIds: number[]) {
+		const payload: VerifyLinkOwnershipRequest.Request = { userId, linkIds }
 
-		const userId = await this.authService.register(username, password)
+		const response = await this.amqpConnection.request<VerifyLinkOwnershipRequest.Response>({
+			exchange: VerifyLinkOwnershipRequest.exchange,
+			routingKey: VerifyLinkOwnershipRequest.routingKey,
+			payload
+		})
 
 		const promises: Promise<unknown>[] = []
 
-		for (const item of createDemoLinks()) {
-			const promise = this.linkService.create(userId, item).then((link) => createClicks(link, this.clickService))
-			promises.push(promise)
+		for (const linkId of response.linkIds) {
+			for (let i = 0; i < Math.round(Math.random() * 100) + 100; i++) {
+				const userAgent = new UserAgent().toString()
+
+				const promise = this.amqpConnection.publish<CreateClickCommand.Message>(
+					CreateClickCommand.exchange,
+					CreateClickCommand.routingKey,
+					{ linkId, date: new Date(), userAgent }
+				)
+
+				promises.push(promise)
+			}
 		}
 
 		await Promise.allSettled(promises)
-
-		return userId
 	}
 }
