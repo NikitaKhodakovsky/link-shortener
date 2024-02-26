@@ -1,4 +1,4 @@
-import { LinkDestinationRequest } from '@app/link-rabbitmq-contracts'
+import { LinkDestinationRequest, VerifyLinkOwnershipRequest } from '@app/link-rabbitmq-contracts'
 import { DeadLetterExchange } from '@app/shared-rabbitmq-contracts'
 import { RabbitRPC } from '@golevelup/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
@@ -19,5 +19,17 @@ export class LinkRMQController {
 		const link = await this.linkService.findByBackHalf(message.backhalf)
 
 		return { link }
+	}
+
+	@RabbitRPC({
+		exchange: VerifyLinkOwnershipRequest.exchange,
+		routingKey: VerifyLinkOwnershipRequest.routingKey,
+		queue: 'link-service.verify-link-ownership-request.queue',
+		queueOptions: { deadLetterExchange: DeadLetterExchange.name }
+	})
+	public async verifyLinkOwnershipRequest(message: VerifyLinkOwnershipRequest.Request): Promise<VerifyLinkOwnershipRequest.Response> {
+		const linkIds = await this.linkService.verifyOwnership(message.userId, message.linkIds)
+
+		return { userId: message.userId, linkIds }
 	}
 }

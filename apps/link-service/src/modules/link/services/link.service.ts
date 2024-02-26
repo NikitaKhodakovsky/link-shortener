@@ -109,4 +109,10 @@ export class LinkService {
 			await queryRunner.release()
 		}
 	}
+
+	public async verifyOwnership(userId: number, linkIds: number[]): Promise<number[]> {
+		const links = await this.linkRepository.findBy({ userId, id: In(linkIds) })
+
+		return links.map(l => l.id)
+	}
 }
