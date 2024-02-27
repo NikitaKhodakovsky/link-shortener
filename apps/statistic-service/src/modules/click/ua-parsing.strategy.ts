@@ -22,10 +22,10 @@ export class BasicUAParsingStrategy extends UAParsingStrategy {
 		const { device, client, os } = this.deviceDetector.parse(userAgent)
 
 		return {
-			platform: device.type,
-			browser: client.name,
-			device: [device.brand, device.model].filter((i) => i).join(' ') || undefined,
-			os: os.name
+			platform: device?.type,
+			browser: client?.name,
+			device: device ? [device.brand, device.model].filter(i => i).join(' ') : undefined,
+			os: os?.name
 		}
 	}
 }
