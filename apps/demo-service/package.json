@@ -7,16 +7,18 @@
 		"build": "nest build",
 		"lint": "eslint \"{src,test}/**/*.ts\" --fix",
 		"format": "prettier --write \"{src,test}/**/*.ts\"",
-		"prune": "turbo prune click-service --docker --out-dir ./pruned/click-service"
+		"prune": "turbo prune demo-service --docker --out-dir ./pruned/demo-service"
 	},
 	"dependencies": {
 		"@app/click-rabbitmq-contracts": "*",
 		"@app/cookie-names": "*",
 		"@app/http-server-env-validation": "*",
+		"@app/link-rabbitmq-contracts": "*",
 		"@app/nestjs-auth-guard": "*",
 		"@app/nestjs-jwt": "*",
 		"@app/nestjs-utils": "*",
 		"@app/rabbitmq-env-validation": "*",
+		"@app/shared-rabbitmq-contracts": "*",
 		"@app/url-builder": "*",
 		"@golevelup/nestjs-rabbitmq": "^5.1.0",
 		"@nanogiants/nestjs-swagger-api-exception-decorator": "^1.6.11",
