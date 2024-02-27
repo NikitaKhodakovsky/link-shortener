@@ -9,7 +9,7 @@
 				"openapi-codegen.config.ts"
 			],
 			"outputs": [
-				"./src/__generated__"
+				"./__generated__"
 			]
 		}
 	}
