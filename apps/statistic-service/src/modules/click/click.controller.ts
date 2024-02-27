@@ -1,6 +1,6 @@
 import { DeadLetterExchange } from '@app/shared-rabbitmq-contracts'
 import { CreateClickCommand } from '@app/click-rabbitmq-contracts'
-import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq'
+import { Nack, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
 import { ClickService } from './click.service'
@@ -15,7 +15,11 @@ export class ClickRMQController {
 		queue: 'statistic-service.create-click-command.queue',
 		queueOptions: { deadLetterExchange: DeadLetterExchange.name }
 	})
-	public async create(message: CreateClickCommand.Message) {
-		await this.clickService.create(message)
+	public async create(message: CreateClickCommand.Message): Promise<void | Nack> {
+		try {
+			await this.clickService.create(message)
+		} catch {
+			return new Nack(true)
+		}
 	}
 }

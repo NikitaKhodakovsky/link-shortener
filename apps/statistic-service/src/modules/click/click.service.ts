@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common'
 import { In, Repository } from 'typeorm'
 
 import { LocationParsingStrategy } from './location-parsing.strategy'
+import { ClickInsertService } from './click-insert.service'
 import { UAParsingStrategy } from './ua-parsing.strategy'
 import { createClick } from './click.factory'
 import { Click } from './click.entity'
@@ -12,6 +13,7 @@ import { Click } from './click.entity'
 export class ClickService {
 	constructor(
 		private readonly locationParsingStrategy: LocationParsingStrategy,
+		private readonly clickInsertService: ClickInsertService,
 		private readonly uaParsingStrategy: UAParsingStrategy,
 		@InjectRepository(Click)
 		private readonly clickRepository: Repository<Click>
@@ -23,7 +25,7 @@ export class ClickService {
 
 		const click = createClick({ userAgent, linkId, date, ...parsedUA, ...location })
 
-		return this.clickRepository.save(click)
+		return this.clickInsertService.insert(click)
 	}
 
 	public async deleteByLinkIds(linkIds: number[]) {

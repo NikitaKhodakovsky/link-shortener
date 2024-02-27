@@ -12,6 +12,7 @@
 		"typeorm:prod": "npx typeorm -d ./dist/config/data-source.config.js"
 	},
 	"dependencies": {
+		"@app/batch-processor": "*",
 		"@app/click-rabbitmq-contracts": "*",
 		"@app/link-rabbitmq-contracts": "*",
 		"@app/postgres-env-validation": "*",

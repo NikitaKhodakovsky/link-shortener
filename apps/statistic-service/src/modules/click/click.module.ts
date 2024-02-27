@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common'
 
 import { LocationParsingStrategy, NotImplementedLocationParsingStrategy } from './location-parsing.strategy'
 import { UAParsingStrategy, BasicUAParsingStrategy } from './ua-parsing.strategy'
+import { ClickInsertService } from './click-insert.service'
 import { ClickRMQController } from './click.controller'
 import { ClickService } from './click.service'
 import { Click } from './click.entity'
@@ -14,6 +15,7 @@ import { Click } from './click.entity'
 	providers: [
 		{ provide: LocationParsingStrategy, useClass: NotImplementedLocationParsingStrategy },
 		{ provide: UAParsingStrategy, useClass: BasicUAParsingStrategy },
+		ClickInsertService,
 		ClickRMQController,
 		DeviceDetector,
 		ClickService
