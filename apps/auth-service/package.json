@@ -12,6 +12,7 @@
 		"typeorm:prod": "npx typeorm -d ./dist/config/data-source.config.js"
 	},
 	"dependencies": {
+		"@app/auth-validation-rules": "*",
 		"@app/cookie-names": "*",
 		"@app/http-server-env-validation": "*",
 		"@app/nestjs-auth-guard": "*",

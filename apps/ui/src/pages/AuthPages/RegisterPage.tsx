@@ -1,3 +1,4 @@
+import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH, PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '@app/auth-validation-rules'
 import { FieldValidator, Form, Formik } from 'formik'
 import { object, ref, string } from 'yup'
 import { Link } from 'react-router-dom'
@@ -11,8 +12,6 @@ import { checkUsername } from 'swagger/auth/components'
 import { FormikInput } from '../../components/FormikInput'
 import { LoginFormValues } from './LoginPage'
 
-const minUsernameLength = 4
-
 export interface RegisterFormValues extends LoginFormValues {
 	confirmation: string
 }
@@ -24,7 +23,7 @@ export const registerFormInitialValues: RegisterFormValues = {
 }
 
 const validateUsername: FieldValidator = async (username: string) => {
-	if (username.length >= minUsernameLength) {
+	if (username.length >= USERNAME_MIN_LENGTH) {
 		const { isTaken } = await checkUsername({ pathParams: { username } })
 
 		if (isTaken) return 'username is already taken'
@@ -32,8 +31,14 @@ const validateUsername: FieldValidator = async (username: string) => {
 }
 
 const registerFormValidationSchema = object({
-	username: string().min(minUsernameLength, `at least ${minUsernameLength} characters`).required('required'),
-	password: string().min(8, 'at least 8 characters').required('required'),
+	username: string()
+		.min(USERNAME_MIN_LENGTH, `at least ${USERNAME_MIN_LENGTH} characters`)
+		.max(USERNAME_MAX_LENGTH, `should be shorten than ${USERNAME_MAX_LENGTH}`)
+		.required('required'),
+	password: string()
+		.min(PASSWORD_MIN_LENGTH, `at least ${PASSWORD_MIN_LENGTH} characters`)
+		.max(PASSWORD_MAX_LENGTH, `should be shorten than ${PASSWORD_MAX_LENGTH}`)
+		.required('required'),
 	confirmation: string()
 		.oneOf([ref('password')], "passwords don't match")
 		.required('required')

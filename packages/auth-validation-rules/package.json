@@ -1,0 +1,10 @@
+{
+	"name": "@app/auth-validation-rules",
+	"private": true,
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"build": "rm -rf ./dist && tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json"
+	}
+}

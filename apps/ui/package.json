@@ -22,6 +22,7 @@
 		"proxy:restart": "npm run proxy:stop && npm run proxy:start"
 	},
 	"dependencies": {
+		"@app/auth-validation-rules": "*",
 		"@app/react-auth": "*",
 		"@app/react-jwt": "*",
 		"@app/url-builder": "*",
