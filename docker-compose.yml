@@ -348,8 +348,21 @@ services:
             - RMQ_PORT=5672
             - RMQ_USERNAME
             - RMQ_PASSWORD
+        healthcheck:
+            test: ['CMD-SHELL', 'curl --fail-with-body http://demo-service/api/demo/health || exit 1']
+            # TODO
+            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+            # start_period: 20s
+            # start_interval: 1s
+            # interval: 30s
+            interval: 30s
+            timeout: 5s
+            retries: 3
         depends_on:
             rabbitmq:
+                condition: service_healthy
+            link-service:
                 condition: service_healthy
 
 volumes:
