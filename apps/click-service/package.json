@@ -17,6 +17,7 @@
 		"@app/link-rabbitmq-contracts": "*",
 		"@app/nestjs-ioredis": "*",
 		"@app/nestjs-ioredis-healthcheck": "*",
+		"@app/nestjs-link-service-healthcheck": "*",
 		"@app/nestjs-rabbitmq-healthcheck": "*",
 		"@app/rabbitmq-env-validation": "*",
 		"@app/redis-env-validation": "*",

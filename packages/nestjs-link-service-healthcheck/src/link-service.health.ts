@@ -1,4 +1,4 @@
-import { LinkDestinationRequest } from '@app/link-rabbitmq-contracts'
+import { LinkDestinationRequest, LinkServicePingRequest } from '@app/link-rabbitmq-contracts'
 import { HealthCheckError, HealthIndicator } from '@nestjs/terminus'
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
@@ -6,29 +6,28 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class LinkServiceHealthIndicator extends HealthIndicator {
 	private readonly errorMessage = 'RabbitMQ healthcheck failed'
-	private readonly key = 'link-service'
 
 	constructor(private readonly amqpConnection: AmqpConnection) {
 		super()
 	}
 
-	public async isHealthy() {
+	public async isHealthy(key: string) {
 		try {
-			const payload: LinkDestinationRequest.Request = { backhalf: 'healthcheck' }
+			const payload: LinkServicePingRequest.Request = { ping: 'healthcheck' }
 
-			await this.amqpConnection.request<LinkDestinationRequest.Response>({
+			await this.amqpConnection.request<LinkServicePingRequest.Response>({
 				exchange: LinkDestinationRequest.exchange,
 				routingKey: LinkDestinationRequest.routingKey,
 				payload
 			})
 
-			return this.getStatus(this.key, true, {
+			return this.getStatus(key, true, {
 				date: new Date()
 			})
 		} catch (e) {
 			throw new HealthCheckError(
 				this.errorMessage,
-				this.getStatus(this.key, false, {
+				this.getStatus(key, false, {
 					date: new Date()
 				})
 			)
