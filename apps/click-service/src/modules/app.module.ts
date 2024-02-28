@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common'
 
+import { HealthModule } from './health/health.module'
 import { ClickModule } from './click/click.module'
 import { CacheModule } from './cache/cache.module'
 
 @Module({
-	imports: [ClickModule, CacheModule]
+	imports: [HealthModule, ClickModule, CacheModule]
 })
 export class AppModule {}

@@ -214,6 +214,17 @@ services:
             - REDIS_HOST=click-service-redis
             - REDIS_PORT=6379
             - REDIS_PASSWORD=${CLICK_SERVICE_REDIS_PASSWORD}
+        healthcheck:
+            test: ['CMD-SHELL', 'curl --fail-with-body http://click-service/health || exit 1']
+            # TODO
+            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+            # start_period: 20s
+            # start_interval: 1s
+            # interval: 30s
+            interval: 30s
+            timeout: 5s
+            retries: 3
         depends_on:
             click-service-redis:
                 condition: service_healthy

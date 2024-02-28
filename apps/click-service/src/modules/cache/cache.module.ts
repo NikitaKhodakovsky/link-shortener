@@ -9,6 +9,6 @@ import { CacheService } from './cache.service'
 @Module({
 	imports: [RabbitMQModule, IORedisModule.register({ host: REDIS_HOST, port: REDIS_PORT, password: REDIS_PASSWORD })],
 	providers: [CacheService, CacheRMQContoller],
-	exports: [CacheService]
+	exports: [CacheService, IORedisModule]
 })
 export class CacheModule {}
