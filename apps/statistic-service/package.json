@@ -14,6 +14,7 @@
 	"dependencies": {
 		"@app/batch-processor": "*",
 		"@app/click-rabbitmq-contracts": "*",
+		"@app/http-server-env-validation": "*",
 		"@app/link-rabbitmq-contracts": "*",
 		"@app/postgres-env-validation": "*",
 		"@app/rabbitmq-env-validation": "*",
