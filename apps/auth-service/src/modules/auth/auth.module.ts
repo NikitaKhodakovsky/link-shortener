@@ -30,6 +30,7 @@ import { User } from '../user/user.entity'
 			provide: PasswordHashingStrategy,
 			useClass: Argon2PasswordHashingStrategy
 		}
-	]
+	],
+	exports: [IORedisModule]
 })
 export class AuthModule {}
