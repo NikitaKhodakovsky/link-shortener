@@ -7,5 +7,10 @@ export const DLX_QUEUE_NAME = 'dlx.queue'
 export const DLXQueue: RabbitMQQueueConfig = {
 	name: DLX_QUEUE_NAME,
 	exchange: DLX_NAME,
-	routingKey: 'dlx'
+	routingKey: 'dlx',
+	options: {
+		arguments: {
+			'x-queue-mode': 'lazy'
+		}
+	}
 }
