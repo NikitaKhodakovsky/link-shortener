@@ -1,4 +1,4 @@
-import { LinkDestinationRequest, VerifyLinkOwnershipRequest } from '@app/link-rabbitmq-contracts'
+import { LinkDestinationRequest, LinkServicePingRequest, VerifyLinkOwnershipRequest } from '@app/link-rabbitmq-contracts'
 import { RabbitRPC } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
@@ -26,5 +26,13 @@ export class LinkRMQController {
 		const linkIds = await this.linkService.verifyOwnership(message.userId, message.linkIds)
 
 		return { userId: message.userId, linkIds }
+	}
+
+	@RabbitRPC({
+		contract: LinkServicePingRequest,
+		queue: 'link-service.ping-request.queue'
+	})
+	public ping(message: LinkServicePingRequest.Request): LinkServicePingRequest.Response {
+		return { pong: message.ping ?? 'pong' }
 	}
 }

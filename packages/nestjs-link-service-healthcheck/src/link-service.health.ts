@@ -1,4 +1,4 @@
-import { LinkDestinationRequest, LinkServicePingRequest } from '@app/link-rabbitmq-contracts'
+import { LinkServicePingRequest } from '@app/link-rabbitmq-contracts'
 import { HealthCheckError, HealthIndicator } from '@nestjs/terminus'
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
@@ -16,8 +16,8 @@ export class LinkServiceHealthIndicator extends HealthIndicator {
 			const payload: LinkServicePingRequest.Request = { ping: 'healthcheck' }
 
 			await this.amqpConnection.request<LinkServicePingRequest.Response>({
-				exchange: LinkDestinationRequest.exchange,
-				routingKey: LinkDestinationRequest.routingKey,
+				exchange: LinkServicePingRequest.exchange,
+				routingKey: LinkServicePingRequest.routingKey,
 				payload
 			})
 
