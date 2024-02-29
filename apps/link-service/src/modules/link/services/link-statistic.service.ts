@@ -19,7 +19,9 @@ export class LinkStatisticService {
 		return this.amqpConnection.request<LinkStatisticRequest.Response>({
 			exchange: LinkStatisticRequest.exchange,
 			routingKey: LinkStatisticRequest.routingKey,
-			payload
+			payload,
+			timeout: 10000,
+			expiration: 10000
 		})
 	}
 }

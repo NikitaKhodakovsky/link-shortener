@@ -14,7 +14,9 @@ export class DemoService {
 		const response = await this.amqpConnection.request<VerifyLinkOwnershipRequest.Response>({
 			exchange: VerifyLinkOwnershipRequest.exchange,
 			routingKey: VerifyLinkOwnershipRequest.routingKey,
-			payload
+			payload,
+			timeout: 20000,
+			expiration: 20000
 		})
 
 		const promises: Promise<unknown>[] = []

@@ -22,7 +22,9 @@ export class LinkService {
 		const { link } = await this.amqpConnection.request<LinkDestinationRequest.Response>({
 			exchange: LinkDestinationRequest.exchange,
 			routingKey: LinkDestinationRequest.routingKey,
-			payload
+			payload,
+			timeout: 10000,
+			expiration: 10000
 		})
 
 		if (!link) throw new LinkNotFoundException()

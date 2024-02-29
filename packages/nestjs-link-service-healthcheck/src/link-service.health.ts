@@ -18,7 +18,9 @@ export class LinkServiceHealthIndicator extends HealthIndicator {
 			await this.amqpConnection.request<LinkServicePingRequest.Response>({
 				exchange: LinkServicePingRequest.exchange,
 				routingKey: LinkServicePingRequest.routingKey,
-				payload
+				payload,
+				timeout: 10000,
+				expiration: 10000
 			})
 
 			return this.getStatus(key, true, {
