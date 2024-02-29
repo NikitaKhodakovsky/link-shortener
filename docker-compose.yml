@@ -83,6 +83,7 @@ services:
         environment:
             - SERVER_PORT=80
             - GLOBAL_PREFIX=/api/auth
+            - SHOW_SWAGGER=always
             - JWT_PUBLIC_KEY
             - JWT_PRIVATE_KEY
             - RMQ_HOST=rabbitmq
@@ -169,6 +170,7 @@ services:
         environment:
             - SERVER_PORT=80
             - GLOBAL_PREFIX=/api/links
+            - SHOW_SWAGGER=always
             - JWT_PUBLIC_KEY
             - RMQ_HOST=rabbitmq
             - RMQ_PORT=5672
@@ -229,6 +231,7 @@ services:
                 - SERVICE=click-service
         environment:
             - SERVER_PORT=80
+            - SHOW_SWAGGER=always
             - RMQ_HOST=rabbitmq
             - RMQ_PORT=5672
             - RMQ_USERNAME
@@ -345,6 +348,7 @@ services:
         environment:
             - SERVER_PORT=80
             - GLOBAL_PREFIX=/api/demo
+            - SHOW_SWAGGER=always
             - JWT_PUBLIC_KEY
             - RMQ_HOST=rabbitmq
             - RMQ_PORT=5672

@@ -4,7 +4,7 @@ import { SwaggerModule } from '@nestjs/swagger'
 import { NestFactory } from '@nestjs/core'
 import cookieParser from 'cookie-parser'
 
-import { SERVER_PORT, GLOBAL_PREFIX, SWAGGER_ROUTE } from './config/env'
+import { SERVER_PORT, GLOBAL_PREFIX, SWAGGER_ROUTE, SHOW_SWAGGER } from './config/env'
 import { swaggerConfig } from './config/swagger.config'
 import { AppModule } from './modules/app.module'
 
@@ -26,11 +26,13 @@ async function bootstrap() {
 		})
 	)
 
-	const document = SwaggerModule.createDocument(app, swaggerConfig, {
-		operationIdFactory: (_, methodKey) => methodKey
-	})
+	if (SHOW_SWAGGER) {
+		const document = SwaggerModule.createDocument(app, swaggerConfig, {
+			operationIdFactory: (_, methodKey) => methodKey
+		})
 
-	SwaggerModule.setup(SWAGGER_ROUTE, app, document)
+		SwaggerModule.setup(SWAGGER_ROUTE, app, document)
+	}
 
 	await app.listen(SERVER_PORT)
 }

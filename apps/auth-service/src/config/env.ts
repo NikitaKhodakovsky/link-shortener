@@ -6,9 +6,9 @@ import { cleanEnv, str } from 'envalid'
 
 export const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE } = postgres.validate()
 
-export const { RMQ_HOST, RMQ_PORT, RMQ_USERNAME, RMQ_PASSWORD } = rabbitmq.validate()
+export const { SERVER_PORT, GLOBAL_PREFIX, SWAGGER_ROUTE, SHOW_SWAGGER } = server.validate()
 
-export const { SERVER_PORT, GLOBAL_PREFIX, SWAGGER_ROUTE } = server.validate()
+export const { RMQ_HOST, RMQ_PORT, RMQ_USERNAME, RMQ_PASSWORD } = rabbitmq.validate()
 
 export const { REDIS_HOST, REDIS_PORT, REDIS_PASSWORD } = redis.validate()
 
