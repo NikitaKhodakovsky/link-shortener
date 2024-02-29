@@ -13,7 +13,6 @@ export interface BatchItem<T> {
 	resolve: Function
 	reject: Function
 }
-
 export class BatchProcessor<T> {
 	private readonly flushStrategy: FlushStrategy<T>
 	private readonly flushInterval: number | undefined

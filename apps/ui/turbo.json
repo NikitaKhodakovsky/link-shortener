@@ -1,16 +1,9 @@
 {
-	"extends": [
-		"//"
-	],
+	"extends": ["//"],
 	"pipeline": {
 		"generate:fetchers:all": {
-			"inputs": [
-				"swagger.yaml",
-				"openapi-codegen.config.ts"
-			],
-			"outputs": [
-				"./__generated__"
-			]
+			"inputs": ["swagger.yaml", "openapi-codegen.config.ts"],
+			"outputs": ["./__generated__"]
 		}
 	}
 }

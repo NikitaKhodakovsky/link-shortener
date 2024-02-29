@@ -9,9 +9,7 @@ export interface BaseProps {
 	id?: string
 }
 
-export interface InputProps
-	extends BaseProps,
-		DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {}
+export interface InputProps extends BaseProps, DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {}
 
 export function Input({ label, required, id, className, error, ...other }: InputProps) {
 	return (

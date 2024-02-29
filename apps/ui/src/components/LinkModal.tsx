@@ -42,12 +42,7 @@ export function LinkModal({ title, buttonText = 'Save', isOpen, closeHandler, va
 					<Form autoComplete="off">
 						<div className="input-list">
 							<FormikInput label="Name" name="name" required placeholder="Name your link" />
-							<FormikInput
-								label="Destination"
-								name="destination"
-								required
-								placeholder="https://google.com"
-							/>
+							<FormikInput label="Destination" name="destination" required placeholder="https://google.com" />
 						</div>
 						<div className="actions">
 							<button className="button transparent" type="reset" onClick={closeHandler}>

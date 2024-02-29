@@ -31,10 +31,7 @@ export function DeleteLinkConfirm({ linkId, isOpen, closeHandler }: DeleteLinkCo
 
 	return (
 		<Modal title="Confirm deletion of the link" isOpen={isOpen} closeHandler={closeHandler}>
-			<p>
-				Information about the link and all related clicks will be deleted. This action cannot be undone.
-				Continue?
-			</p>
+			<p>Information about the link and all related clicks will be deleted. This action cannot be undone. Continue?</p>
 			<div className="actions">
 				<button className="button transparent" onClick={closeHandler}>
 					Cancel

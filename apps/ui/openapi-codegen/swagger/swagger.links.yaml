@@ -1,692 +1,692 @@
 openapi: 3.0.0
 paths:
-  /api/links:
-    post:
-      operationId: createLink
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateLinkDTO'
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Link'
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '409':
-          content:
-            application/json:
-              examples:
-                BackHalfIsNotUniqueException:
-                  description: Backhalf is not unique
-                  value:
-                    statusCode: 409
-                    message: Backhalf is not unique
-                    error: Conflict
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 409
-                  message:
-                    type: string
-                    example: Backhalf is not unique
-                  error:
-                    type: string
-                    example: Conflict
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Links
-    get:
-      operationId: findAllLinks
-      parameters:
-        - name: page
-          required: false
-          in: query
-          schema:
-            default: 1
-            type: number
-        - name: perPage
-          required: false
-          in: query
-          schema:
-            default: 20
-            type: number
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - properties:
-                      items:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Link'
-                      meta:
-                        type: object
-                        properties:
-                          itemCount:
-                            type: number
-                          totalItems:
-                            type: number
-                          itemsPerPage:
-                            type: number
-                          totalPages:
-                            type: number
-                          currentPage:
-                            type: number
-                        required:
-                          - itemCount
-                          - totalItems
-                          - itemsPerPage
-                          - totalPages
-                          - currentPage
-                      links:
-                        type: object
-                        properties:
-                          first:
-                            type: string
-                          previous:
-                            type: string
-                          next:
-                            type: string
-                          last:
-                            type: string
-                        required:
-                          - first
-                          - previous
-                          - next
-                          - last
-                    required:
-                      - items
-                      - meta
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Links
-  /api/links/{linkId}:
-    patch:
-      operationId: updateLink
-      parameters:
-        - name: linkId
-          required: true
-          in: path
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateLinkDTO'
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Link'
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '404':
-          content:
-            application/json:
-              examples:
-                LinkNotFoundException:
-                  description: Link not found
-                  value:
-                    statusCode: 404
-                    message: Link not found
-                    error: Not Found
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 404
-                  message:
-                    type: string
-                    example: Link not found
-                  error:
-                    type: string
-                    example: Not Found
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Links
-    delete:
-      operationId: deleteLink
-      parameters:
-        - name: linkId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '404':
-          content:
-            application/json:
-              examples:
-                LinkNotFoundException:
-                  description: Link not found
-                  value:
-                    statusCode: 404
-                    message: Link not found
-                    error: Not Found
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 404
-                  message:
-                    type: string
-                    example: Link not found
-                  error:
-                    type: string
-                    example: Not Found
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Links
-    get:
-      operationId: findLinkById
-      parameters:
-        - name: linkId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Link'
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '404':
-          content:
-            application/json:
-              examples:
-                LinkNotFoundException:
-                  description: Link not found
-                  value:
-                    statusCode: 404
-                    message: Link not found
-                    error: Not Found
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 404
-                  message:
-                    type: string
-                    example: Link not found
-                  error:
-                    type: string
-                    example: Not Found
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Links
-  /api/links/{linkId}/statistic:
-    get:
-      operationId: linkStatistic
-      parameters:
-        - name: linkId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LinkStatisticDTO'
-        '400':
-          content:
-            application/json:
-              examples:
-                BadRequestException:
-                  description: Bad Request
-                  value:
-                    statusCode: 400
-                    message: Bad Request
-                    error: Bad Request
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 400
-                  message:
-                    type: string
-                    example: Bad Request
-                  error:
-                    type: string
-                    example: Bad Request
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '401':
-          content:
-            application/json:
-              examples:
-                UnauthorizedException:
-                  description: Unauthorized
-                  value:
-                    statusCode: 401
-                    message: Unauthorized
-                    error: Unauthorized
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
-                  error:
-                    type: string
-                    example: Unauthorized
-                required:
-                  - statusCode
-                  - message
-          description: ''
-        '404':
-          content:
-            application/json:
-              examples:
-                LinkNotFoundException:
-                  description: Link not found
-                  value:
-                    statusCode: 404
-                    message: Link not found
-                    error: Not Found
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: number
-                    example: 404
-                  message:
-                    type: string
-                    example: Link not found
-                  error:
-                    type: string
-                    example: Not Found
-                required:
-                  - statusCode
-                  - message
-          description: ''
-      tags:
-        - Links
+    /api/links:
+        post:
+            operationId: createLink
+            parameters: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateLinkDTO'
+            responses:
+                '201':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Link'
+                '400':
+                    content:
+                        application/json:
+                            examples:
+                                BadRequestException:
+                                    description: Bad Request
+                                    value:
+                                        statusCode: 400
+                                        message: Bad Request
+                                        error: Bad Request
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 400
+                                    message:
+                                        type: string
+                                        example: Bad Request
+                                    error:
+                                        type: string
+                                        example: Bad Request
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '401':
+                    content:
+                        application/json:
+                            examples:
+                                UnauthorizedException:
+                                    description: Unauthorized
+                                    value:
+                                        statusCode: 401
+                                        message: Unauthorized
+                                        error: Unauthorized
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 401
+                                    message:
+                                        type: string
+                                        example: Unauthorized
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '409':
+                    content:
+                        application/json:
+                            examples:
+                                BackHalfIsNotUniqueException:
+                                    description: Backhalf is not unique
+                                    value:
+                                        statusCode: 409
+                                        message: Backhalf is not unique
+                                        error: Conflict
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 409
+                                    message:
+                                        type: string
+                                        example: Backhalf is not unique
+                                    error:
+                                        type: string
+                                        example: Conflict
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+            tags:
+                - Links
+        get:
+            operationId: findAllLinks
+            parameters:
+                - name: page
+                  required: false
+                  in: query
+                  schema:
+                      default: 1
+                      type: number
+                - name: perPage
+                  required: false
+                  in: query
+                  schema:
+                      default: 20
+                      type: number
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    - properties:
+                                          items:
+                                              type: array
+                                              items:
+                                                  $ref: '#/components/schemas/Link'
+                                          meta:
+                                              type: object
+                                              properties:
+                                                  itemCount:
+                                                      type: number
+                                                  totalItems:
+                                                      type: number
+                                                  itemsPerPage:
+                                                      type: number
+                                                  totalPages:
+                                                      type: number
+                                                  currentPage:
+                                                      type: number
+                                              required:
+                                                  - itemCount
+                                                  - totalItems
+                                                  - itemsPerPage
+                                                  - totalPages
+                                                  - currentPage
+                                          links:
+                                              type: object
+                                              properties:
+                                                  first:
+                                                      type: string
+                                                  previous:
+                                                      type: string
+                                                  next:
+                                                      type: string
+                                                  last:
+                                                      type: string
+                                              required:
+                                                  - first
+                                                  - previous
+                                                  - next
+                                                  - last
+                                      required:
+                                          - items
+                                          - meta
+                '400':
+                    content:
+                        application/json:
+                            examples:
+                                BadRequestException:
+                                    description: Bad Request
+                                    value:
+                                        statusCode: 400
+                                        message: Bad Request
+                                        error: Bad Request
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 400
+                                    message:
+                                        type: string
+                                        example: Bad Request
+                                    error:
+                                        type: string
+                                        example: Bad Request
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '401':
+                    content:
+                        application/json:
+                            examples:
+                                UnauthorizedException:
+                                    description: Unauthorized
+                                    value:
+                                        statusCode: 401
+                                        message: Unauthorized
+                                        error: Unauthorized
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 401
+                                    message:
+                                        type: string
+                                        example: Unauthorized
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+            tags:
+                - Links
+    /api/links/{linkId}:
+        patch:
+            operationId: updateLink
+            parameters:
+                - name: linkId
+                  required: true
+                  in: path
+                  schema:
+                      type: number
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateLinkDTO'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Link'
+                '400':
+                    content:
+                        application/json:
+                            examples:
+                                BadRequestException:
+                                    description: Bad Request
+                                    value:
+                                        statusCode: 400
+                                        message: Bad Request
+                                        error: Bad Request
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 400
+                                    message:
+                                        type: string
+                                        example: Bad Request
+                                    error:
+                                        type: string
+                                        example: Bad Request
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '401':
+                    content:
+                        application/json:
+                            examples:
+                                UnauthorizedException:
+                                    description: Unauthorized
+                                    value:
+                                        statusCode: 401
+                                        message: Unauthorized
+                                        error: Unauthorized
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 401
+                                    message:
+                                        type: string
+                                        example: Unauthorized
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '404':
+                    content:
+                        application/json:
+                            examples:
+                                LinkNotFoundException:
+                                    description: Link not found
+                                    value:
+                                        statusCode: 404
+                                        message: Link not found
+                                        error: Not Found
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 404
+                                    message:
+                                        type: string
+                                        example: Link not found
+                                    error:
+                                        type: string
+                                        example: Not Found
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+            tags:
+                - Links
+        delete:
+            operationId: deleteLink
+            parameters:
+                - name: linkId
+                  required: true
+                  in: path
+                  schema:
+                      type: number
+            responses:
+                '200':
+                    description: ''
+                '400':
+                    content:
+                        application/json:
+                            examples:
+                                BadRequestException:
+                                    description: Bad Request
+                                    value:
+                                        statusCode: 400
+                                        message: Bad Request
+                                        error: Bad Request
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 400
+                                    message:
+                                        type: string
+                                        example: Bad Request
+                                    error:
+                                        type: string
+                                        example: Bad Request
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '401':
+                    content:
+                        application/json:
+                            examples:
+                                UnauthorizedException:
+                                    description: Unauthorized
+                                    value:
+                                        statusCode: 401
+                                        message: Unauthorized
+                                        error: Unauthorized
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 401
+                                    message:
+                                        type: string
+                                        example: Unauthorized
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '404':
+                    content:
+                        application/json:
+                            examples:
+                                LinkNotFoundException:
+                                    description: Link not found
+                                    value:
+                                        statusCode: 404
+                                        message: Link not found
+                                        error: Not Found
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 404
+                                    message:
+                                        type: string
+                                        example: Link not found
+                                    error:
+                                        type: string
+                                        example: Not Found
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+            tags:
+                - Links
+        get:
+            operationId: findLinkById
+            parameters:
+                - name: linkId
+                  required: true
+                  in: path
+                  schema:
+                      type: number
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Link'
+                '400':
+                    content:
+                        application/json:
+                            examples:
+                                BadRequestException:
+                                    description: Bad Request
+                                    value:
+                                        statusCode: 400
+                                        message: Bad Request
+                                        error: Bad Request
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 400
+                                    message:
+                                        type: string
+                                        example: Bad Request
+                                    error:
+                                        type: string
+                                        example: Bad Request
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '401':
+                    content:
+                        application/json:
+                            examples:
+                                UnauthorizedException:
+                                    description: Unauthorized
+                                    value:
+                                        statusCode: 401
+                                        message: Unauthorized
+                                        error: Unauthorized
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 401
+                                    message:
+                                        type: string
+                                        example: Unauthorized
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '404':
+                    content:
+                        application/json:
+                            examples:
+                                LinkNotFoundException:
+                                    description: Link not found
+                                    value:
+                                        statusCode: 404
+                                        message: Link not found
+                                        error: Not Found
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 404
+                                    message:
+                                        type: string
+                                        example: Link not found
+                                    error:
+                                        type: string
+                                        example: Not Found
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+            tags:
+                - Links
+    /api/links/{linkId}/statistic:
+        get:
+            operationId: linkStatistic
+            parameters:
+                - name: linkId
+                  required: true
+                  in: path
+                  schema:
+                      type: number
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LinkStatisticDTO'
+                '400':
+                    content:
+                        application/json:
+                            examples:
+                                BadRequestException:
+                                    description: Bad Request
+                                    value:
+                                        statusCode: 400
+                                        message: Bad Request
+                                        error: Bad Request
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 400
+                                    message:
+                                        type: string
+                                        example: Bad Request
+                                    error:
+                                        type: string
+                                        example: Bad Request
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '401':
+                    content:
+                        application/json:
+                            examples:
+                                UnauthorizedException:
+                                    description: Unauthorized
+                                    value:
+                                        statusCode: 401
+                                        message: Unauthorized
+                                        error: Unauthorized
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 401
+                                    message:
+                                        type: string
+                                        example: Unauthorized
+                                    error:
+                                        type: string
+                                        example: Unauthorized
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+                '404':
+                    content:
+                        application/json:
+                            examples:
+                                LinkNotFoundException:
+                                    description: Link not found
+                                    value:
+                                        statusCode: 404
+                                        message: Link not found
+                                        error: Not Found
+                            schema:
+                                type: object
+                                properties:
+                                    statusCode:
+                                        type: number
+                                        example: 404
+                                    message:
+                                        type: string
+                                        example: Link not found
+                                    error:
+                                        type: string
+                                        example: Not Found
+                                required:
+                                    - statusCode
+                                    - message
+                    description: ''
+            tags:
+                - Links
 info:
-  title: Link Service
-  description: ''
-  version: 1.0.0
-  contact: {}
+    title: Link Service
+    description: ''
+    version: 1.0.0
+    contact: {}
 tags: []
 servers: []
 components:
-  securitySchemes:
-    cookie:
-      type: apiKey
-      in: cookie
-      name: access-token
-  schemas:
-    CreateLinkDTO:
-      type: object
-      properties:
-        destination:
-          type: string
-          description: Url with protocol, host and tld.
-          example: https://google.com
-        name:
-          type: string
-          minLength: 1
-          maxLength: 32
-      required:
-        - destination
-        - name
-    Link:
-      type: object
-      properties:
-        id:
-          type: number
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-        backhalf:
-          type: string
-        name:
-          type: string
-        destination:
-          type: string
-      required:
-        - id
-        - createdAt
-        - updatedAt
-        - backhalf
-        - name
-        - destination
-    UpdateLinkDTO:
-      type: object
-      properties:
-        destination:
-          type: string
-          description: Url with protocol, host and tld.
-          example: https://google.com
-        name:
-          type: string
-          minLength: 1
-          maxLength: 32
-    LinkStatisticDTO:
-      type: object
-      properties:
-        platforms:
-          type: object
-          additionalProperties:
-            type: number
-        browsers:
-          type: object
-          additionalProperties:
-            type: number
-        systems:
-          type: object
-          additionalProperties:
-            type: number
-        devices:
-          type: object
-          additionalProperties:
-            type: number
-        clicks:
-          type: number
-      required:
-        - platforms
-        - browsers
-        - systems
-        - devices
-        - clicks
+    securitySchemes:
+        cookie:
+            type: apiKey
+            in: cookie
+            name: access-token
+    schemas:
+        CreateLinkDTO:
+            type: object
+            properties:
+                destination:
+                    type: string
+                    description: Url with protocol, host and tld.
+                    example: https://google.com
+                name:
+                    type: string
+                    minLength: 1
+                    maxLength: 32
+            required:
+                - destination
+                - name
+        Link:
+            type: object
+            properties:
+                id:
+                    type: number
+                createdAt:
+                    format: date-time
+                    type: string
+                updatedAt:
+                    format: date-time
+                    type: string
+                backhalf:
+                    type: string
+                name:
+                    type: string
+                destination:
+                    type: string
+            required:
+                - id
+                - createdAt
+                - updatedAt
+                - backhalf
+                - name
+                - destination
+        UpdateLinkDTO:
+            type: object
+            properties:
+                destination:
+                    type: string
+                    description: Url with protocol, host and tld.
+                    example: https://google.com
+                name:
+                    type: string
+                    minLength: 1
+                    maxLength: 32
+        LinkStatisticDTO:
+            type: object
+            properties:
+                platforms:
+                    type: object
+                    additionalProperties:
+                        type: number
+                browsers:
+                    type: object
+                    additionalProperties:
+                        type: number
+                systems:
+                    type: object
+                    additionalProperties:
+                        type: number
+                devices:
+                    type: object
+                    additionalProperties:
+                        type: number
+                clicks:
+                    type: number
+            required:
+                - platforms
+                - browsers
+                - systems
+                - devices
+                - clicks

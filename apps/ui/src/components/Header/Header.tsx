@@ -16,10 +16,7 @@ export function Header() {
 						Link Shortener
 					</Link>
 					<div className={styles.actions}>
-						<button
-							className={`icon ${theme === 'light' ? 'moon' : 'sun'} ${styles.toggle}`}
-							onClick={toggleTheme}
-						></button>
+						<button className={`icon ${theme === 'light' ? 'moon' : 'sun'} ${styles.toggle}`} onClick={toggleTheme}></button>
 						<Dropdown />
 					</div>
 				</header>

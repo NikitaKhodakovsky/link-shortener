@@ -16,7 +16,7 @@ export class AuthManager {
 
 	public subscribe(subscriber: Subscriber): UnsubscribeFunction {
 		this.subscribers.push(subscriber)
-		return () => (this.subscribers = this.subscribers.filter((s) => s !== subscriber))
+		return () => (this.subscribers = this.subscribers.filter(s => s !== subscriber))
 	}
 
 	public setAuth(auth: boolean) {
@@ -28,7 +28,7 @@ export class AuthManager {
 			localStorage.removeItem('auth')
 		}
 
-		this.subscribers.forEach((s) => s(this.getAuth()))
+		this.subscribers.forEach(s => s(this.getAuth()))
 	}
 
 	public getAuth() {
