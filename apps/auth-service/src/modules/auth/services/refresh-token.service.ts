@@ -6,7 +6,8 @@ export class RefreshTokenService {
 	constructor(private readonly redis: Redis) {}
 
 	public async set(token: string, accessToken: string, expiresIn?: number): Promise<void> {
-		await this.redis.set(token, accessToken, 'EX', expiresIn)
+		//@ts-ignore
+		await this.redis.set(token, accessToken, 'NX', 'EX', expiresIn)
 	}
 
 	public exists(token: string): Promise<boolean> {

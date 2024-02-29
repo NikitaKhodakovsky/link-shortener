@@ -2,13 +2,12 @@ import { CSSProperties, Fragment, useRef } from 'react'
 
 import styles from './Dropdown.module.scss'
 
-import { useEntranceExitAnimation } from '../../hooks/useEntranceExitAnimation'
-import { useOnClickOutside } from '../../hooks/useOnClickOutside'
-import { useIsOpen } from '../../hooks/useIsOpen'
+import { useEntranceExitAnimation } from 'hooks/useEntranceExitAnimation'
+import { useLogoutMutation } from 'mutations/useLogoutMutation'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import { useIsOpen } from 'hooks/useIsOpen'
 
-import { useLogoutMutation } from '../../mutations/useLogoutMutation'
-
-import { DeleteAccountConfirm } from '../DeleteAccountConfirm'
+import { DeleteAccountConfirm } from 'components/DeleteAccountConfirm'
 
 const exitDuration = 200
 
@@ -44,10 +43,7 @@ export function Dropdown() {
 			<div className={styles.wrap} ref={ref}>
 				<button className="icon profile" onClick={toggleDropdown} />
 				{render && (
-					<div
-						className={`${styles.animation} ${animation}`}
-						style={{ '--exit-duration': `${exitDuration}ms` } as CSSProperties}
-					>
+					<div className={`${styles.animation} ${animation}`} style={{ '--exit-duration': `${exitDuration}ms` } as CSSProperties}>
 						<div className={styles.dropdown}>
 							<button onClick={deleteAccountHandler}>Delete Account</button>
 							<button onClick={logoutHandler}>Logout</button>

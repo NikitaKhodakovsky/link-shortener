@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 export interface UseEntranceExitAnimationArguments {
 	isOpen: boolean
-	entrance: string
-	exit: string
+	entrance?: string
+	exit?: string
 	exitDuration: number
 }
 
@@ -14,8 +14,8 @@ export interface UseEntranceExitAnimationResult {
 
 export function useEntranceExitAnimation({
 	isOpen,
-	entrance,
-	exit,
+	entrance = '',
+	exit = '',
 	exitDuration
 }: UseEntranceExitAnimationArguments): UseEntranceExitAnimationResult {
 	const [render, setRender] = useState(false)

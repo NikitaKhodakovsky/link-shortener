@@ -1,6 +1,4 @@
 export class HTTPError extends Error {
-	public readonly message: string
-
 	constructor(
 		public readonly status: number,
 		public readonly statusText: string

@@ -50,7 +50,7 @@ export class JWTService {
 
 		const payload = await this.jwtDecodingStrategy.decode<{ userId: number }>(accessToken)
 
-		if (typeof payload !== 'object' || typeof payload.userId !== 'number') {
+		if (payload === null || typeof payload !== 'object' || typeof payload.userId !== 'number') {
 			throw new UnauthorizedException('Invalid token payload')
 		}
 

@@ -14,7 +14,7 @@ export class JWTGenerationStrategy {
 		return new Promise((res, rej) => {
 			const payload: JWTPayload<T> = { ...data, exp: Math.floor(Date.now() / 1000) + 60 * 15 }
 
-			sign(payload, this.privateKey, { algorithm: ALGORITHM }, (e, token) => (e ? rej(e) : res([token, payload])))
+			sign(payload, this.privateKey, { algorithm: ALGORITHM }, (e, token) => (e ? rej(e) : res([token as string, payload])))
 		})
 	}
 }

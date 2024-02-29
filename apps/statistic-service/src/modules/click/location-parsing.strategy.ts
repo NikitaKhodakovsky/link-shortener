@@ -6,11 +6,11 @@ export interface ILocation {
 }
 
 export abstract class LocationParsingStrategy {
-	abstract parse(ip: string): ILocation | Promise<ILocation>
+	abstract parse(ip?: string): ILocation | Promise<ILocation>
 }
 
 export class NotImplementedLocationParsingStrategy extends LocationParsingStrategy {
-	public async parse(ip: string) {
+	public async parse(ip?: string) {
 		return { ip }
 	}
 }

@@ -19,29 +19,29 @@ export class Click implements BaseEntity {
 	date: Date
 
 	@Column({ nullable: true })
-	userAgent: string
+	userAgent: string | null
 
 	@Column({ nullable: true })
-	platform: string
+	platform: string | null
 
 	@Column({ nullable: true })
-	browser: string
+	browser: string | null
 
 	@Column({ nullable: true })
-	os: string
+	os: string | null
 
 	@Column({ nullable: true })
-	device: string
+	device: string | null
 
 	@Column({ nullable: true })
-	ip: string
+	ip: string | null
 
 	@Column({ nullable: true })
-	country: string
+	country: string | null
 
 	@Column({ nullable: true })
-	region: string
+	region: string | null
 
 	@Column({ nullable: true })
-	city: string
+	city: string | null
 }

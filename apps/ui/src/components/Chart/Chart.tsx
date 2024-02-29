@@ -21,7 +21,7 @@ function dataMapper(input: IData) {
 
 	for (const key in input) {
 		labels.push(key === 'null' ? 'Unknown' : key)
-		data.push(input[key])
+		data.push(input[key] as number)
 	}
 
 	if (labels.length === 0) {
@@ -84,7 +84,7 @@ export function Chart(props: ChartProps) {
 									data,
 									borderWidth: 0,
 									backgroundColor: empty ? [emptyBg] : undefined
-							  }
+								}
 					]
 				}}
 				options={options}

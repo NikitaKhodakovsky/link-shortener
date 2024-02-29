@@ -3,7 +3,7 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 
 import { TokenPair } from '../services'
 
-export const Tokens = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+export const Tokens = createParamDecorator((_: unknown, ctx: ExecutionContext) => {
 	const request = ctx.switchToHttp().getRequest()
 
 	const cookies = request.cookies ?? {}

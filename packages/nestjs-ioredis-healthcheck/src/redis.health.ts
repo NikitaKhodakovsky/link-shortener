@@ -14,7 +14,7 @@ export class RedisHealthIndicator extends HealthIndicator {
 		return new Promise<void>((res, rej) => {
 			const timer = setTimeout(() => rej(`${this.errorMessage}; Timeout;`), timeout)
 
-			this.redis.ping(undefined, e => {
+			this.redis.ping('ping', e => {
 				clearTimeout(timer)
 				e ? rej(this.errorMessage) : res()
 			})

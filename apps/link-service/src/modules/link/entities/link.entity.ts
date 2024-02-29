@@ -6,7 +6,7 @@ import { Column, Entity } from 'typeorm'
 export class Link extends BaseEntity {
 	@ApiHideProperty()
 	@Column({ type: 'integer', select: false })
-	userId: number
+	userId?: number
 
 	@Column({ unique: true })
 	backhalf: string
