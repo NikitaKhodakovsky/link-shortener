@@ -4,10 +4,10 @@ import { TerminusModule } from '@nestjs/terminus'
 import { Module } from '@nestjs/common'
 
 import { HealthController } from './health.controller'
-import { RabbitMQModule } from '../rabbitmq.module'
+import { DemoModule } from '../demo/demo.module'
 
 @Module({
-	imports: [TerminusModule, RabbitMQModule],
+	imports: [TerminusModule, DemoModule],
 	controllers: [HealthController],
 	providers: [RabbitMQHealthIndicator, LinkServiceHealthIndicator]
 })

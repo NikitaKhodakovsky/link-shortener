@@ -1,6 +1,6 @@
 import { VerifyLinkOwnershipRequest } from '@app/link-rabbitmq-contracts'
 import { CreateClickCommand } from '@app/click-rabbitmq-contracts'
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
+import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 import UserAgent from 'user-agents'
 
