@@ -5,6 +5,7 @@
 	"module": "./dist/esm/index.js",
 	"types": "./src/index.ts",
 	"scripts": {
-		"build": "rm -rf ./dist && tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json"
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json"
 	}
 }

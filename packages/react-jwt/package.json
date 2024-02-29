@@ -5,7 +5,8 @@
 	"types": "./src/index.ts",
 	"module": "./dist/index.js",
 	"scripts": {
-		"build": "tsc"
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc"
 	},
 	"dependencies": {
 		"@app/react-auth": "*",

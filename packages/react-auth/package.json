@@ -5,7 +5,8 @@
 	"module": "./dist/index.js",
 	"types": "./src/index.ts",
 	"scripts": {
-		"build": "tsc"
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc"
 	},
 	"dependencies": {
 		"react": "^18.2.0",

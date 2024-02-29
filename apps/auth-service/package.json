@@ -9,7 +9,8 @@
 		"format": "prettier --write \"{src,test}/**/*.ts\"",
 		"prune": "turbo prune auth-service --docker --out-dir ./pruned/auth-service",
 		"typeorm:dev": "npx typeorm-ts-node-commonjs -d ./src/config/data-source.config.ts",
-		"typeorm:prod": "npx typeorm -d ./dist/config/data-source.config.js"
+		"typeorm:prod": "npx typeorm -d ./dist/config/data-source.config.js",
+		"clean": "rm -rf ./dist"
 	},
 	"dependencies": {
 		"@app/auth-validation-rules": "*",

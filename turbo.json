@@ -38,6 +38,9 @@
 				"^lint"
 			]
 		},
-		"prune": {}
+		"prune": {},
+		"clean": {
+			"cache": false
+		}
 	}
 }

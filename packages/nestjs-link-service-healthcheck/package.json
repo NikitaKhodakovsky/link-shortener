@@ -4,7 +4,8 @@
 	"main": "./dist/index.js",
 	"types": "./src/index.ts",
 	"scripts": {
-		"build": "rm -rf ./dist && tsc"
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc"
 	},
 	"dependencies": {
 		"@app/link-rabbitmq-contracts": "*",

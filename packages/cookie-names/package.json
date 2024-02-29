@@ -4,6 +4,7 @@
 	"main": "./dist/index.js",
 	"types": "./src/index.ts",
 	"scripts": {
-		"build": "tsc"
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc"
 	}
 }
