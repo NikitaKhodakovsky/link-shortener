@@ -1,6 +1,5 @@
-import { DeadLetterExchange } from '@app/shared-rabbitmq-contracts'
-import { Nack, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq'
 import { UserDeletedEvent } from '@app/user-rabbitmq-contracts'
+import { Nack, RabbitSubscribe } from '@app/nestjs-rabbitmq'
 import { Injectable, Logger } from '@nestjs/common'
 
 import { LinkService } from '../link/services'
@@ -12,10 +11,8 @@ export class UserRMQController {
 	constructor(private readonly linkService: LinkService) {}
 
 	@RabbitSubscribe({
-		exchange: UserDeletedEvent.exchange,
-		routingKey: UserDeletedEvent.routingKey,
-		queue: 'link-service.user-deleted-event.queue',
-		queueOptions: { deadLetterExchange: DeadLetterExchange.name }
+		contract: UserDeletedEvent,
+		queue: 'link-service.user-deleted-event.queue'
 	})
 	public deleteAllByUserId(message: UserDeletedEvent.Message) {
 		return this.linkService.deleteAllByUserId(message.userId).catch(e => {

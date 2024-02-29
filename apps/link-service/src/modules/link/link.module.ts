@@ -4,11 +4,10 @@ import { Module } from '@nestjs/common'
 import { AlphanumericBackHalfGenerationStrategy, BackHalfGenerationStrategy } from './strategies'
 import { LinkEventService, LinkService, LinkStatisticService } from './services'
 import { LinkController, LinkRMQController } from './controllers'
-import { RabbitMQModule } from '../rabbitmq.module'
 import { Link } from './entities'
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Link]), RabbitMQModule],
+	imports: [TypeOrmModule.forFeature([Link])],
 	controllers: [LinkController],
 	providers: [
 		LinkStatisticService,

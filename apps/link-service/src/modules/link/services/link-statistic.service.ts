@@ -1,5 +1,5 @@
 import { LinkStatisticRequest } from '@app/link-rabbitmq-contracts'
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
+import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
 import { LinkService } from './link.service'
