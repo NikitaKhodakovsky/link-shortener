@@ -1,5 +1,5 @@
 import { MessageHandlerErrorBehavior, RabbitMQConfig, defaultNackErrorHandler } from '@golevelup/nestjs-rabbitmq'
-import { DLXQueue, DeadLetterExchange } from '@app/shared-rabbitmq-contracts'
+import { DLXQueue, DeadLetterExchange } from '@app/dlx-rabbitmq-contract'
 
 export function createConfig({ queues, exchanges, defaultRpcErrorHandler, defaultSubscribeErrorBehavior, ...other }: RabbitMQConfig) {
 	return {

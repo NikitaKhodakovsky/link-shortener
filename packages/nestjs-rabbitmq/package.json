@@ -10,7 +10,7 @@
 		"@golevelup/nestjs-rabbitmq": "^5.1.0"
 	},
 	"dependencies": {
-		"@app/shared-rabbitmq-contracts": "*",
+		"@app/dlx-rabbitmq-contract": "*",
 		"@nestjs/common": "^10.3.3"
 	}
 }

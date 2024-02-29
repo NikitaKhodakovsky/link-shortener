@@ -1,4 +1,4 @@
-import { DeadLetterExchange } from '@app/shared-rabbitmq-contracts'
+import { DeadLetterExchange } from '@app/dlx-rabbitmq-contract'
 import { MessageHandlerOptions } from '@golevelup/nestjs-rabbitmq'
 
 export interface RabbitMQContract {

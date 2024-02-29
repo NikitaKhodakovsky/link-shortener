@@ -1,5 +1,5 @@
 {
-	"name": "@app/shared-rabbitmq-contracts",
+	"name": "@app/dlx-rabbitmq-contract",
 	"private": true,
 	"main": "./dist/index.js",
 	"types": "./src/index.ts",
