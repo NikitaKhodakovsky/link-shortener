@@ -1,4 +1,3 @@
-import { RabbitMQModule } from '../rabbitmq.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import DeviceDetector from 'device-detector-js'
 import { Module } from '@nestjs/common'
@@ -11,7 +10,7 @@ import { ClickService } from './click.service'
 import { Click } from './click.entity'
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Click]), RabbitMQModule],
+	imports: [TypeOrmModule.forFeature([Click])],
 	providers: [
 		{ provide: LocationParsingStrategy, useClass: NotImplementedLocationParsingStrategy },
 		{ provide: UAParsingStrategy, useClass: BasicUAParsingStrategy },
