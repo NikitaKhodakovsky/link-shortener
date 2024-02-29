@@ -4,7 +4,7 @@ import { DynamicModule, Module } from '@nestjs/common'
 import { createConfig } from './config.factory'
 
 export interface RabbitMQConfig extends XRabbitMQConfig {
-	global: true
+	global?: boolean
 }
 
 @Module({})
