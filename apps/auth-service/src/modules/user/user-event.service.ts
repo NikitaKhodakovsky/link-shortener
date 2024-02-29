@@ -1,5 +1,5 @@
 import { UserDeletedEvent } from '@app/user-rabbitmq-contracts'
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
+import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
