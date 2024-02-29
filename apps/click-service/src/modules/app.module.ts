@@ -14,7 +14,8 @@ import { CacheModule } from './cache/cache.module'
 	imports: [
 		RabbitMQModule.register({
 			uri: createURL({ protocol: 'amqp', host: RMQ_HOST, port: RMQ_PORT, username: RMQ_USERNAME, password: RMQ_PASSWORD }),
-			exchanges: [ClickExchange, LinkExchange, PingExchange]
+			exchanges: [ClickExchange, LinkExchange, PingExchange],
+			global: true
 		}),
 		HealthModule,
 		ClickModule,
