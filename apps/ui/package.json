@@ -9,7 +9,7 @@
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"prune": "turbo prune ui --docker --out-dir ./pruned/ui",
-		"generate:fetchers:all": "npm run generate:fetchers:auth & npm run generate:fetchers:links & npm run generate:fetchers:demo",
+		"generate:fetchers:all": "npm run generate:fetchers:auth & npm run generate:fetchers:links & npm run generate:fetchers:demo & wait",
 		"generate:fetchers:auth": "npx openapi-codegen gen auth -c ./openapi-codegen/config/openapi-codegen.auth.ts",
 		"generate:fetchers:links": "npx openapi-codegen gen links -c ./openapi-codegen/config/openapi-codegen.links.ts",
 		"generate:fetchers:demo": "npx openapi-codegen gen demo -c ./openapi-codegen/config/openapi-codegen.demo.ts",
