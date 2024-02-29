@@ -1,5 +1,5 @@
 import { CreateClickCommand } from '@app/click-rabbitmq-contracts'
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
+import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
 export type CreateClickDTO = Omit<CreateClickCommand.Message, 'date'>

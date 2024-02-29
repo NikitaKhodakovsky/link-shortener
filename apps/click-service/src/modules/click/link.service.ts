@@ -1,6 +1,6 @@
 import { LinkDestinationRequest } from '@app/link-rabbitmq-contracts'
 import { LinkNotFoundException } from '@app/link-exceptions'
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq'
+import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
 import { CacheRecord, CacheService } from '../cache/cache.service'

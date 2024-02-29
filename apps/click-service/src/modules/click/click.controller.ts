@@ -1,7 +1,7 @@
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator'
 import { Controller, Get, HttpCode, Param, Req, Res } from '@nestjs/common'
-import { ApiResponse, ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger'
 import { LinkNotFoundException } from '@app/link-exceptions'
+import { ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request, Response } from 'express'
 import { RealIP } from 'nestjs-real-ip'
 
