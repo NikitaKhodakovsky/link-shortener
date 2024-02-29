@@ -1,7 +1,7 @@
 import { PingExchange } from '@app/nestjs-rabbitmq-healthcheck'
-import { RabbitMQModule } from '@app/nestjs-rabbitmq'
 import { ClickExchange } from '@app/click-rabbitmq-contracts'
 import { LinkExchange } from '@app/link-rabbitmq-contracts'
+import { RabbitMQModule } from '@app/nestjs-rabbitmq'
 import { createURL } from '@app/url-builder'
 import { Module } from '@nestjs/common'
 
@@ -18,6 +18,7 @@ import { DemoService } from './demo.service'
 		})
 	],
 	controllers: [DemoController],
-	providers: [DemoService, RabbitMQModule]
+	providers: [DemoService],
+	exports: [RabbitMQModule]
 })
 export class DemoModule {}
