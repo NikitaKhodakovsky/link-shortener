@@ -20,7 +20,6 @@ import { UserModule } from './user/user.module'
 		RabbitMQModule.register({
 			uri: createURL({ protocol: 'amqp', host: RMQ_HOST, port: RMQ_PORT, username: RMQ_USERNAME, password: RMQ_PASSWORD }),
 			exchanges: [PingExchange, LinkExchange, UserExchange],
-			prefetchCount: 30,
 			global: true
 		}),
 		HealthModule,
