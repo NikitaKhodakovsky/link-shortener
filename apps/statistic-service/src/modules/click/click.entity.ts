@@ -18,30 +18,30 @@ export class Click implements BaseEntity {
 	@Column()
 	date: Date
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	userAgent: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	platform: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	browser: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	os: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	device: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	ip: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	country: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	region: string | null
 
-	@Column({ nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	city: string | null
 }
