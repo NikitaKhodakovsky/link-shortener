@@ -86,6 +86,8 @@ services:
             - SHOW_SWAGGER=always
             - JWT_PUBLIC_KEY
             - JWT_PRIVATE_KEY
+            - ACCESS_TOKEN_DURATION=15m
+            - REFRESH_TOKEN_DURATION=7d
             - RMQ_HOST=rabbitmq
             - RMQ_PORT=5672
             - RMQ_USERNAME

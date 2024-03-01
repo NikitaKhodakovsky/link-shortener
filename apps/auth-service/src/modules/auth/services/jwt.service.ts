@@ -1,7 +1,6 @@
 import { JWTGenerationStrategy, JWTDecodingStrategy, JWTPayload } from '@app/nestjs-jwt'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 
-import { RefreshTokenGenerationStrategy } from '../strategies'
 import { RefreshTokenService } from './refresh-token.service'
 import { UserService } from '../../user/user.service'
 
@@ -17,7 +16,6 @@ export interface TokenPairWithAccessTokenPayload extends TokenPair {
 @Injectable()
 export class JWTService {
 	constructor(
-		private readonly refreshTokenGenerationStrategy: RefreshTokenGenerationStrategy,
 		private readonly jwtGenerationStrategy: JWTGenerationStrategy,
 		private readonly jwtDecodingStrategy: JWTDecodingStrategy,
 		private readonly refreshTokenService: RefreshTokenService,
@@ -26,9 +24,8 @@ export class JWTService {
 
 	public async generate(userId: number): Promise<TokenPairWithAccessTokenPayload> {
 		const [accessToken, accessTokenPayload] = await this.jwtGenerationStrategy.generate({ userId })
-		const refreshToken = await this.refreshTokenGenerationStrategy.generate()
 
-		await this.refreshTokenService.set(refreshToken, accessToken, 60 * 60 * 24 * 7)
+		const refreshToken = await this.refreshTokenService.generate(accessToken)
 
 		return {
 			accessToken,

@@ -1,13 +1,22 @@
 import { Injectable } from '@nestjs/common'
 import { Redis } from 'ioredis'
 
+import { RefreshTokenGenerationStrategy } from '../strategies'
+
 @Injectable()
 export class RefreshTokenService {
-	constructor(private readonly redis: Redis) {}
+	constructor(
+		private readonly refreshTokenGenerationStrategy: RefreshTokenGenerationStrategy,
+		private readonly expiresIn: number,
+		private readonly redis: Redis
+	) {}
 
-	public async set(token: string, accessToken: string, expiresIn?: number): Promise<void> {
-		//@ts-ignore
-		await this.redis.set(token, accessToken, 'NX', 'EX', expiresIn)
+	public async generate(accessToken: string): Promise<string> {
+		const refreshToken = await this.refreshTokenGenerationStrategy.generate()
+
+		await this.redis.set(refreshToken, accessToken, 'EX', this.expiresIn, 'NX')
+
+		return refreshToken
 	}
 
 	public exists(token: string): Promise<boolean> {

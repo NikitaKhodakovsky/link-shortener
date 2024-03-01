@@ -1,6 +1,7 @@
 import * as server from '@app/http-server-env-validation'
 import * as postgres from '@app/postgres-env-validation'
 import * as rabbitmq from '@app/rabbitmq-env-validation'
+import { seconds } from '@app/seconds-envalid-validator'
 import * as redis from '@app/redis-env-validation'
 import { cleanEnv, str } from 'envalid'
 
@@ -12,7 +13,9 @@ export const { RMQ_HOST, RMQ_PORT, RMQ_USERNAME, RMQ_PASSWORD } = rabbitmq.valid
 
 export const { REDIS_HOST, REDIS_PORT, REDIS_PASSWORD } = redis.validate()
 
-export const { JWT_PUBLIC_KEY, JWT_PRIVATE_KEY } = cleanEnv(process.env, {
+export const { JWT_PUBLIC_KEY, JWT_PRIVATE_KEY, ACCESS_TOKEN_DURATION, REFRESH_TOKEN_DURATION } = cleanEnv(process.env, {
 	JWT_PUBLIC_KEY: str(),
-	JWT_PRIVATE_KEY: str()
+	JWT_PRIVATE_KEY: str(),
+	ACCESS_TOKEN_DURATION: seconds(),
+	REFRESH_TOKEN_DURATION: seconds()
 })

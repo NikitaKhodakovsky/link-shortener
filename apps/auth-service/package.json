@@ -25,6 +25,7 @@
 		"@app/postgres-env-validation": "*",
 		"@app/rabbitmq-env-validation": "*",
 		"@app/redis-env-validation": "*",
+		"@app/seconds-envalid-validator": "*",
 		"@app/typeorm-base-entity": "*",
 		"@app/url-builder": "*",
 		"@app/user-rabbitmq-contracts": "*",
