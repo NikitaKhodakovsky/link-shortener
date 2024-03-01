@@ -29,8 +29,8 @@ services:
         image: rabbitmq:3.12.13-alpine
         restart: always
         volumes:
-            - link-shortener_rabbitmq-data:/var/lib/rabbitmq
-            - link-shortener_rabbitmq-logs:/var/log/rabbitmq
+            - rabbitmq-data:/var/lib/rabbitmq
+            - rabbitmq-logs:/var/log/rabbitmq
         environment:
             - RABBITMQ_DEFAULT_USER=${RMQ_USERNAME}
             - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
@@ -124,7 +124,7 @@ services:
         restart: always
         image: postgres:14.4-alpine
         volumes:
-            - link-shortener_auth-service-postgres:/var/lib/postgresql/data
+            - auth-service-postgres:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=${AUTH_SERVICE_DB_USERNAME}
             - POSTGRES_PASSWORD=${AUTH_SERVICE_DB_PASSWORD}
@@ -154,7 +154,7 @@ services:
             --auto-aof-rewrite-percentage 100
             --auto-aof-rewrite-min-size 16mb
         volumes:
-            - link-shortener_auth-service-redis:/data
+            - auth-service-redis:/data
         healthcheck:
             test: ['CMD-SHELL', 'redis-cli -a "$CLICK_SERVICE_REDIS_PASSWORD" ping']
             # TODO
@@ -212,7 +212,7 @@ services:
         restart: always
         image: postgres:14.4-alpine
         volumes:
-            - link-shortener_link-service-postgres:/var/lib/postgresql/data
+            - link-service-postgres:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=${LINK_SERVICE_DB_USERNAME}
             - POSTGRES_PASSWORD=${LINK_SERVICE_DB_PASSWORD}
@@ -277,7 +277,7 @@ services:
             --appendonly no
             --save ''
         volumes:
-            - link-shortener_click-service-redis:/data
+            - click-service-redis:/data
         healthcheck:
             test: ['CMD-SHELL', 'redis-cli -a "$CLICK_SERVICE_REDIS_PASSWORD" ping']
             # TODO
@@ -332,7 +332,7 @@ services:
         restart: always
         image: postgres:14.4-alpine
         volumes:
-            - link-shortener_statistic-service-postgres:/var/lib/postgresql/data
+            - statistic-service-postgres:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=${STATISTIC_SERVICE_DB_USERNAME}
             - POSTGRES_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
@@ -385,10 +385,10 @@ services:
                 condition: service_healthy
 
 volumes:
-    link-shortener_auth-service-postgres:
-    link-shortener_auth-service-redis:
-    link-shortener_link-service-postgres:
-    link-shortener_rabbitmq-data:
-    link-shortener_rabbitmq-logs:
-    link-shortener_click-service-redis:
-    link-shortener_statistic-service-postgres:
+    auth-service-postgres:
+    auth-service-redis:
+    link-service-postgres:
+    rabbitmq-data:
+    rabbitmq-logs:
+    click-service-redis:
+    statistic-service-postgres:

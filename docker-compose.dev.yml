@@ -111,7 +111,7 @@ services:
             - PGADMIN_DEFAULT_EMAIL=admin@admin.com
             - PGADMIN_DEFAULT_PASSWORD=password
         volumes:
-            - link-shortener_pgadmin-data:/var/lib/pgadmin
+            - pgadmin-data:/var/lib/pgadmin
         ports:
             - 3000:80
 
@@ -119,7 +119,7 @@ services:
         container_name: link-shortener_redis-insight
         image: redislabs/redisinsight:latest
         volumes:
-            - link-shortener_redis-insight-data:/db
+            - redis-insight-data:/db
         ports:
             - 4000:5540
 
@@ -129,5 +129,5 @@ services:
             - 5000:15672
 
 volumes:
-    link-shortener_redis-insight-data:
-    link-shortener_pgadmin-data:
+    redis-insight-data:
+    pgadmin-data:
