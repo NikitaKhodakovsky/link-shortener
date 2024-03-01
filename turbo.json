@@ -1,6 +1,6 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"globalDependencies": ["tsconfig.json", ".eslintrc.js"],
+	"globalDependencies": ["tsconfig.json"],
 	"pipeline": {
 		"start": {
 			"dependsOn": ["^build"],
@@ -19,9 +19,6 @@
 		"format": {},
 		"test": {
 			"dependsOn": ["^build"]
-		},
-		"lint": {
-			"dependsOn": ["^lint"]
 		},
 		"prune": {},
 		"clean": {

@@ -4,7 +4,6 @@
 	"scripts": {
 		"build": "turbo build",
 		"dev": "turbo dev",
-		"lint": "turbo lint",
 		"format": "prettier --write .",
 		"prune": "turbo run prune",
 		"clean:turbo": "rm -rf `find . -type d -name .turbo` && rm -rf node_modules/.cache/turbo",
