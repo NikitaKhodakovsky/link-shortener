@@ -20,7 +20,10 @@ export interface CacheRecord {
 export class CacheService {
 	private readonly logger = new Logger(CacheService.name)
 
-	constructor(private readonly redis: Redis) {}
+	constructor(
+		private readonly cachingDuration: number,
+		private readonly redis: Redis
+	) {}
 
 	private backhalfKey(backhalf: string) {
 		return `backhalf:${backhalf}`
@@ -48,8 +51,8 @@ export class CacheService {
 	public async cacheLink(backhalf: string, linkId: number, destination: string): Promise<CacheRecord> {
 		const record: CacheRecord = { linkId, destination }
 
-		await this.redis.set(this.backhalfKey(backhalf), JSON.stringify(record))
-		await this.redis.set(this.linkIdKey(linkId), backhalf)
+		await this.redis.set(this.backhalfKey(backhalf), JSON.stringify(record), 'EX', this.cachingDuration)
+		await this.redis.set(this.linkIdKey(linkId), backhalf, 'EX', this.cachingDuration)
 
 		return record
 	}

@@ -239,6 +239,7 @@ services:
         environment:
             - SERVER_PORT=80
             - SHOW_SWAGGER=always
+            - LINK_CACHING_DURATION=15m
             - RMQ_HOST=rabbitmq
             - RMQ_PORT=5672
             - RMQ_USERNAME
