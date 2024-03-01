@@ -1,8 +1,11 @@
 import { LinkDeletedEvent, LinkUpdatedEvent } from '@app/link-rabbitmq-contracts'
-import { RabbitSubscribe } from '@app/nestjs-rabbitmq'
+import { QueueOptions, RabbitSubscribe } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 
+import { LINK_CACHING_DURATION } from '../../config/env'
 import { CacheService } from './cache.service'
+
+const queueOptions: QueueOptions = { durable: false, messageTtl: LINK_CACHING_DURATION }
 
 @Injectable()
 export class CacheRMQContoller {
@@ -10,7 +13,8 @@ export class CacheRMQContoller {
 
 	@RabbitSubscribe({
 		contract: LinkUpdatedEvent,
-		queue: 'click-service.cache.queue'
+		queue: 'click-service.cache.queue',
+		queueOptions
 	})
 	public async linkUpdatedEvent({ linkId }: LinkUpdatedEvent.Message) {
 		await this.cacheService.invalidateLinkById(linkId)
@@ -18,7 +22,8 @@ export class CacheRMQContoller {
 
 	@RabbitSubscribe({
 		contract: LinkDeletedEvent,
-		queue: 'click-service.cache.queue'
+		queue: 'click-service.cache.queue',
+		queueOptions
 	})
 	public async linkDeletedEvent({ linkIds }: LinkDeletedEvent.Message) {
 		await Promise.allSettled(linkIds.map(linkId => this.cacheService.invalidateLinkById(linkId)))

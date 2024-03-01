@@ -272,7 +272,10 @@ services:
         container_name: link-shortener_click-service-redis
         restart: always
         image: redis:7.2.4-alpine
-        command: redis-server --requirepass ${CLICK_SERVICE_REDIS_PASSWORD}
+        command: redis-server
+            --requirepass ${CLICK_SERVICE_REDIS_PASSWORD}
+            --appendonly no
+            --save ''
         volumes:
             - link-shortener_click-service-redis:/data
         healthcheck:
