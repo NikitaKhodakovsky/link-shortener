@@ -1,14 +1,11 @@
-export class HTTPError extends Error {
+export class FetcherError {
 	constructor(
 		public readonly status: number,
-		public readonly statusText: string
-	) {
-		super()
-		this.message = `HTTP Error: ${status} ${statusText}`
-	}
+		public readonly payload: object
+	) {}
 }
 
-export type ErrorWrapper<TError> = TError | Error
+export type ErrorWrapper<TError extends FetcherError | void> = TError
 
 export type PathParams = Record<string | number, string | number>
 
@@ -52,21 +49,21 @@ export async function fetch<
 			signal
 		})
 		.catch(e => {
-			throw new Error(`Network error: ${e}`)
+			throw new FetcherError(601, { message: `Network error: ${e}` })
 		})
 
 	const contentType = response.headers.get('content-type') ?? ''
 
 	if (contentType.includes('json')) {
 		const payload = await response.json().catch((e: any) => {
-			throw new Error(`Invalid payload: ${e}`)
+			throw new FetcherError(602, { message: `Invalid payload: ${e}` })
 		})
 
-		if (!response.ok) throw payload as TError
+		if (!response.ok) throw new FetcherError(response.status, payload) as TError
 
 		return payload as TData
 	} else {
-		if (!response.ok) throw new HTTPError(response.status, response.statusText)
+		if (!response.ok) throw new FetcherError(response.status, { status: response.status, message: response.statusText }) as TError
 
 		return null as TData
 	}
