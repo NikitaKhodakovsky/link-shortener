@@ -11,6 +11,7 @@ import { dataSourceOptions } from '../config/data-source.config'
 import { StatisticModule } from './statistic/statistic.module'
 import { HealthModule } from './health/health.module'
 import { ClickModule } from './click/click.module'
+import { LinkModule } from './link/link.module'
 
 @Module({
 	imports: [
@@ -21,9 +22,10 @@ import { ClickModule } from './click/click.module'
 			exchanges: [ClickExchange, LinkExchange, PingExchange],
 			global: true
 		}),
-		ClickModule,
 		StatisticModule,
-		HealthModule
+		HealthModule,
+		ClickModule,
+		LinkModule
 	]
 })
 export class AppModule {}
