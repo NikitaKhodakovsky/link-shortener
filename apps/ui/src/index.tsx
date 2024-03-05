@@ -26,7 +26,7 @@ const refreshTokenStrategy: RefreshTokenStrategy = () => refresh().catch(() => n
 
 const refreshTokenService = new RefreshTokenService(refreshTokenStrategy, authManager, jwtService, 60)
 
-refreshTokenService.refresh()
+refreshTokenService.refresh().catch(() => {})
 
 root.render(
 	<React.StrictMode>

@@ -39,7 +39,7 @@ export class RefreshTokenService {
 		const payload = this.jwtService.payload()
 
 		if (payload) {
-			this.refreshTimeout = window.setTimeout(this.refresh.bind(this), payload.exp - this.deadline)
+			this.refreshTimeout = window.setTimeout(this.refresh.bind(this), (payload.exp - this.deadline) * 1000 - Date.now())
 			this.authService.setAuth(true)
 		} else {
 			this.authService.setAuth(false)
