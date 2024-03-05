@@ -12,6 +12,7 @@
 		"clean": "rm -rf ./dist"
 	},
 	"dependencies": {
+		"@app/destination-url-validator": "*",
 		"@app/http-server-env-validation": "*",
 		"@app/link-exceptions": "*",
 		"@app/link-rabbitmq-contracts": "*",

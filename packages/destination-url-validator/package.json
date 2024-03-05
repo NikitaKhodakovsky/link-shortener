@@ -1,0 +1,13 @@
+{
+	"name": "@app/destination-url-validator",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc"
+	},
+	"dependencies": {
+		"class-validator": "^0.14.1"
+	}
+}

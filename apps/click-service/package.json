@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@app/click-rabbitmq-contracts": "*",
 		"@app/cookie-names": "*",
+		"@app/destination-url-validator": "*",
 		"@app/http-server-env-validation": "*",
 		"@app/link-exceptions": "*",
 		"@app/link-rabbitmq-contracts": "*",

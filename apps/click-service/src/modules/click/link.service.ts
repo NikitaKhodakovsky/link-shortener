@@ -1,4 +1,5 @@
 import { LinkDestinationRequest } from '@app/link-rabbitmq-contracts'
+import { isDestinationURL } from '@app/destination-url-validator'
 import { LinkNotFoundException } from '@app/link-exceptions'
 import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
@@ -27,7 +28,7 @@ export class LinkService {
 			expiration: 10000
 		})
 
-		if (!link) throw new LinkNotFoundException()
+		if (!link || !isDestinationURL(link.destination)) throw new LinkNotFoundException()
 
 		return this.cacheService.cacheLink(backhalf, link.id, link.destination)
 	}
