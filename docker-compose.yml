@@ -35,7 +35,7 @@ services:
             - RABBITMQ_DEFAULT_USER=${RMQ_USERNAME}
             - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
         healthcheck:
-            test: ['CMD-SHELL', 'rabbitmq-diagnostics -q ping']
+            test: ['CMD-SHELL', 'rabbitmq-diagnostics -q check_running || exit 1']
             # TODO
             # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
             # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.

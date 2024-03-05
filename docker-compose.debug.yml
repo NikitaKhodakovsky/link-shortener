@@ -1,0 +1,28 @@
+services:
+    rabbitmq:
+        image: rabbitmq:3.12.13-management-alpine
+        ports:
+            - 5000:15672
+
+    pgadmin:
+        image: dpage/pgadmin4:8.3
+        container_name: link-shortener_pgadmin
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+            - PGADMIN_DEFAULT_PASSWORD=password
+        volumes:
+            - pgadmin-data:/var/lib/pgadmin
+        ports:
+            - 3000:80
+
+    redis-insight:
+        container_name: link-shortener_redis-insight
+        image: redislabs/redisinsight:latest
+        volumes:
+            - redis-insight-data:/db
+        ports:
+            - 4000:5540
+
+volumes:
+    redis-insight-data:
+    pgadmin-data:
