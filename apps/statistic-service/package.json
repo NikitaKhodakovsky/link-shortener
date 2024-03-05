@@ -34,7 +34,6 @@
 		"typeorm": "^0.3.20"
 	},
 	"devDependencies": {
-		"@app/typeorm-base-entity": "*",
 		"@nestjs/cli": "^10.3.2",
 		"@nestjs/schematics": "^10.1.1",
 		"@types/node": "^20.11.19",

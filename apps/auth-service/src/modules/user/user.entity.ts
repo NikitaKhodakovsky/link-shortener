@@ -1,9 +1,17 @@
-import { BaseEntity } from '@app/typeorm-base-entity'
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { ApiHideProperty } from '@nestjs/swagger'
-import { Column, Entity } from 'typeorm'
 
 @Entity()
-export class User extends BaseEntity {
+export class User {
+	@PrimaryGeneratedColumn()
+	id: number
+
+	@CreateDateColumn({ name: 'created_at' })
+	createdAt: Date
+
+	@UpdateDateColumn({ name: 'updated_at' })
+	updatedAt: Date
+
 	@Column({ unique: true })
 	username: string
 

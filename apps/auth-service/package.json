@@ -25,7 +25,6 @@
 		"@app/rabbitmq-env-validation": "*",
 		"@app/redis-env-validation": "*",
 		"@app/seconds-envalid-validator": "*",
-		"@app/typeorm-base-entity": "*",
 		"@app/url-builder": "*",
 		"@app/user-rabbitmq-contracts": "*",
 		"@nanogiants/nestjs-swagger-api-exception-decorator": "^1.6.11",

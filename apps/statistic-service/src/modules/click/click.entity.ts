@@ -1,8 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import type { BaseEntity } from '@app/typeorm-base-entity'
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
-export class Click implements BaseEntity {
+export class Click {
 	@PrimaryGeneratedColumn()
 	id: number
 
@@ -12,6 +11,7 @@ export class Click implements BaseEntity {
 	@UpdateDateColumn({ name: 'updated_at' })
 	updatedAt: Date
 
+	@Index('idx_click_link_id')
 	@Column({ type: 'integer' })
 	linkId: number
 

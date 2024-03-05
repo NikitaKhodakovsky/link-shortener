@@ -22,7 +22,6 @@
 		"@app/nestjs-utils": "*",
 		"@app/postgres-env-validation": "*",
 		"@app/rabbitmq-env-validation": "*",
-		"@app/typeorm-base-entity": "*",
 		"@app/url-builder": "*",
 		"@app/user-rabbitmq-contracts": "*",
 		"@nanogiants/nestjs-swagger-api-exception-decorator": "^1.6.11",
