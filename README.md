@@ -90,7 +90,7 @@ Documentation:
 
 -   [Swagger (Auth Service)](https://shortener.khodakovsky.com/api/auth/swagger)
 -   [Swagger (Link Service)](https://shortener.khodakovsky.com/api/links/swagger)
--   [Swagger (Click Service)](https://shortener.khodakovsky.com/api/swagger)
+-   [Swagger (Click Service)](https://shortener.khodakovsky.com/swagger)
 -   [Swagger (Demo Service)](https://shortener.khodakovsky.com/api/demo/swagger)
 
 ### Auth Service
