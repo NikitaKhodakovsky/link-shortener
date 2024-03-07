@@ -3,15 +3,15 @@ import { Fragment, Suspense, lazy } from 'react'
 
 import styles from './LinkPage.module.scss'
 
-import { useLinkStatisticQuery } from '../../queries/useLinkStatisticQuery'
-import { useFindLinkByIdQuery } from '../../queries/useFindLinkByIdQuery'
-import { useScrollToTop } from '../../hooks/useScrollToTop'
-import { useToHome } from '../../hooks/useToHome'
+import { useLinkStatisticQuery } from 'queries/useLinkStatisticQuery'
+import { useFindLinkByIdQuery } from 'queries/useFindLinkByIdQuery'
+import { useScrollToTop } from 'hooks/useScrollToTop'
+import { LinkItem } from 'components/LinkItem'
+import { useToHome } from 'hooks/useToHome'
+import { Loader } from 'components/Loader'
+import { useTitle } from 'hooks/useTitle'
 
-import { LinkItem } from '../../components/LinkItem'
-import { Loader } from '../../components/Loader'
-
-const Chart = lazy(() => import('../../components/Chart').then(module => ({ default: module.Chart })))
+const Chart = lazy(() => import('components/Chart').then(module => ({ default: module.Chart })))
 
 export function LinkPage() {
 	const params = useParams()
@@ -25,6 +25,14 @@ export function LinkPage() {
 	const sq = useLinkStatisticQuery(linkId)
 
 	const shortLink = new URL(lq.data?.backhalf ?? '', window.location.origin).href
+
+	const title = lq.isLoading
+		? 'Loading...'
+		: lq.error && lq.error.status === 404
+			? 'Not Found'
+			: lq.data?.name ?? 'Something gone wrong...'
+
+	useTitle(`${title} | Link Shortener`)
 
 	return (
 		<Fragment>

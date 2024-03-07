@@ -4,10 +4,10 @@ import { object, string } from 'yup'
 
 import styles from './AuthPages.module.scss'
 
-import { useLoginMutation } from '../../mutations/useLoginMutation'
-import { toastErrorHandler } from '../../utils/toastErrorHandler'
-
-import { FormikInput } from '../../components/FormikInput'
+import { useLoginMutation } from 'mutations/useLoginMutation'
+import { toastErrorHandler } from 'utils/toastErrorHandler'
+import { FormikInput } from 'components/FormikInput'
+import { useTitle } from 'hooks/useTitle'
 
 export interface LoginFormValues {
 	username: string
@@ -26,6 +26,8 @@ export const loginFormValidationSchema = object({
 
 export function LoginPage() {
 	const { mutateAsync } = useLoginMutation()
+
+	useTitle('Sign In | Link Shortener')
 
 	const login = async ({ username, password }: LoginFormValues, _: FormikHelpers<LoginFormValues>) =>
 		mutateAsync({ body: { username, password } }, { onError: toastErrorHandler })

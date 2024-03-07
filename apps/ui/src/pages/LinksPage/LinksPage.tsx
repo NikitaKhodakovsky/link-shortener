@@ -3,18 +3,20 @@ import { Fragment } from 'react'
 
 import styles from './LinksPage.module.scss'
 
-import { useAllLinksQuery } from '../../queries/useAllLinksQuery'
-import { useIsOpen } from '../../hooks/useIsOpen'
-
-import { CreateLinkModal } from '../../components/CreateLinkModal'
-import { Pagination } from '../../components/Pagination'
-import { LinkItem } from '../../components/LinkItem'
-import { Loader } from '../../components/Loader'
+import { CreateLinkModal } from 'components/CreateLinkModal'
+import { useAllLinksQuery } from 'queries/useAllLinksQuery'
+import { Pagination } from 'components/Pagination'
+import { LinkItem } from 'components/LinkItem'
+import { useIsOpen } from 'hooks/useIsOpen'
+import { Loader } from 'components/Loader'
+import { useTitle } from 'hooks/useTitle'
 
 export function LinksPage() {
 	const [isOpen, close, open] = useIsOpen()
 	const [searchParams] = useSearchParams()
 	const navigate = useNavigate()
+
+	useTitle('Link Shortener')
 
 	const page = parseInt(searchParams.get('page') ?? '') || 1
 

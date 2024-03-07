@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 
 import styles from './AuthPages.module.scss'
 
-import { useRegisterMutation } from '../../mutations/useRegisterMutation'
-import { toastErrorHandler } from '../../utils/toastErrorHandler'
+import { useRegisterMutation } from 'mutations/useRegisterMutation'
+import { toastErrorHandler } from 'utils/toastErrorHandler'
 import { checkUsername } from 'swagger/auth/components'
-
-import { FormikInput } from '../../components/FormikInput'
+import { FormikInput } from 'components/FormikInput'
 import { LoginFormValues } from './LoginPage'
+import { useTitle } from 'hooks/useTitle'
 
 export interface RegisterFormValues extends LoginFormValues {
 	confirmation: string
@@ -46,6 +46,8 @@ const registerFormValidationSchema = object({
 
 export function RegisterPage() {
 	const { mutateAsync } = useRegisterMutation()
+
+	useTitle('New Account | Link Shortener')
 
 	const register = async ({ username, password }: RegisterFormValues) =>
 		mutateAsync({ body: { username, password } }, { onError: toastErrorHandler })
