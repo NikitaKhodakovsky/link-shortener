@@ -21,13 +21,13 @@ export const linkFormInitialValues: LinkFormValues = {
 }
 
 export const linkFormValidationSchema = object({
-	name: string().required('required'),
-	destination: string().url('should include protocol, host and tld').required('required')
+	name: string().trim().required('required'),
+	destination: string().trim().url('should include protocol, host and tld').required('required')
 })
 
 export function LinkModal({ title, buttonText = 'Save', isOpen, closeHandler, values, onSubmit }: LinkModalProps) {
-	const submitHandler = async (data: LinkFormValues) => {
-		if (onSubmit) await onSubmit(data)
+	const submitHandler = async ({ name, destination }: LinkFormValues) => {
+		if (onSubmit) await onSubmit({ name: name.trim(), destination: destination.trim() })
 		closeHandler()
 	}
 
