@@ -39,7 +39,7 @@ export function createDemoLinksData(): CreateLinkDTO[] {
 		},
 		{
 			name: 'LinkedIn',
-			destination: 'https://linkedin.com/khodakovsky'
+			destination: 'https://linkedin.com/in/khodakovsky'
 		},
 		{
 			name: 'Personal Portfolio',
