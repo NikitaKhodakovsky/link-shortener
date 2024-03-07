@@ -20,6 +20,7 @@
 		"@app/nestjs-rabbitmq": "*",
 		"@app/nestjs-rabbitmq-healthcheck": "*",
 		"@app/nestjs-utils": "*",
+		"@app/positive-integer-envalid-validator": "*",
 		"@app/rabbitmq-env-validation": "*",
 		"@app/url-builder": "*",
 		"@nanogiants/nestjs-swagger-api-exception-decorator": "^1.6.11",

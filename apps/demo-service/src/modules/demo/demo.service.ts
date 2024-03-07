@@ -4,6 +4,8 @@ import { AmqpConnection } from '@app/nestjs-rabbitmq'
 import { Injectable } from '@nestjs/common'
 import UserAgent from 'user-agents'
 
+import { CLICKS_PER_LINK_MAX, CLICKS_PER_LINK_MIN } from '../../config/env'
+
 @Injectable()
 export class DemoService {
 	constructor(private readonly amqpConnection: AmqpConnection) {}
@@ -22,7 +24,9 @@ export class DemoService {
 		const promises: Promise<unknown>[] = []
 
 		for (const linkId of response.linkIds) {
-			for (let i = 0; i < Math.round(Math.random() * 100) + 100; i++) {
+			const countOfClicks = Math.min(Math.round(Math.random() * CLICKS_PER_LINK_MAX) + CLICKS_PER_LINK_MIN, CLICKS_PER_LINK_MAX)
+
+			for (let i = 0; i < countOfClicks; i++) {
 				const userAgent = new UserAgent().toString()
 
 				const promise = this.amqpConnection.publish<CreateClickCommand.Message>(

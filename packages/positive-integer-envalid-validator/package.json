@@ -1,0 +1,13 @@
+{
+	"name": "@app/positive-integer-envalid-validator",
+	"private": true,
+	"main": "./dist/index.js",
+	"types": "./src/index.ts",
+	"scripts": {
+		"clean": "rm -rf ./dist",
+		"build": "npm run clean && tsc"
+	},
+	"dependencies": {
+		"envalid": "^8.0.0"
+	}
+}
