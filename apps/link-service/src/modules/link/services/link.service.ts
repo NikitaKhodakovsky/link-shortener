@@ -45,7 +45,7 @@ export class LinkService {
 
 		await this.linkRepository.save(link)
 
-		await this.linkEventService.linkUpdatedEvent(link.id)
+		await this.linkEventService.linkUpdatedEvent(linkId)
 
 		return link
 	}
@@ -55,7 +55,7 @@ export class LinkService {
 
 		await this.linkRepository.remove(link)
 
-		await this.linkEventService.linkDeletedEvent(link.id)
+		await this.linkEventService.linkDeletedEvent(linkId)
 	}
 
 	public async findByIdOrFail(userId: number, linkId: number) {

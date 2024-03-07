@@ -13,7 +13,7 @@ export class CacheRMQContoller {
 
 	@RabbitSubscribe({
 		contract: LinkUpdatedEvent,
-		queue: 'click-service.cache.queue',
+		queue: 'click-service.link-updated-event.queue',
 		queueOptions
 	})
 	public async linkUpdatedEvent({ linkId }: LinkUpdatedEvent.Message) {
@@ -22,7 +22,7 @@ export class CacheRMQContoller {
 
 	@RabbitSubscribe({
 		contract: LinkDeletedEvent,
-		queue: 'click-service.cache.queue',
+		queue: 'click-service.link-deleted-event.queue',
 		queueOptions
 	})
 	public async linkDeletedEvent({ linkIds }: LinkDeletedEvent.Message) {
