@@ -20,7 +20,7 @@ export class Argon2PasswordHashingStrategy extends PasswordHashingStrategy {
 		return { hash, salt: salt.toString('hex') }
 	}
 
-	public verify(password: string, hash: string, salt: string) {
-		return argon2.verify(hash, password, { salt: Buffer.from(salt) })
+	public verify(password: string, hash: string) {
+		return argon2.verify(hash, password)
 	}
 }
