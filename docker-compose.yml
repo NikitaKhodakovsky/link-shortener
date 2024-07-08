@@ -17,7 +17,7 @@ services:
             - link-service
             - ui
         healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://localhost:3000/health || exit 1']
+            test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent --insecure http://localhost || exit 1']
             # TODO
             # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
             # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
@@ -64,7 +64,7 @@ services:
             - BASE_URL=/dashboard
             - PORT=80
         healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://localhost || exit 1']
+            test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent http://localhost || exit 1']
             # TODO
             # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
             # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
