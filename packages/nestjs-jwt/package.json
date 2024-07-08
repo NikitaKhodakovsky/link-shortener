@@ -8,10 +8,10 @@
 		"build": "npm run clean && tsc"
 	},
 	"dependencies": {
-		"@nestjs/common": "^10.3.3",
+		"@nestjs/common": "^10.3.10",
 		"jsonwebtoken": "^9.0.2"
 	},
 	"devDependencies": {
-		"@types/jsonwebtoken": "^9.0.5"
+		"@types/jsonwebtoken": "^9.0.6"
 	}
 }

@@ -8,8 +8,8 @@
 		"build": "npm run clean && tsc"
 	},
 	"dependencies": {
-		"@nestjs/common": "^10.3.3",
+		"@nestjs/common": "^10.3.10",
 		"@nestjs/terminus": "^10.2.3",
-		"ioredis": "^5.3.2"
+		"ioredis": "^5.4.1"
 	}
 }
