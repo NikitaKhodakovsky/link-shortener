@@ -12,7 +12,7 @@ ARG SERVICE
 # TURBO
 FROM base AS turbo
 
-RUN npm i -g turbo
+RUN npm i -g turbo@^1.13.4
 
 
 

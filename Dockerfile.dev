@@ -11,7 +11,7 @@ RUN apk add curl
 
 RUN apk add bash
 
-RUN npm i -g turbo
+RUN npm i -g turbo@^1.13.4
 
 # Aliases
 RUN echo 'alias ll="ls -lAhS"' >> ~/.bashrc
