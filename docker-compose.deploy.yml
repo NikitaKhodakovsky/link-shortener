@@ -1,12 +1,12 @@
 services:
-    click-service:
-        container_name: !reset
-        deploy:
-            mode: replicatred
-            replicas: 2
+  click-service:
+    container_name: !reset
+    deploy:
+      mode: replicatred
+      replicas: 2
 
-    statistic-service:
-        container_name: !reset
-        deploy:
-            mode: replicatred
-            replicas: 4
+  statistic-service:
+    container_name: !reset
+    deploy:
+      mode: replicatred
+      replicas: 4

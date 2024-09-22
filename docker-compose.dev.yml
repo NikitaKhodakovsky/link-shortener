@@ -1,105 +1,105 @@
 services:
-    builder:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        restart: no
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo build
+  builder:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    restart: no
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo build
 
-    ui:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=ui
-        depends_on:
-            builder:
-                condition: service_completed_successfully
-        healthcheck:
-            disable: true
+  ui:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo dev --filter=ui
+    depends_on:
+      builder:
+        condition: service_completed_successfully
+    healthcheck:
+      disable: true
 
-    auth-service:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=auth-service
-        depends_on:
-            builder:
-                condition: service_completed_successfully
+  auth-service:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo dev --filter=auth-service
+    depends_on:
+      builder:
+        condition: service_completed_successfully
 
-    link-service:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=link-service
-        depends_on:
-            builder:
-                condition: service_completed_successfully
+  link-service:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo dev --filter=link-service
+    depends_on:
+      builder:
+        condition: service_completed_successfully
 
-    click-service:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=click-service
-        depends_on:
-            builder:
-                condition: service_completed_successfully
+  click-service:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo dev --filter=click-service
+    depends_on:
+      builder:
+        condition: service_completed_successfully
 
-    statistic-service:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=statistic-service
-        depends_on:
-            builder:
-                condition: service_completed_successfully
+  statistic-service:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo dev --filter=statistic-service
+    depends_on:
+      builder:
+        condition: service_completed_successfully
 
-    demo-service:
-        image: dev
-        user: ${UID:-1000}:${GID:-1000}
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        volumes:
-            - ./:/app
-        environment:
-            - NODE_ENV=development
-        command: turbo dev --filter=demo-service
-        depends_on:
-            builder:
-                condition: service_completed_successfully
+  demo-service:
+    image: dev
+    user: ${UID:-1000}:${GID:-1000}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    command: turbo dev --filter=demo-service
+    depends_on:
+      builder:
+        condition: service_completed_successfully

@@ -1,68 +1,68 @@
 openapi: 3.0.0
 paths:
-    /api/demo:
-        post:
-            operationId: demo
-            summary: ''
-            description: Generates clicks for the provided links
-            parameters: []
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/DemoDTO'
-            responses:
-                '201':
-                    description: ''
-                '401':
-                    content:
-                        application/json:
-                            examples:
-                                UnauthorizedException:
-                                    description: Unauthorized
-                                    value:
-                                        statusCode: 401
-                                        message: Unauthorized
-                                        error: Unauthorized
-                            schema:
-                                type: object
-                                properties:
-                                    statusCode:
-                                        type: number
-                                        example: 401
-                                    message:
-                                        type: string
-                                        example: Unauthorized
-                                    error:
-                                        type: string
-                                        example: Unauthorized
-                                required:
-                                    - statusCode
-                                    - message
-                    description: ''
-            tags:
-                - Demo
+  /api/demo:
+    post:
+      operationId: demo
+      summary: ''
+      description: Generates clicks for the provided links
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemoDTO'
+      responses:
+        '201':
+          description: ''
+        '401':
+          content:
+            application/json:
+              examples:
+                UnauthorizedException:
+                  description: Unauthorized
+                  value:
+                    statusCode: 401
+                    message: Unauthorized
+                    error: Unauthorized
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+                  error:
+                    type: string
+                    example: Unauthorized
+                required:
+                  - statusCode
+                  - message
+          description: ''
+      tags:
+        - Demo
 info:
-    title: Demo Service
-    description: ''
-    version: 1.0.0
-    contact: {}
+  title: Demo Service
+  description: ''
+  version: 1.0.0
+  contact: {}
 tags: []
 servers: []
 components:
-    securitySchemes:
-        cookie:
-            type: apiKey
-            in: cookie
-            name: access-token
-    schemas:
-        DemoDTO:
-            type: object
-            properties:
-                linkIds:
-                    type: array
-                    items:
-                        type: number
-            required:
-                - linkIds
+  securitySchemes:
+    cookie:
+      type: apiKey
+      in: cookie
+      name: access-token
+  schemas:
+    DemoDTO:
+      type: object
+      properties:
+        linkIds:
+          type: array
+          items:
+            type: number
+      required:
+        - linkIds

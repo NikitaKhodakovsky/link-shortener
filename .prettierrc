@@ -6,5 +6,14 @@
 	"semi": false,
 	"printWidth": 140,
 	"arrowParens": "avoid",
-	"bracketSpacing": true
+	"bracketSpacing": true,
+	"overrides": [
+		{
+			"files": ["**/*.yaml", "**/*.yml"],
+			"options": {
+				"useTabs": false,
+				"tabWidth": 2
+			}
+		}
+	]
 }

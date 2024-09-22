@@ -1,400 +1,400 @@
 services:
-    nginx:
-        container_name: link-shortener_nginx
-        image: nginx:1.25.3-alpine
-        restart: always
-        ports:
-            - ${NGINX_HTTP_PORT}:80
-            # Uncomment this line (NGINX_TLS)
-            # - ${NGINX_HTTPS_PORT}:443
-        volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-            # Uncomment this line (NGINX_TLS)
-            # - ./certificates:/etc/nginx/certificates
-        depends_on:
-            - click-service
-            - auth-service
-            - link-service
-            - ui
-        healthcheck:
-            test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent --insecure http://localhost || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  nginx:
+    container_name: link-shortener_nginx
+    image: nginx:1.25.3-alpine
+    restart: always
+    ports:
+      - ${NGINX_HTTP_PORT}:80
+      # Uncomment this line (NGINX_TLS)
+      # - ${NGINX_HTTPS_PORT}:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # Uncomment this line (NGINX_TLS)
+      # - ./certificates:/etc/nginx/certificates
+    depends_on:
+      - click-service
+      - auth-service
+      - link-service
+      - ui
+    healthcheck:
+      test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent --insecure http://localhost || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    rabbitmq:
-        container_name: link-shortener_rabbitmq
-        image: rabbitmq:3.12.13-alpine
-        restart: always
-        volumes:
-            - rabbitmq-data:/var/lib/rabbitmq
-            - rabbitmq-logs:/var/log/rabbitmq
-        environment:
-            - RABBITMQ_DEFAULT_USER=${RMQ_USERNAME}
-            - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
-        healthcheck:
-            test: ['CMD-SHELL', 'rabbitmq-diagnostics -q check_running || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  rabbitmq:
+    container_name: link-shortener_rabbitmq
+    image: rabbitmq:3.12.13-alpine
+    restart: always
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-logs:/var/log/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'rabbitmq-diagnostics -q check_running || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    ui:
-        container_name: link-shortener_ui
-        restart: always
-        init: true
-        build:
-            context: .
-            dockerfile: apps/ui/Dockerfile
-            args:
-                - SERVICE=ui
-                - BASE_URL=/dashboard
-        environment:
-            - BASE_URL=/dashboard
-            - PORT=80
-        healthcheck:
-            test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent http://localhost || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  ui:
+    container_name: link-shortener_ui
+    restart: always
+    init: true
+    build:
+      context: .
+      dockerfile: apps/ui/Dockerfile
+      args:
+        - SERVICE=ui
+        - BASE_URL=/dashboard
+    environment:
+      - BASE_URL=/dashboard
+      - PORT=80
+    healthcheck:
+      test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent http://localhost || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    auth-service:
-        container_name: link-shortener_auth-service
-        restart: always
-        init: true
-        build:
-            dockerfile: Dockerfile.nestjs
-            context: .
-            args:
-                - SERVICE=auth-service
-        environment:
-            - SERVER_PORT=80
-            - GLOBAL_PREFIX=/api/auth
-            - SHOW_SWAGGER=always
-            - JWT_PUBLIC_KEY
-            - JWT_PRIVATE_KEY
-            - ACCESS_TOKEN_DURATION=15m
-            - REFRESH_TOKEN_DURATION=7d
-            - RMQ_HOST=rabbitmq
-            - RMQ_PORT=5672
-            - RMQ_USERNAME
-            - RMQ_PASSWORD
-            - DB_HOST=auth-service-postgres
-            - DB_PORT=5432
-            - DB_USERNAME=${AUTH_SERVICE_DB_USERNAME}
-            - DB_PASSWORD=${AUTH_SERVICE_DB_PASSWORD}
-            - DB_DATABASE=postgres
-            - REDIS_HOST=auth-service-redis
-            - REDIS_PORT=6379
-            - REDIS_PASSWORD=${AUTH_SERVICE_REDIS_PASSWORD}
-        healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://auth-service/api/auth/health || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 15s
-            timeout: 5s
-            retries: 3
-        depends_on:
-            auth-service-postgres:
-                condition: service_healthy
-            auth-service-redis:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
+  auth-service:
+    container_name: link-shortener_auth-service
+    restart: always
+    init: true
+    build:
+      dockerfile: Dockerfile.nestjs
+      context: .
+      args:
+        - SERVICE=auth-service
+    environment:
+      - SERVER_PORT=80
+      - GLOBAL_PREFIX=/api/auth
+      - SHOW_SWAGGER=always
+      - JWT_PUBLIC_KEY
+      - JWT_PRIVATE_KEY
+      - ACCESS_TOKEN_DURATION=15m
+      - REFRESH_TOKEN_DURATION=7d
+      - RMQ_HOST=rabbitmq
+      - RMQ_PORT=5672
+      - RMQ_USERNAME
+      - RMQ_PASSWORD
+      - DB_HOST=auth-service-postgres
+      - DB_PORT=5432
+      - DB_USERNAME=${AUTH_SERVICE_DB_USERNAME}
+      - DB_PASSWORD=${AUTH_SERVICE_DB_PASSWORD}
+      - DB_DATABASE=postgres
+      - REDIS_HOST=auth-service-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${AUTH_SERVICE_REDIS_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://auth-service/api/auth/health || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      auth-service-postgres:
+        condition: service_healthy
+      auth-service-redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
-    auth-service-postgres:
-        container_name: link-shortener_auth-service-postgres
-        restart: always
-        image: postgres:14.4-alpine
-        volumes:
-            - auth-service-postgres:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_USER=${AUTH_SERVICE_DB_USERNAME}
-            - POSTGRES_PASSWORD=${AUTH_SERVICE_DB_PASSWORD}
-            - POSTGRES_DB=postgres
-        healthcheck:
-            test: ['CMD-SHELL', 'pg_isready -U $AUTH_SERVICE_DB_USERNAME']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  auth-service-postgres:
+    container_name: link-shortener_auth-service-postgres
+    restart: always
+    image: postgres:14.4-alpine
+    volumes:
+      - auth-service-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${AUTH_SERVICE_DB_USERNAME}
+      - POSTGRES_PASSWORD=${AUTH_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $AUTH_SERVICE_DB_USERNAME']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    auth-service-redis:
-        container_name: link-shortener_auth-service-redis
-        restart: always
-        image: redis:7.2.4-alpine
-        command: redis-server
-            --requirepass ${AUTH_SERVICE_REDIS_PASSWORD}
-            --appendonly yes
-            --appendfsync everysec
-            --aof-load-truncated yes
-            --aof-use-rdb-preamble yes
-            --auto-aof-rewrite-percentage 100
-            --auto-aof-rewrite-min-size 16mb
-        volumes:
-            - auth-service-redis:/data
-        healthcheck:
-            test: ['CMD-SHELL', 'redis-cli -a "$CLICK_SERVICE_REDIS_PASSWORD" ping']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  auth-service-redis:
+    container_name: link-shortener_auth-service-redis
+    restart: always
+    image: redis:7.2.4-alpine
+    command: redis-server
+      --requirepass ${AUTH_SERVICE_REDIS_PASSWORD}
+      --appendonly yes
+      --appendfsync everysec
+      --aof-load-truncated yes
+      --aof-use-rdb-preamble yes
+      --auto-aof-rewrite-percentage 100
+      --auto-aof-rewrite-min-size 16mb
+    volumes:
+      - auth-service-redis:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli -a "$CLICK_SERVICE_REDIS_PASSWORD" ping']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    link-service:
-        container_name: link-shortener_link-service
-        restart: always
-        init: true
-        build:
-            dockerfile: Dockerfile.nestjs
-            context: .
-            args:
-                - SERVICE=link-service
-        environment:
-            - SERVER_PORT=80
-            - GLOBAL_PREFIX=/api/links
-            - SHOW_SWAGGER=always
-            - JWT_PUBLIC_KEY
-            - RMQ_HOST=rabbitmq
-            - RMQ_PORT=5672
-            - RMQ_USERNAME
-            - RMQ_PASSWORD
-            - DB_HOST=link-service-postgres
-            - DB_PORT=5432
-            - DB_USERNAME=${LINK_SERVICE_DB_USERNAME}
-            - DB_PASSWORD=${LINK_SERVICE_DB_PASSWORD}
-            - DB_DATABASE=postgres
-        healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://link-service/api/links/health || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 15s
-            timeout: 5s
-            retries: 3
-        depends_on:
-            link-service-postgres:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
+  link-service:
+    container_name: link-shortener_link-service
+    restart: always
+    init: true
+    build:
+      dockerfile: Dockerfile.nestjs
+      context: .
+      args:
+        - SERVICE=link-service
+    environment:
+      - SERVER_PORT=80
+      - GLOBAL_PREFIX=/api/links
+      - SHOW_SWAGGER=always
+      - JWT_PUBLIC_KEY
+      - RMQ_HOST=rabbitmq
+      - RMQ_PORT=5672
+      - RMQ_USERNAME
+      - RMQ_PASSWORD
+      - DB_HOST=link-service-postgres
+      - DB_PORT=5432
+      - DB_USERNAME=${LINK_SERVICE_DB_USERNAME}
+      - DB_PASSWORD=${LINK_SERVICE_DB_PASSWORD}
+      - DB_DATABASE=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://link-service/api/links/health || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      link-service-postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
-    link-service-postgres:
-        container_name: link-shortener_link-service-postgres
-        restart: always
-        image: postgres:14.4-alpine
-        volumes:
-            - link-service-postgres:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_USER=${LINK_SERVICE_DB_USERNAME}
-            - POSTGRES_PASSWORD=${LINK_SERVICE_DB_PASSWORD}
-            - POSTGRES_DB=postgres
-        healthcheck:
-            test: ['CMD-SHELL', 'pg_isready -U $LINK_SERVICE_DB_USERNAME']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  link-service-postgres:
+    container_name: link-shortener_link-service-postgres
+    restart: always
+    image: postgres:14.4-alpine
+    volumes:
+      - link-service-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${LINK_SERVICE_DB_USERNAME}
+      - POSTGRES_PASSWORD=${LINK_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $LINK_SERVICE_DB_USERNAME']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    click-service:
-        container_name: link-shortener_click-service
-        restart: always
-        init: true
-        build:
-            dockerfile: Dockerfile.nestjs
-            context: .
-            args:
-                - SERVICE=click-service
-        environment:
-            - SERVER_PORT=80
-            - SHOW_SWAGGER=always
-            - LINK_CACHING_DURATION=15m
-            - RMQ_HOST=rabbitmq
-            - RMQ_PORT=5672
-            - RMQ_USERNAME
-            - RMQ_PASSWORD
-            - REDIS_HOST=click-service-redis
-            - REDIS_PORT=6379
-            - REDIS_PASSWORD=${CLICK_SERVICE_REDIS_PASSWORD}
-        healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://click-service/health || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 15s
-            timeout: 5s
-            retries: 3
-        depends_on:
-            click-service-redis:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
-            link-service:
-                condition: service_healthy
+  click-service:
+    container_name: link-shortener_click-service
+    restart: always
+    init: true
+    build:
+      dockerfile: Dockerfile.nestjs
+      context: .
+      args:
+        - SERVICE=click-service
+    environment:
+      - SERVER_PORT=80
+      - SHOW_SWAGGER=always
+      - LINK_CACHING_DURATION=15m
+      - RMQ_HOST=rabbitmq
+      - RMQ_PORT=5672
+      - RMQ_USERNAME
+      - RMQ_PASSWORD
+      - REDIS_HOST=click-service-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${CLICK_SERVICE_REDIS_PASSWORD}
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://click-service/health || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      click-service-redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      link-service:
+        condition: service_healthy
 
-    click-service-redis:
-        container_name: link-shortener_click-service-redis
-        restart: always
-        image: redis:7.2.4-alpine
-        command: redis-server
-            --requirepass ${CLICK_SERVICE_REDIS_PASSWORD}
-            --appendonly no
-            --save ''
-        volumes:
-            - click-service-redis:/data
-        healthcheck:
-            test: ['CMD-SHELL', 'redis-cli -a "$CLICK_SERVICE_REDIS_PASSWORD" ping']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  click-service-redis:
+    container_name: link-shortener_click-service-redis
+    restart: always
+    image: redis:7.2.4-alpine
+    command: redis-server
+      --requirepass ${CLICK_SERVICE_REDIS_PASSWORD}
+      --appendonly no
+      --save ''
+    volumes:
+      - click-service-redis:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli -a "$CLICK_SERVICE_REDIS_PASSWORD" ping']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    statistic-service:
-        container_name: link-shortener_statistic-service
-        restart: always
-        init: true
-        build:
-            dockerfile: Dockerfile.nestjs
-            context: .
-            args:
-                - SERVICE=statistic-service
-        environment:
-            - SERVER_PORT=80
-            - RMQ_HOST=rabbitmq
-            - RMQ_PORT=5672
-            - RMQ_USERNAME
-            - RMQ_PASSWORD
-            - DB_HOST=statistic-service-postgres
-            - DB_PORT=5432
-            - DB_USERNAME=${STATISTIC_SERVICE_DB_USERNAME}
-            - DB_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
-            - DB_DATABASE=postgres
-        healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://statistic-service/health || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 15s
-            timeout: 5s
-            retries: 3
-        depends_on:
-            statistic-service-postgres:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
+  statistic-service:
+    container_name: link-shortener_statistic-service
+    restart: always
+    init: true
+    build:
+      dockerfile: Dockerfile.nestjs
+      context: .
+      args:
+        - SERVICE=statistic-service
+    environment:
+      - SERVER_PORT=80
+      - RMQ_HOST=rabbitmq
+      - RMQ_PORT=5672
+      - RMQ_USERNAME
+      - RMQ_PASSWORD
+      - DB_HOST=statistic-service-postgres
+      - DB_PORT=5432
+      - DB_USERNAME=${STATISTIC_SERVICE_DB_USERNAME}
+      - DB_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
+      - DB_DATABASE=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://statistic-service/health || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      statistic-service-postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
-    statistic-service-postgres:
-        container_name: link-shortener_statistic-service-postgres
-        restart: always
-        image: postgres:14.4-alpine
-        volumes:
-            - statistic-service-postgres:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_USER=${STATISTIC_SERVICE_DB_USERNAME}
-            - POSTGRES_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
-            - POSTGRES_DB=postgres
-        healthcheck:
-            test: ['CMD-SHELL', 'pg_isready -U $STATISTIC_SERVICE_DB_USERNAME']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 10s
-            timeout: 5s
-            retries: 3
+  statistic-service-postgres:
+    container_name: link-shortener_statistic-service-postgres
+    restart: always
+    image: postgres:14.4-alpine
+    volumes:
+      - statistic-service-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${STATISTIC_SERVICE_DB_USERNAME}
+      - POSTGRES_PASSWORD=${STATISTIC_SERVICE_DB_PASSWORD}
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $STATISTIC_SERVICE_DB_USERNAME']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-    demo-service:
-        container_name: link-shortener_demo-service
-        restart: always
-        init: true
-        build:
-            dockerfile: Dockerfile.nestjs
-            context: .
-            args:
-                - SERVICE=demo-service
-        environment:
-            - SERVER_PORT=80
-            - GLOBAL_PREFIX=/api/demo
-            - SHOW_SWAGGER=always
-            - JWT_PUBLIC_KEY
-            - RMQ_HOST=rabbitmq
-            - RMQ_PORT=5672
-            - RMQ_USERNAME
-            - RMQ_PASSWORD
-            - CLICKS_PER_LINK_MIN=10
-            - CLICKS_PER_LINK_MAX=30
-        healthcheck:
-            test: ['CMD-SHELL', 'wget -q -O /dev/null http://demo-service/api/demo/health || exit 1']
-            # TODO
-            # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
-            # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
-            # start_period: 20s
-            # start_interval: 1s
-            # interval: 30s
-            interval: 15s
-            timeout: 5s
-            retries: 3
-        depends_on:
-            rabbitmq:
-                condition: service_healthy
-            link-service:
-                condition: service_healthy
+  demo-service:
+    container_name: link-shortener_demo-service
+    restart: always
+    init: true
+    build:
+      dockerfile: Dockerfile.nestjs
+      context: .
+      args:
+        - SERVICE=demo-service
+    environment:
+      - SERVER_PORT=80
+      - GLOBAL_PREFIX=/api/demo
+      - SHOW_SWAGGER=always
+      - JWT_PUBLIC_KEY
+      - RMQ_HOST=rabbitmq
+      - RMQ_PORT=5672
+      - RMQ_USERNAME
+      - RMQ_PASSWORD
+      - CLICKS_PER_LINK_MIN=10
+      - CLICKS_PER_LINK_MAX=30
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://demo-service/api/demo/health || exit 1']
+      # TODO
+      # For some reason, the behavior of the start_period and start_interval differs from the behavior described in the documentation.
+      # Container becomes healthy only after first regular heathcheck that runs after start_period + interval.
+      # start_period: 20s
+      # start_interval: 1s
+      # interval: 30s
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      link-service:
+        condition: service_healthy
 
 volumes:
-    auth-service-postgres:
-    auth-service-redis:
-    link-service-postgres:
-    rabbitmq-data:
-    rabbitmq-logs:
-    click-service-redis:
-    statistic-service-postgres:
+  auth-service-postgres:
+  auth-service-redis:
+  link-service-postgres:
+  rabbitmq-data:
+  rabbitmq-logs:
+  click-service-redis:
+  statistic-service-postgres:
