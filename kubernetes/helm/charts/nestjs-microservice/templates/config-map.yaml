@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+data:
+  SERVER_PORT: {{ .Values.serverPort | quote }}
+  {{- if .Values.configMap.data }}
+  {{- .Values.configMap.data | toYaml | nindent 2 }}
+  {{- end }}

@@ -1,0 +1,22 @@
+name: null
+namespace: default
+serverPort: 8080
+replicas: 1
+
+# Service configuration
+service:
+  type: NodePort
+  port: 80
+  nodePort: null
+
+container:
+  # container.image is the image of the container.
+  image: null
+  # container.env is a yaml list that will be appended to Deployment.spec.template.spec.containers.env
+  env: null
+  # container.envFrom is a yaml list that will be appended to Deployment.spec.template.spec.containers.envFrom
+  envFrom: null
+
+configMap:
+  # configMap.data is yaml map that will be appended to ConfigMap.data
+  data: null

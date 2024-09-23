@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: click-service-redis
+  namespace: link-shortener
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+  selector:
+    name: click-service-redis

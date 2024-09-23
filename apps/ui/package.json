@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "npm run proxy:start & vite",
-		"build": "turbo generate:fetchers:all && tsc && vite build",
+		"build": "turbo generate:fetchers:all && tsc && BASE_URL=/dashboard vite build",
 		"preview": "vite preview",
 		"prune": "turbo prune ui --docker --out-dir ./pruned/ui",
 		"clean": "rm -rf ./dist & rm -rf ./__generated__ & wait",

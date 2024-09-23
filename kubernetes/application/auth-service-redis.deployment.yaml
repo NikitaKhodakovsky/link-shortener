@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-redis
+  namespace: link-shortener
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: auth-service-redis
+    spec:
+      containers:
+        - name: auth-service-redis
+          image: redis:7.2.4-alpine
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-service-redis
+                  key: password
+          command: ['redis-server']
+          args:
+            [
+              '--requirepass',
+              '$(REDIS_PASSWORD)',
+              '--appendonly',
+              'yes',
+              '--appendfsync',
+              'everysec',
+              '--aof-load-truncated',
+              'yes',
+              '--aof-use-rdb-preamble',
+              'yes',
+              '--auto-aof-rewrite-percentage',
+              '100',
+              '--auto-aof-rewrite-min-size',
+              '16mb'
+            ]
+  selector:
+    matchLabels:
+      name: auth-service-redis

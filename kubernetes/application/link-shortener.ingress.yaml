@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: link-shortener
+  namespace: link-shortener
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+spec:
+  ingressClassName: alb
+  defaultBackend:
+    service:
+      name: click-service
+      port:
+        number: 80
+  rules:
+    - http:
+        paths:
+          - path: /api/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 80
+          - path: /api/links
+            pathType: Prefix
+            backend:
+              service:
+                name: link-service
+                port:
+                  number: 80
+          - path: /api/demo
+            pathType: Prefix
+            backend:
+              service:
+                name: demo-service
+                port:
+                  number: 80

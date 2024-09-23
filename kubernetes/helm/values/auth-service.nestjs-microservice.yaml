@@ -1,0 +1,72 @@
+name: auth-service
+namespace: link-shortener
+replicas: 2
+
+container:
+  image: <IMAGE_REPOSITORY_URL>
+  env:
+    - name: JWT_PUBLIC_KEY
+      valueFrom:
+        secretKeyRef:
+          name: jwt
+          key: public_key
+    - name: JWT_PRIVATE_KEY
+      valueFrom:
+        secretKeyRef:
+          name: jwt
+          key: private_key
+    - name: RMQ_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: rabbitmq
+          key: host
+    - name: RMQ_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: rabbitmq
+          key: port
+    - name: RMQ_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: rabbitmq
+          key: username
+    - name: RMQ_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: rabbitmq
+          key: password
+    - name: DB_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: postgres
+          key: host
+    - name: DB_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: postgres
+          key: port
+    - name: DB_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: username
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: password
+    - name: REDIS_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: auth-service-redis
+          key: password
+
+configMap:
+  data:
+    GLOBAL_PREFIX: /api/auth
+    SHOW_SWAGGER: always
+    ACCESS_TOKEN_DURATION: 15m
+    REFRESH_TOKEN_DURATION: 7d
+    DB_DATABASE: auth-service
+    REDIS_HOST: auth-service-redis
+    REDIS_PORT: '6379'

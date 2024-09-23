@@ -28,3 +28,23 @@ pnpm-debug.log*
 
 # Secrets
 certificates
+private-key.pem
+
+# Terraform
+
+## Local terraform directories
+.terraform
+
+## State
+*.tfstate
+*.tfstate.*
+terraform/*/state
+.terraform.tfstate.lock.info
+
+## Crash log files
+crash.log
+crash.*.log
+
+## Variables
+*.tfvars
+*.tfvars.json

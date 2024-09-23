@@ -1,0 +1,42 @@
+name: click-service
+namespace: link-shortener
+replicas: 4
+
+container:
+  image: <IMAGE_REPOSITORY_URL>
+  env:
+    - name: RMQ_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: rabbitmq
+          key: host
+    - name: RMQ_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: rabbitmq
+          key: port
+    - name: RMQ_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: rabbitmq
+          key: username
+    - name: RMQ_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: rabbitmq
+          key: password
+    - name: REDIS_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: click-service-redis
+          key: password
+
+configMap:
+  data:
+    PORT: '8080'
+    #
+    GLOBAL_PREFIX: /
+    SHOW_SWAGGER: always
+    LINK_CACHING_DURATION: 15m
+    REDIS_HOST: click-service-redis
+    REDIS_PORT: '6379'

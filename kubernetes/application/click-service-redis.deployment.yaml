@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: click-service-redis
+  namespace: link-shortener
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: click-service-redis
+    spec:
+      containers:
+        - name: click-service-redis
+          image: redis:7.2.4-alpine
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: click-service-redis
+                  key: password
+          command: ['redis-server']
+          args: ['--requirepass', '$(REDIS_PASSWORD)', '--appendonly', 'no', '--save', "''"]
+  selector:
+    matchLabels:
+      name: click-service-redis

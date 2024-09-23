@@ -51,6 +51,8 @@ services:
       retries: 3
 
   ui:
+    image: ui
+    pull_policy: build
     container_name: link-shortener_ui
     restart: always
     init: true
@@ -59,9 +61,7 @@ services:
       dockerfile: apps/ui/Dockerfile
       args:
         - SERVICE=ui
-        - BASE_URL=/dashboard
     environment:
-      - BASE_URL=/dashboard
       - PORT=80
     healthcheck:
       test: ['CMD-SHELL', 'curl --location --fail --output /dev/null --silent http://localhost || exit 1']
@@ -76,6 +76,8 @@ services:
       retries: 3
 
   auth-service:
+    image: auth-service
+    pull_policy: build
     container_name: link-shortener_auth-service
     restart: always
     init: true
@@ -172,6 +174,8 @@ services:
       retries: 3
 
   link-service:
+    image: link-service
+    pull_policy: build
     container_name: link-shortener_link-service
     restart: always
     init: true
@@ -234,6 +238,8 @@ services:
       retries: 3
 
   click-service:
+    image: click-service
+    pull_policy: build
     container_name: link-shortener_click-service
     restart: always
     init: true
@@ -295,6 +301,8 @@ services:
       retries: 3
 
   statistic-service:
+    image: statistic-service
+    pull_policy: build
     container_name: link-shortener_statistic-service
     restart: always
     init: true
@@ -354,6 +362,8 @@ services:
       retries: 3
 
   demo-service:
+    image: demo-service
+    pull_policy: build
     container_name: link-shortener_demo-service
     restart: always
     init: true

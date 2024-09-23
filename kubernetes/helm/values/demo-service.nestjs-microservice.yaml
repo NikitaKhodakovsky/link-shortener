@@ -1,0 +1,41 @@
+name: demo-service
+namespace: link-shortener
+replicas: 2
+
+container:
+  image: <IMAGE_REPOSITORY_URL>
+  env:
+    - name: JWT_PUBLIC_KEY
+      valueFrom:
+        secretKeyRef:
+          name: jwt
+          key: public_key
+    - name: RMQ_HOST
+      valueFrom:
+        configMapKeyRef:
+          name: rabbitmq
+          key: host
+    - name: RMQ_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: rabbitmq
+          key: port
+    - name: RMQ_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: rabbitmq
+          key: username
+    - name: RMQ_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: rabbitmq
+          key: password
+
+configMap:
+  data:
+    PORT: '8080'
+    #
+    GLOBAL_PREFIX: /api/demo
+    SHOW_SWAGGER: always
+    CLICKS_PER_LINK_MIN: '10'
+    CLICKS_PER_LINK_MAX: '30'
