@@ -1,6 +1,6 @@
 {
 	"extends": ["//"],
-	"pipeline": {
+	"tasks": {
 		"generate:fetchers:all": {
 			"inputs": ["swagger.yaml", "openapi-codegen.config.ts"],
 			"outputs": ["./__generated__"]

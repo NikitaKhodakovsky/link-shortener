@@ -12,7 +12,7 @@ ARG SERVICE
 # TURBO
 FROM base AS turbo
 
-RUN npm i -g turbo@^1.13.4
+RUN npm i -g turbo@^2.1.2
 
 
 
@@ -21,40 +21,30 @@ FROM turbo AS prune
 
 COPY . .
 
-RUN turbo run prune --filter=${SERVICE}
-
+RUN turbo prune "${SERVICE}" --docker --out-dir "./pruned/${SERVICE}"
 
 
 # BUILD
 FROM turbo AS build
 
-COPY --from=prune app/pruned/${SERVICE}/json .
+COPY --from=prune "app/pruned/${SERVICE}/json" .
 
 RUN npm ci --include=dev
 
-COPY --from=prune app/pruned/${SERVICE}/full .
+COPY --from=prune "app/pruned/${SERVICE}/full" .
 
 COPY tsconfig.json .
 
-#Build the project and all its local dependencies
-RUN npx turbo build --no-cache
-
-# Remove turbo cache
-RUN npm run clean:turbo
-
-# Remove node_modules
-RUN npm run clean:node_modules
+RUN npx turbo run build --no-cache && npm run clean:turbo && npm run clean:node_modules
 
 
 
 # PRODUCTION
 FROM base AS production
 
-COPY --from=prune app/pruned/${SERVICE}/json .
+COPY --from=prune "app/pruned/${SERVICE}/json" .
 
-RUN npm ci --omit=dev
-
-RUN npm cache clean --force
+RUN npm ci --omit=dev && npm cache clean --force
 
 COPY --from=build /app .
 
@@ -62,6 +52,6 @@ RUN addgroup -S production
 RUN adduser -S -D production production
 USER production
 
-ENV SERVICE=${SERVICE}
+ENV SERVICE="${SERVICE}"
 
-CMD node apps/${SERVICE}/dist/main.js
+CMD node apps/$SERVICE/dist/main.js

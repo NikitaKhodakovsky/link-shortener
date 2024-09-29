@@ -7,7 +7,6 @@
 		"dev": "npm run proxy:start & vite",
 		"build": "turbo generate:fetchers:all && tsc && BASE_URL=/dashboard vite build",
 		"preview": "vite preview",
-		"prune": "turbo prune ui --docker --out-dir ./pruned/ui",
 		"clean": "rm -rf ./dist & rm -rf ./__generated__ & wait",
 		"generate:fetchers:all": "npm run generate:fetchers:auth & npm run generate:fetchers:links & npm run generate:fetchers:demo & wait",
 		"generate:fetchers:auth": "npx openapi-codegen gen auth -c ./openapi-codegen/config/openapi-codegen.auth.ts",

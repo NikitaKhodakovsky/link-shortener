@@ -37,3 +37,15 @@
 
 # ESLint
 **/.eslint*
+
+# Kubernetes
+kubernetes
+
+# Terraform
+terraform
+
+# Scripts
+scripts
+
+# Images
+images

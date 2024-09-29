@@ -6,7 +6,6 @@
 		"dev": "nest start --watch",
 		"build": "nest build",
 		"format": "prettier --write \"{src,test}/**/*.ts\"",
-		"prune": "turbo prune click-service --docker --out-dir ./pruned/click-service",
 		"clean": "rm -rf ./dist"
 	},
 	"dependencies": {

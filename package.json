@@ -2,16 +2,15 @@
 	"name": "link-shortener",
 	"private": true,
 	"scripts": {
-		"build": "turbo build",
-		"dev": "turbo dev",
+		"build": "turbo run build",
+		"dev": "turbo run dev",
 		"format": "prettier --write .",
-		"prune": "turbo run prune",
 		"clean:turbo": "rm -rf `find . -type d -name .turbo` && rm -rf node_modules/.cache/turbo",
 		"clean:node_modules": "rm -rf `find . -type d -name node_modules`"
 	},
 	"devDependencies": {
 		"prettier": "^3.3.2",
-		"turbo": "^1.13.4"
+		"turbo": "^2.1.2"
 	},
 	"engines": {
 		"node": ">=18"
